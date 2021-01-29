@@ -52,6 +52,8 @@ struct Quaternion
     #endif
 };
 
+using Quat = Quaternion;
+
 #include "Quaternion.inl"
 
 } // End of namespace GPM
