@@ -47,6 +47,6 @@ struct Matrix4
 using Mat4 = Matrix4;
 using mat4 = Matrix4;
 
-#include "Matrix4.inl"
+#include "../src/Matrix4.inl"
 
 } // End of namespace Math

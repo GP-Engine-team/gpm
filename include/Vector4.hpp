@@ -27,6 +27,6 @@ struct Vector4
 using Vec4 = Vector4;
 using vec4 = Vector4;
 
-#include "Vector4.inl"
+#include "../src/Vector4.inl"
 
 } // End of namespace Math

@@ -85,6 +85,6 @@ struct Vector3
 using Vec3 = Vector3;
 using vec3 = Vector3;
 
-#include "Vector3.inl"
+#include "../src/Vector3.inl"
 
 } // End of namespace Math
