@@ -22,6 +22,10 @@ struct Vector4
     constexpr Vector4 operator/  (const Vector4& v) const noexcept;
     constexpr Vector4 operator*  (const f32 k) const noexcept;
     constexpr Vector4 operator/  (const f32 k) const noexcept;
+
+    #ifdef _DEBUG
+    friend std::ostream& operator<<(std::ostream& os, const Vector4& v) noexcept;
+    #endif
 };
 
 using Vec4 = Vector4;
