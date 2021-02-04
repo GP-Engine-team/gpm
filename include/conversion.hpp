@@ -16,8 +16,8 @@ constexpr Mat4       toMatrix4   (const Mat3& m) noexcept;
 constexpr Mat3       toMatrix3   (const Quat& q) noexcept;
 constexpr Mat4       toMatrix4   (const Quat& q) noexcept;
 
-Quaternion           toQuaternion(const Mat3& m) noexcept;
-Quaternion           toQuaternion(const Mat4& m) noexcept;
+Quat                 toQuaternion(const Mat3& m) noexcept;
+Quat                 toQuaternion(const Mat4& m) noexcept;
 
 #include "../src/conversion.inl"
 
