@@ -1,5 +1,5 @@
 /* =================== Static methods (pseudo-constructors) =================== */
-inline Quaternion angleAxis(const f32 angle, const Vec3& axis) noexcept
+inline Quaternion Quaternion::angleAxis(const f32 angle, const Vec3& axis) noexcept
 {
     const f32 halfAngle{angle * .5f};
     return {axis.normalized() * sinf(halfAngle), cosf(halfAngle)};
@@ -122,7 +122,5 @@ inline constexpr f32& Quaternion::operator[](const u8 i) noexcept
 { return *((f32*)this + i); }
 
 
-#ifdef _DEBUG
 inline std::ostream& operator<<(std::ostream& os, const Quaternion& q) noexcept
 { return os << '[' << q.s << ", " << q.v << ']'; }
-#endif

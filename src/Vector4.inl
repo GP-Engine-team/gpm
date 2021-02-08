@@ -43,3 +43,7 @@ inline constexpr Vector4 Vector4::operator/(const f32 k) const noexcept
     const f32 reciprocal{1.f / k};
     return {xyz * reciprocal, w * reciprocal};
 }
+
+
+inline std::ostream& operator<<(std::ostream& os, const Vector4& v) noexcept
+{ return os << '[' << v.xyz.x << ", " << v.xyz.y << ", " << v.xyz.z << ", " << v.w << ']'; }

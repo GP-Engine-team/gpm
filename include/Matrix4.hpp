@@ -1,11 +1,16 @@
+/*
+ * Copyright (C) 2021 Amara Sami, Dallard Thomas, Nardone William, Six Jonathan
+ * This file is subject to the LGNU license terms in the LICENSE file
+ * found in the top-level directory of this distribution.
+ */
+
 #pragma once
+
 #include "types.hpp"
 #include "Vector4.hpp"
 
-#ifdef _DEBUG
 #include <iomanip>
 #include <iostream>
-#endif
 
 namespace GPM
 {
@@ -39,9 +44,7 @@ struct Matrix4
     constexpr f32       operator[]      (const u8 i)             const noexcept;
     constexpr f32       operator()      (const u8 i, const u8 j) const noexcept;
 
-    #ifdef _DEBUG
-    friend std::ostream& operator<<(std::ostream& os, const Matrix4& m) noexcept;
-    #endif
+    friend std::ostream& operator<<     (std::ostream& os, const Matrix4& m) noexcept;
 };
 
 using Mat4 = Matrix4;

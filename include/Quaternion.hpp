@@ -1,12 +1,16 @@
+/*
+ * Copyright (C) 2021 Amara Sami, Dallard Thomas, Nardone William, Six Jonathan
+ * This file is subject to the LGNU license terms in the LICENSE file
+ * found in the top-level directory of this distribution.
+ */
+
 #pragma once
 
 #include "constants.hpp"
 #include "types.hpp"
 #include "Vector3.hpp"
 
-#ifdef _DEBUG
 #include <iostream>
-#endif
 
 namespace GPM
 {
@@ -47,9 +51,7 @@ struct Quaternion
     constexpr f32               operator[]  (const u8 i)                            const noexcept;
     constexpr f32&              operator[]  (const u8 i)                            noexcept;
 
-    #ifdef _DEBUG
-    friend std::ostream& operator<<(std::ostream& os, const Quaternion& q) noexcept;
-    #endif
+    friend std::ostream&        operator<<  (std::ostream& os, const Quaternion& q) noexcept;
 };
 
 using Quat = Quaternion;

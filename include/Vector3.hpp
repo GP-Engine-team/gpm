@@ -1,11 +1,14 @@
+/*
+ * Copyright (C) 2021 Amara Sami, Dallard Thomas, Nardone William, Six Jonathan
+ * This file is subject to the LGNU license terms in the LICENSE file
+ * found in the top-level directory of this distribution.
+ */
+
 #pragma once
 
 #include <cfloat>
 #include <cmath>
-
-#ifdef _DEBUG
 #include <iostream>
-#endif
 
 namespace GPM
 {
@@ -32,8 +35,8 @@ struct Vector3
     constexpr bool      isNull              ()                              const noexcept;
     constexpr bool      isOrthogonalTo      (const Vector3& v)              const noexcept;
     constexpr bool      isNormalized        ()                              const noexcept;
-    constexpr  bool     isOrthonormalTo     (const Vector3& v)              const noexcept;
-    constexpr  bool     isColinearTo        (const Vector3& v)              const noexcept;
+    constexpr bool      isOrthonormalTo     (const Vector3& v)              const noexcept;
+    constexpr bool      isColinearTo        (const Vector3& v)              const noexcept;
     bool                isEqualTo           (const Vector3& v,
                                              const f32 eps = FLT_EPSILON)   const noexcept;
     bool                isNotEqualTo        (const Vector3& v,
@@ -77,9 +80,7 @@ struct Vector3
     constexpr Vector3	operator*           (const f32 k)                   const noexcept;
     constexpr Vector3	operator/           (const f32 k)                   const noexcept;
 
-    #ifdef _DEBUG
-    friend std::ostream& operator<<(std::ostream& os, const Vector3& v) noexcept;
-    #endif
+    friend std::ostream& operator<<         (std::ostream& os, const Vector3& v) noexcept;
 };
 
 using Vec3 = Vector3;

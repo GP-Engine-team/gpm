@@ -290,7 +290,5 @@ inline constexpr Vector3 Vector3::operator/(const f32 k) const noexcept
 }
 
 
-#ifdef _DEBUG
 inline std::ostream& operator<<(std::ostream& os, const Vector3& v) noexcept
 { return os << '[' << v.x << ", " << v.y << ", " << v.z << ']'; }
-#endif
