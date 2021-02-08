@@ -1,5 +1,15 @@
+/*
+ * Copyright (C) 2021 Amara Sami, Dallard Thomas, Nardone William, Six Jonathan
+ * This file is subject to the LGNU license terms in the LICENSE file
+ * found in the top-level directory of this distribution.
+ */
+
 #pragma once
+
 #include "Vector3.hpp"
+#include <cfloat>
+#include <cmath>
+#include <iostream>
 
 namespace GPM
 {
@@ -7,10 +17,10 @@ namespace GPM
 struct Vector4
 {
     // Data members
-    Vec3    xyz{Vec3::zero()};
-    f32     w  {.0f};
+    Vec3    xyz;
+    f32     w;
 
-    constexpr Vector4() noexcept = default;
+    Vector4() noexcept;
     constexpr Vector4(const Vec3& v, const f32 w = 1.f) noexcept;
     constexpr Vector4(const f32 x, const f32 y, const f32 z, const f32 w = 1.f) noexcept;
 
@@ -23,9 +33,7 @@ struct Vector4
     constexpr Vector4 operator*  (const f32 k) const noexcept;
     constexpr Vector4 operator/  (const f32 k) const noexcept;
 
-    #ifdef _DEBUG
     friend std::ostream& operator<<(std::ostream& os, const Vector4& v) noexcept;
-    #endif
 };
 
 using Vec4 = Vector4;

@@ -154,7 +154,6 @@ inline constexpr f32 Matrix3::operator()(const u8 i, const u8 j) const noexcept
 { return coef[j * MAT3_COL + i]; }
 
 
-#ifdef _DEBUG
 inline std::ostream& operator<<(std::ostream& os, const Matrix3& mat) noexcept
 {
     std::streamsize original = std::cout.precision();
@@ -175,4 +174,3 @@ inline std::ostream& operator<<(std::ostream& os, const Matrix3& mat) noexcept
 
     return os;
 }
-#endif

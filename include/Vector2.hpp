@@ -1,12 +1,14 @@
+/*
+ * Copyright (C) 2021 Amara Sami, Dallard Thomas, Nardone William, Six Jonathan
+ * This file is subject to the LGNU license terms in the LICENSE file
+ * found in the top-level directory of this distribution.
+ */
+
 #pragma once
 
-#include <cmath>
 #include <cfloat>
-
-#ifdef _DEBUG
-#include <iomanip>
+#include <cmath>
 #include <iostream>
-#endif
 
 namespace GPM
 {
@@ -14,8 +16,8 @@ namespace GPM
 struct Vector2
 {
     // Data members
-    f32 x{.0f};
-    f32 y{.0f};
+    f32 x;
+    f32 y;
     
     // Static methods (pseudo-constructors)
     static constexpr Vector2 zero   () noexcept;
@@ -72,9 +74,7 @@ struct Vector2
     constexpr Vector2   operator*           (const f32 k)       const noexcept;
     constexpr Vector2   operator/           (const f32 k)       const noexcept;
 
-    #ifdef _DEBUG
-    friend std::ostream& operator<<(std::ostream& os, const Vector2& v) noexcept;
-    #endif
+    friend std::ostream& operator<<         (std::ostream& os, const Vector2& v) noexcept;
 };
 
 using Vec2 = Vector2;

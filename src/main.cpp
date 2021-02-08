@@ -19,7 +19,6 @@ int main()
     GPM::Quat quat{GPM::Quat::angleAxis(HALF_PI, vec3)};
     GPM::Quat quatMat3{toQuaternion(mat3)};
 
-#ifdef _DEBUG
     std::cerr << "mat3 = " << mat3 << '\n';
     std::cerr << "mat4 = " << mat4 << '\n';
     std::cerr << "vec2 = " << vec2 << '\n';
@@ -32,7 +31,6 @@ int main()
     quatMat3 = toQuaternion(toMatrix3(quatMat3));
 
     std::cerr << "quatMat3 = toQuaternion(toMatrix3(quatMat3)) = " << quatMat3 << '\n';
-#endif
 
     return 0;
 }

@@ -122,7 +122,5 @@ inline constexpr f32& Quaternion::operator[](const u8 i) noexcept
 { return *((f32*)this + i); }
 
 
-#ifdef _DEBUG
 inline std::ostream& operator<<(std::ostream& os, const Quaternion& q) noexcept
 { return os << '[' << q.s << ", " << q.v << ']'; }
-#endif
