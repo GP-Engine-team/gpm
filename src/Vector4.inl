@@ -1,11 +1,26 @@
 /* =================== Constructors =================== */
-inline constexpr Vector4::Vector4(const Vec3& v, const f32 w_) noexcept
-    : xyz{v}, w{w_}
+inline constexpr Vector4::Vector4(const f32 k) noexcept
+    : x{k}, y{k}, z{k}, w{k}
 {}
 
 
 inline constexpr Vector4::Vector4(const f32 x, const f32 y, const f32 z, const f32 w_) noexcept
     : xyz{x, y, z}, w{w_}
+{}
+
+
+inline constexpr Vector4::Vector4(const Vec2& v, const f32 z_, const f32 w_) noexcept
+    : xy{v}, z{z_}, w{w_}
+{}
+
+
+inline constexpr Vector4::Vector4(const Vec3& v, const f32 w_) noexcept
+    : xyz{v}, w{w_}
+{}
+
+
+inline constexpr Vector4::Vector4(const f32 coef[4]) noexcept
+    : e{coef[0], coef[1], coef[2], coef[3]}
 {}
 
 

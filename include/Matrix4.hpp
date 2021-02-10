@@ -16,12 +16,22 @@ namespace GPM
 {
 
 #define MAT4_COL  4u
-#define MAT4_SIZE 16u
+#define MAT4_COEF 16u
 
-struct Matrix4
+// Aligned as 16 to enable auto-vectorization
+union alignas(16) Matrix4
 {
-    // Data members, aligned by 16 to enable auto-vectorization
-    alignas(16) f32 coef[MAT4_SIZE];
+    // Data members
+    f32  e[MAT4_COEF];
+    Vec4 c[MAT4_COL];
+
+    // Constructors
+    Matrix4() noexcept = default;
+    constexpr Matrix4(const f32 e0,  const f32 e1,  const f32 e2,  const f32 e3,
+                      const f32 e4,  const f32 e5,  const f32 e6,  const f32 e7,
+                      const f32 e8,  const f32 e9,  const f32 e10, const f32 e11,
+                      const f32 e12, const f32 e13, const f32 e14, const f32 e15) noexcept;
+    constexpr Matrix4(const Vec4& c0, const Vec4& c1, const Vec4& c2, const Vec4& c3) noexcept;
 
     // Static methods, pseudo-constructors
     static constexpr Matrix4 zero       ()                       noexcept;
@@ -38,11 +48,9 @@ struct Matrix4
     // Operator overloads
     constexpr Matrix4&  operator*=      (const Matrix4& m)       noexcept;
     constexpr Matrix4&  operator/=      (const f32 k)            noexcept;
-    Matrix4             operator*       (const Matrix4& m)       const noexcept;
+    constexpr Matrix4   operator*       (const Matrix4& m)       const noexcept;
     constexpr Vec4      operator*       (const Vec4& v)          const noexcept;
     Matrix4             operator/       (const f32 k)            const noexcept;
-    constexpr f32       operator[]      (const u8 i)             const noexcept;
-    constexpr f32       operator()      (const u8 i, const u8 j) const noexcept;
 
     friend std::ostream& operator<<     (std::ostream& os, const Matrix4& m) noexcept;
 };

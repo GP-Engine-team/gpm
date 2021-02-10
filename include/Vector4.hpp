@@ -6,23 +6,47 @@
 
 #pragma once
 
-#include "Vector3.hpp"
 #include <cfloat>
 #include <cmath>
 #include <iostream>
 
+#include "Vector3.hpp"
+
 namespace GPM
 {
 
-struct Vector4
+union alignas(16) Vector4
 {
     // Data members
-    Vec3    xyz;
-    f32     w;
+    struct
+    {
+        union 
+        {
+            Vec3 xyz;
 
-    Vector4() noexcept;
-    constexpr Vector4(const Vec3& v, const f32 w = 1.f) noexcept;
+            struct
+            {
+                union
+                {
+                    Vec2 xy;
+                    struct { f32 x; f32 y; };
+                };
+
+                f32 z;
+            };
+        };
+
+        f32 w;
+    };
+
+    f32 e[4];
+
+    Vector4() noexcept = default;
+    constexpr Vector4(const f32 k)                                              noexcept;
     constexpr Vector4(const f32 x, const f32 y, const f32 z, const f32 w = 1.f) noexcept;
+    constexpr Vector4(const Vec2& v, const f32 z = .0f, const f32 w = 1.f)      noexcept;
+    constexpr Vector4(const Vec3& v, const f32 w = 1.f)                         noexcept;
+    constexpr Vector4(const f32 coef[4])                                        noexcept;
 
     // Methods
     constexpr Vector4 homogenized ()  const noexcept;

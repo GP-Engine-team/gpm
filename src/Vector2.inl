@@ -1,3 +1,21 @@
+/* =================== Constructors =================== */
+inline constexpr Vector2::Vector2(const f32 k) noexcept
+	: x{k}, y{k}
+{}
+
+
+inline constexpr Vector2::Vector2(const f32 x_, const f32 y_) noexcept
+	: x{x_}, y{y_}
+{}
+
+
+inline constexpr Vector2::Vector2(const f32 coef[2]) noexcept
+	: e{coef[0], coef[1]}
+{}
+
+
+
+
 /* =================== Static methods (pseudo-constructors) =================== */
 inline constexpr Vector2 Vector2::zero() noexcept
 { return {.0f, .0f}; }

@@ -6,31 +6,30 @@
 #include "Quaternion.hpp"
 #include "conversion.hpp"
 #include "constants.hpp"
+#include "Transform.hpp"
 
 #include <iostream>
 
+using namespace GPM;
+
 int main()
 {
-    GPM::Mat3 mat3 = GPM::Mat3::identity();
-    GPM::Mat4 mat4 = GPM::Mat4::identity();
-    GPM::Vec2 vec2{1.f, 2.f};
-    GPM::Vec3 vec3{-3.f, -2.f, -1.f};
-    GPM::Vec4 vec4{vec3, 1.f};
-    GPM::Quat quat{GPM::Quat::angleAxis(HALF_PI, vec3)};
-    GPM::Quat quatMat3{toQuaternion(mat3)};
+    Transform transform;
+    SplitTransform split{toSplitTransform(transform)};
 
-    std::cerr << "mat3 = " << mat3 << '\n';
-    std::cerr << "mat4 = " << mat4 << '\n';
-    std::cerr << "vec2 = " << vec2 << '\n';
-    std::cerr << "vec3 = " << vec3 << '\n';
-    std::cerr << "vec4 = " << vec4 << '\n';
-    std::cerr << "quat = " << quat << '\n';
-    std::cerr << "quatMat3 = " << quatMat3 << '\n';
-    std::cerr << "toMatrix3(quatMat3) = " << toMatrix3(quatMat3) << '\n';
+    std::cerr << "- transform:\n" << transform << '\n';
 
-    quatMat3 = toQuaternion(toMatrix3(quatMat3));
+    transform.rotate({-PI * .5f, .0f, .0f});
+    std::cerr << "- transform after rotation:\n" << transform << '\n'; 
+    transform.translate({1.f, .0f, .0f});
+    std::cerr << "- transform after translation:\n" << transform << '\n'; 
+    transform.scale({.5f});
+    std::cerr << "- transform after scaling:\n" << transform << '\n';
 
-    std::cerr << "quatMat3 = toQuaternion(toMatrix3(quatMat3)) = " << quatMat3 << '\n';
+    Mat4 m{Transform::rotationX(-PI * .25f)};
+    std::cerr << "m before:\n" << m << '\n';
+    m = m.inversed();
+    std::cerr << "m after:\n" << m.inversed() << '\n';
 
     return 0;
 }

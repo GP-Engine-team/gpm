@@ -29,9 +29,9 @@ inline constexpr Matrix3 Matrix3::cofactor() const noexcept
     // Repeated values
     return
     {
-        (coef[4] * coef[8]) - (coef[7] * coef[5]), (coef[7] * coef[2]) - (coef[1] * coef[8]), (coef[1] * coef[5]) - (coef[4] * coef[2]),
-        (coef[6] * coef[5]) - (coef[3] * coef[8]), (coef[0] * coef[8]) - (coef[6] * coef[2]), (coef[3] * coef[2]) - (coef[0] * coef[5]),
-        (coef[0] * coef[7]) - (coef[6] * coef[4]), (coef[6] * coef[1]) - (coef[0] * coef[7]), (coef[0] * coef[4]) - (coef[3] * coef[1])
+        (e[4] * e[8]) - (e[7] * e[5]), (e[7] * e[2]) - (e[1] * e[8]), (e[1] * e[5]) - (e[4] * e[2]),
+        (e[6] * e[5]) - (e[3] * e[8]), (e[0] * e[8]) - (e[6] * e[2]), (e[3] * e[2]) - (e[0] * e[5]),
+        (e[0] * e[7]) - (e[6] * e[4]), (e[6] * e[1]) - (e[0] * e[7]), (e[0] * e[4]) - (e[3] * e[1])
     };
 }
 
@@ -40,9 +40,9 @@ inline constexpr Matrix3 Matrix3::transposed() const noexcept
 {
     return
     {
-        coef[0], coef[3], coef[6],
-        coef[1], coef[4], coef[7],
-        coef[2], coef[5], coef[8]
+        e[0], e[3], e[6],
+        e[1], e[4], e[7],
+        e[2], e[5], e[8]
     };
 }
 
@@ -53,9 +53,9 @@ inline constexpr Matrix3 Matrix3::adjugate() const noexcept
 
 inline constexpr f32 Matrix3::det() const noexcept
 {
-    return   coef[0] * (coef[4] * coef[8] - coef[7] * coef[5])
-           - coef[1] * (coef[3] * coef[8] - coef[6] * coef[5])
-           + coef[2] * (coef[3] * coef[7] + coef[6] * coef[4]);
+    return   e[0] * (e[4] * e[8] - e[7] * e[5])
+           - e[1] * (e[3] * e[8] - e[6] * e[5])
+           + e[2] * (e[3] * e[7] + e[6] * e[4]);
 }
 
 
@@ -65,7 +65,7 @@ inline Matrix3 Matrix3::inversed() const noexcept
 
 
 inline constexpr f32 Matrix3::trace() const noexcept
-{ return coef[0] + coef[4] + coef[8]; }
+{ return e[0] + e[4] + e[8]; }
 
 
 
@@ -73,15 +73,15 @@ inline constexpr f32 Matrix3::trace() const noexcept
 // This actually does m * *this
 inline constexpr Matrix3& Matrix3::operator*=(const Matrix3& m) noexcept
 {
-    coef[0] = (m.coef[0] * coef[0]) + (m.coef[3] * coef[1]) + (m.coef[6] * coef[2]);
-    coef[1] = (m.coef[0] * coef[3]) + (m.coef[3] * coef[4]) + (m.coef[6] * coef[5]);
-    coef[2] = (m.coef[0] * coef[6]) + (m.coef[3] * coef[7]) + (m.coef[6] * coef[8]);
-    coef[3] = (m.coef[0] * coef[0]) + (m.coef[3] * coef[1]) + (m.coef[6] * coef[2]);
-    coef[4] = (m.coef[0] * coef[3]) + (m.coef[3] * coef[4]) + (m.coef[6] * coef[5]);
-    coef[5] = (m.coef[0] * coef[6]) + (m.coef[3] * coef[7]) + (m.coef[6] * coef[8]);
-    coef[6] = (m.coef[0] * coef[0]) + (m.coef[3] * coef[1]) + (m.coef[6] * coef[2]);
-    coef[7] = (m.coef[0] * coef[3]) + (m.coef[3] * coef[4]) + (m.coef[6] * coef[5]);
-    coef[8] = (m.coef[0] * coef[6]) + (m.coef[3] * coef[7]) + (m.coef[6] * coef[8]);
+    e[0] = (m.e[0] * e[0]) + (m.e[3] * e[1]) + (m.e[6] * e[2]);
+    e[1] = (m.e[0] * e[3]) + (m.e[3] * e[4]) + (m.e[6] * e[5]);
+    e[2] = (m.e[0] * e[6]) + (m.e[3] * e[7]) + (m.e[6] * e[8]);
+    e[3] = (m.e[0] * e[0]) + (m.e[3] * e[1]) + (m.e[6] * e[2]);
+    e[4] = (m.e[0] * e[3]) + (m.e[3] * e[4]) + (m.e[6] * e[5]);
+    e[5] = (m.e[0] * e[6]) + (m.e[3] * e[7]) + (m.e[6] * e[8]);
+    e[6] = (m.e[0] * e[0]) + (m.e[3] * e[1]) + (m.e[6] * e[2]);
+    e[7] = (m.e[0] * e[3]) + (m.e[3] * e[4]) + (m.e[6] * e[5]);
+    e[8] = (m.e[0] * e[6]) + (m.e[3] * e[7]) + (m.e[6] * e[8]);
 
     return *this;
 }
@@ -91,15 +91,15 @@ inline constexpr Matrix3& Matrix3::operator/=(const f32 k) noexcept
 {
     const f32 reciprocal{1.f / k};
 
-    coef[0] *= reciprocal;
-    coef[1] *= reciprocal;
-    coef[2] *= reciprocal;
-    coef[3] *= reciprocal;
-    coef[4] *= reciprocal;
-    coef[5] *= reciprocal;
-    coef[6] *= reciprocal;
-    coef[7] *= reciprocal;
-    coef[8] *= reciprocal;
+    e[0] *= reciprocal;
+    e[1] *= reciprocal;
+    e[2] *= reciprocal;
+    e[3] *= reciprocal;
+    e[4] *= reciprocal;
+    e[5] *= reciprocal;
+    e[6] *= reciprocal;
+    e[7] *= reciprocal;
+    e[8] *= reciprocal;
 
     return *this;
 }
@@ -109,9 +109,9 @@ inline constexpr Vec3 Matrix3::operator*(const Vec3& v) const noexcept
 {
     return
     {
-        (coef[0] * v.x) + (coef[3] * v.y) + (coef[6] * v.z),
-        (coef[1] * v.x) + (coef[4] * v.y) + (coef[7] * v.z),
-        (coef[2] * v.x) + (coef[5] * v.y) + (coef[8] * v.z)
+        (e[0] * v.x) + (e[3] * v.y) + (e[6] * v.z),
+        (e[1] * v.x) + (e[4] * v.y) + (e[7] * v.z),
+        (e[2] * v.x) + (e[5] * v.y) + (e[8] * v.z)
     };
 }
 
@@ -120,15 +120,15 @@ inline Matrix3 Matrix3::operator*(const Matrix3& m) const noexcept
 {
     return
     {
-        (coef[0] * m.coef[0]) + (coef[3] * m.coef[1]) + (coef[6] * m.coef[2]),
-        (coef[0] * m.coef[3]) + (coef[3] * m.coef[4]) + (coef[6] * m.coef[5]),
-        (coef[0] * m.coef[6]) + (coef[3] * m.coef[7]) + (coef[6] * m.coef[8]),
-        (coef[1] * m.coef[0]) + (coef[4] * m.coef[1]) + (coef[7] * m.coef[2]),
-        (coef[1] * m.coef[3]) + (coef[4] * m.coef[4]) + (coef[7] * m.coef[5]),
-        (coef[1] * m.coef[6]) + (coef[4] * m.coef[7]) + (coef[7] * m.coef[8]),
-        (coef[2] * m.coef[0]) + (coef[5] * m.coef[1]) + (coef[8] * m.coef[2]),
-        (coef[2] * m.coef[3]) + (coef[5] * m.coef[4]) + (coef[8] * m.coef[5]),
-        (coef[2] * m.coef[6]) + (coef[5] * m.coef[7]) + (coef[8] * m.coef[8])
+        (e[0] * m.e[0]) + (e[3] * m.e[1]) + (e[6] * m.e[2]),
+        (e[0] * m.e[3]) + (e[3] * m.e[4]) + (e[6] * m.e[5]),
+        (e[0] * m.e[6]) + (e[3] * m.e[7]) + (e[6] * m.e[8]),
+        (e[1] * m.e[0]) + (e[4] * m.e[1]) + (e[7] * m.e[2]),
+        (e[1] * m.e[3]) + (e[4] * m.e[4]) + (e[7] * m.e[5]),
+        (e[1] * m.e[6]) + (e[4] * m.e[7]) + (e[7] * m.e[8]),
+        (e[2] * m.e[0]) + (e[5] * m.e[1]) + (e[8] * m.e[2]),
+        (e[2] * m.e[3]) + (e[5] * m.e[4]) + (e[8] * m.e[5]),
+        (e[2] * m.e[6]) + (e[5] * m.e[7]) + (e[8] * m.e[8])
     };
 }
 
@@ -139,19 +139,11 @@ inline Matrix3 Matrix3::operator/(const f32 k) const noexcept
     
     return
     {
-        coef[0] * reciprocal, coef[1] * reciprocal, coef[2] * reciprocal,
-        coef[3] * reciprocal, coef[4] * reciprocal, coef[5] * reciprocal,
-        coef[6] * reciprocal, coef[7] * reciprocal, coef[8] * reciprocal
+        e[0] * reciprocal, e[1] * reciprocal, e[2] * reciprocal,
+        e[3] * reciprocal, e[4] * reciprocal, e[5] * reciprocal,
+        e[6] * reciprocal, e[7] * reciprocal, e[8] * reciprocal
     };
 }
-
-
-inline constexpr f32 Matrix3::operator[](const u8 i) const noexcept
-{ return coef[i]; }
-
-
-inline constexpr f32 Matrix3::operator()(const u8 i, const u8 j) const noexcept
-{ return coef[j * MAT3_COL + i]; }
 
 
 inline std::ostream& operator<<(std::ostream& os, const Matrix3& mat) noexcept
@@ -163,11 +155,14 @@ inline std::ostream& operator<<(std::ostream& os, const Matrix3& mat) noexcept
     {
         u8 induction{i};
         
-        os << "\n| ";
+        os << "| ";
         for (u8 j{MAT3_COL}; j--; induction += MAT3_COL)
-            os << std::setw(6) << mat.coef[induction] << ' ';
+            os << std::setw(6) << mat.e[induction] << ' ';
 
         os << " |";
+
+        if (i != MAT3_COL - 1u)
+            os << '\n';
     }
 
     os << std::setprecision(original);
