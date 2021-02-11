@@ -15,21 +15,23 @@ using namespace GPM;
 int main()
 {
     Transform transform;
-    SplitTransform split{toSplitTransform(transform)};
 
     std::cerr << "- transform:\n" << transform << '\n';
 
-    transform.rotate({-PI * .5f, .0f, .0f});
-    std::cerr << "- transform after rotation:\n" << transform << '\n'; 
-    transform.translate({1.f, .0f, .0f});
-    std::cerr << "- transform after translation:\n" << transform << '\n'; 
-    transform.scale({.5f});
-    std::cerr << "- transform after scaling:\n" << transform << '\n';
-
-    Mat4 m{Transform::rotationX(-PI * .25f)};
-    std::cerr << "m before:\n" << m << '\n';
-    m = m.inversed();
-    std::cerr << "m after:\n" << m.inversed() << '\n';
+#if 1
+    transform.translate({.0f, 1.f, .0f});
+    std::cerr << "- transform after y=y+1:\n" << transform << '\n';
+#endif
+#if 1
+    transform.scaleY(5.f);
+    std::cerr << "- transform after scale yx5:\n" << transform << '\n';
+#endif
+#if 0
+    transform.rotateX(HALF_PI);
+    std::cerr << "- transform after rotX(90):\n" << transform << '\n'; 
+#endif
+    //transform.scale({.5f});
+    //std::cerr << "- transform after scaling:\n" << transform << '\n';
 
     return 0;
 }

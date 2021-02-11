@@ -105,9 +105,8 @@ inline Transform toTransform(const SplitTransform& transfo) noexcept
 {
     return
     {
-        Transform::translation(transfo.position) *
-        toMatrix4(transfo.rotation) *
-        Transform::scaling(transfo.scale)
+        transfo.position,
+
     };
 }
 

@@ -245,7 +245,7 @@ inline std::ostream& operator<<(std::ostream& os, const Matrix4& mat) noexcept
         
         os << "| ";
         for (u8 j{MAT4_COL}; j--; induction += MAT4_COL)
-            os << std::setw(6) << mat.e[induction] << ' ';
+            os << std::setw(10) << mat.e[induction] << ' ';
 
         os << " |";
         

@@ -41,6 +41,15 @@ inline constexpr void Vector4::homogenize() noexcept
 
 
 /* =================== Operator overloads =================== */
+inline constexpr Vector4& Vector4::operator*=(const Vector4& v) noexcept
+{
+    xyz = xyz * v.xyz;
+    w  *= v.w;
+
+    return *this;
+}
+
+
 inline constexpr Vector4 Vector4::operator*(const Vector4& v) const noexcept
 { return {xyz * v.xyz, w * v.w}; }
 

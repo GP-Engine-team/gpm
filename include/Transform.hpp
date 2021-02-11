@@ -24,6 +24,13 @@ struct Transform
 {
     Mat4 model{Mat4::identity()};
 
+    // Constructor
+    Transform() = default;
+    Transform(const Vec3& t,
+              const Vec3& r = Vec3::zero(),
+              const Vec3& s = Vec3::one())                               noexcept;
+    constexpr Transform(const Mat4& m)                                   noexcept;
+
     // Static methods
     static constexpr Mat4 translation(const Vec3& t)                     noexcept;
     static Mat4           rotationX  (const f32 angle)                   noexcept;
@@ -41,22 +48,33 @@ struct Transform
                                       const f32 width, const f32 height) noexcept;
 
     // Getters
-    Mat4            normalMat        ()                                  const noexcept;
-    constexpr Vec3  right            ()                                  const noexcept;
-    constexpr Vec3  up               ()                                  const noexcept;
-    constexpr Vec3  forward          ()                                  const noexcept;
-    constexpr Vec3  translation      ()                                  const noexcept;
-    Mat4            rotation         ()                                  const noexcept;
-    Vec3            scaling          ()                                  const noexcept;
+    Mat4                  normalMat  ()                                  const noexcept;
+    constexpr Vec3        right      ()                                  const noexcept;
+    constexpr Vec3        up         ()                                  const noexcept;
+    constexpr Vec3        forward    ()                                  const noexcept;
+    constexpr Vec3        translation()                                  const noexcept;
+    Mat4                  rotation   ()                                  const noexcept;
+    Vec3                  eulerAngles()                                  const noexcept;
+    Vec3                  scaling    ()                                  const noexcept;
 
     // Transformations
-    constexpr void  translate        (const Vec3& t)                     noexcept;
-    void            rotateX          (const f32 angle)                   noexcept;
-    void            rotateY          (const f32 angle)                   noexcept;
-    void            rotateZ          (const f32 angle)                   noexcept;
-    void            rotate           (const Vec3& r)                     noexcept;
-    constexpr void  scale            (const Vec3& s)                     noexcept;
-    constexpr void  apply            (const Mat4& m)                     noexcept;
+    constexpr void        translateX (const f32 shift)                   noexcept;
+    constexpr void        translateY (const f32 shift)                   noexcept;
+    constexpr void        translateZ (const f32 shift)                   noexcept;
+    constexpr void        translate  (const Vec3& t)                     noexcept;
+    void                  rotateX    (const f32 angle)                   noexcept;
+    void                  rotateY    (const f32 angle)                   noexcept;
+    void                  rotateZ    (const f32 angle)                   noexcept;
+    void                  rotate     (const Vec3& r)                     noexcept;
+    constexpr void        scaleX     (const f32 coef)                    noexcept;
+    constexpr void        scaleY     (const f32 coef)                    noexcept;
+    constexpr void        scaleZ     (const f32 coef)                    noexcept;
+    constexpr void        scale      (const Vec3& s)                     noexcept;
+
+    void                  apply      (const Vec3& t,
+                                      const Vec3& r,
+                                      const Vec3& s)                     noexcept;
+    constexpr void        apply      (const Mat4& m)                     noexcept;
 
     // Utility
     friend std::ostream& operator<<(std::ostream& os, const Transform& m) noexcept;

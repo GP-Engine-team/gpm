@@ -52,10 +52,11 @@ union alignas(16) Vector4
     constexpr Vector4 homogenized ()  const noexcept;
     constexpr void    homogenize  ()  noexcept;
 
-    constexpr Vector4 operator*  (const Vector4& v) const noexcept;
-    constexpr Vector4 operator/  (const Vector4& v) const noexcept;
-    constexpr Vector4 operator*  (const f32 k) const noexcept;
-    constexpr Vector4 operator/  (const f32 k) const noexcept;
+    constexpr Vector4& operator*= (const Vector4& v) noexcept;
+    constexpr Vector4  operator*  (const Vector4& v) const noexcept;
+    constexpr Vector4  operator/  (const Vector4& v) const noexcept;
+    constexpr Vector4  operator*  (const f32 k)      const noexcept;
+    constexpr Vector4  operator/  (const f32 k)      const noexcept;
 
     friend std::ostream& operator<<(std::ostream& os, const Vector4& v) noexcept;
 };
