@@ -10,6 +10,8 @@
 #include <cmath>
 #include <iostream>
 
+#include "types.hpp"
+
 namespace GPM
 {
 
