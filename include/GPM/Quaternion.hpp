@@ -15,10 +15,18 @@
 namespace GPM
 {
 
-struct Quaternion
+union alignas(16) Quaternion
 {
-    Vec3 v;
-    f32  s;
+    struct
+    {
+        union
+        {
+            Vec3 v;
+            struct { f32 x; f32 y; f32 z; };
+        };
+        f32 s;
+    };
+    f32 e[4];
 
     static Quaternion angleAxis(const f32 angle, const Vec3& axis) noexcept;
     static constexpr Quaternion identity() noexcept;
@@ -34,12 +42,6 @@ struct Quaternion
     Quaternion                  slerp       (const Quaternion& target, const f32 t) const noexcept;
     Quaternion                  nlerp       (const Quaternion& target, const f32 t) const noexcept;
 
-    // Getters, optional, only for comfort
-    constexpr f32               x           ()                                      const noexcept;
-    constexpr f32               y           ()                                      const noexcept;
-    constexpr f32               z           ()                                      const noexcept;
-    constexpr f32               w           ()                                      const noexcept;
-
     // Operator overloads
     constexpr Quaternion        operator+   (const Quaternion& q)                   const noexcept;
     constexpr Quaternion        operator-   (const Quaternion& q)                   const noexcept;
@@ -48,14 +50,12 @@ struct Quaternion
     constexpr Vec3              operator*   (const Vec3& v)                         const noexcept;
     constexpr Quaternion        operator*   (const f32 k)                           const noexcept;
     constexpr Quaternion        operator/   (const f32 k)                           const noexcept;
-    constexpr f32               operator[]  (const u8 i)                            const noexcept;
-    constexpr f32&              operator[]  (const u8 i)                            noexcept;
 
     friend std::ostream&        operator<<  (std::ostream& os, const Quaternion& q) noexcept;
 };
 
 using Quat = Quaternion;
 
-#include "../src/Quaternion.inl"
+#include "../../src/Quaternion.inl"
 
 } // End of namespace GPM

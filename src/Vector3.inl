@@ -1,3 +1,26 @@
+/* =================== Cosntructors =================== */
+inline constexpr Vector3::Vector3(const f32 k) noexcept
+    : x{k}, y{k}, z{k}
+{}
+
+
+inline constexpr Vector3::Vector3(const f32 x_, const f32 y_, const f32 z_) noexcept
+    : x{x_}, y{y_}, z{z_}
+{}
+
+
+inline constexpr Vector3::Vector3(Vec2 v, const f32 z_) noexcept
+    : xy{v}, z{z_}
+{}
+
+
+inline constexpr Vector3::Vector3(const f32 coef[3]) noexcept
+    : e{coef[0], coef[1], coef[2]}
+{}
+
+
+
+
 /* =================== Static methods (pseudo-constructors) =================== */
 inline constexpr Vector3 Vector3::zero() noexcept
 { return {.0f, .0f, .0f}; }
@@ -7,7 +30,7 @@ inline constexpr Vector3 Vector3::one() noexcept
 { return {1.f, 1.f, 1.f}; }
 
 
-inline constexpr Vector3 Vector3::left() noexcept
+inline constexpr Vector3 Vector3::right() noexcept
 { return {1.f, .0f, .0f}; }
 
 

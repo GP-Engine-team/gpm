@@ -61,25 +61,6 @@ inline Quaternion Quaternion::nlerp(const Quaternion& target, const f32 t) const
 
 
 
-/* =================== Getters =================== */
-inline constexpr f32 Quaternion::x() const noexcept
-{ return v.x; }
-
-
-inline constexpr f32 Quaternion::y() const noexcept
-{ return v.y; }
-
-
-inline constexpr f32 Quaternion::z() const noexcept
-{ return v.z; }
-
-
-inline constexpr f32 Quaternion::w() const noexcept
-{ return s; }
-
-
-
-
 /* =================== Operator overloads =================== */
 inline constexpr Quaternion Quaternion::operator+(const Quaternion& q) const noexcept
 { return {v + q.v, s + q.s}; }
@@ -112,14 +93,6 @@ inline constexpr Quaternion Quaternion::operator/(const f32 k) const noexcept
 
     return {v * reciprocal, s * reciprocal};
 }
-
-
-inline constexpr f32 Quaternion::operator[](const u8 i) const noexcept
-{ return *((f32*)this + i); }
-
-
-inline constexpr f32& Quaternion::operator[](const u8 i) noexcept
-{ return *((f32*)this + i); }
 
 
 inline std::ostream& operator<<(std::ostream& os, const Quaternion& q) noexcept

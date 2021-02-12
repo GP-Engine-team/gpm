@@ -15,12 +15,13 @@ namespace GPM
 {
 
 #define MAT3_COL  3u
-#define MAT3_SIZE 9u
+#define MAT3_COEF 9u
 
-struct Matrix3
+union Matrix3
 {
     // Data members, aligned by 16 to enable auto-vectorization
-    alignas(16) f32 coef[MAT3_SIZE];
+    f32  e[MAT3_COEF];
+    Vec3 c[MAT3_COL];
 
     // Static methods, pseudo-constructors
     static constexpr Matrix3 zero       ()                  noexcept;
@@ -31,17 +32,15 @@ struct Matrix3
     constexpr Matrix3   transposed      ()                  const noexcept;
     constexpr Matrix3   adjugate        ()                  const noexcept;
     constexpr f32       det             ()                  const noexcept;
-    Matrix3             inversed        ()                  const noexcept;
+    constexpr Matrix3   inversed        ()                  const noexcept;
     constexpr f32       trace           ()                  const noexcept;
 
     // Operator overloads
     constexpr Matrix3&  operator*=      (const Matrix3& m)  noexcept;
     constexpr Matrix3&  operator/=      (const f32 k)       noexcept;
-    Matrix3             operator*       (const Matrix3& m)  const noexcept;
+    constexpr Matrix3   operator*       (const Matrix3& m)  const noexcept;
     constexpr Vec3      operator*       (const Vec3& v)     const noexcept;
-    Matrix3             operator/       (const f32 k)       const noexcept;
-    constexpr f32       operator[]      (const u8 i)        const noexcept;
-    constexpr f32       operator()      (const u8 i, const u8 j) const noexcept;
+    constexpr Matrix3   operator/       (const f32 k)       const noexcept;
 
     friend std::ostream& operator<<     (std::ostream& os, const Matrix3& m) noexcept;
 };
@@ -49,6 +48,6 @@ struct Matrix3
 using Mat3 = Matrix3;
 using mat3 = Matrix3;
 
-#include "../src/Matrix3.inl"
+#include "../../src/Matrix3.inl"
 
-} // End of namespace Math
+} // End of namespace GPM

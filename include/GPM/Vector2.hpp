@@ -10,19 +10,27 @@
 #include <cmath>
 #include <iostream>
 
+#include "types.hpp"
+
 namespace GPM
 {
 
-struct Vector2
+union Vector2
 {
     // Data members
-    f32 x;
-    f32 y;
+    struct { f32 x; f32 y; };
+    f32 e[2];
+
+    Vector2() = default;
+    constexpr Vector2(const f32 k)                              noexcept;
+    constexpr Vector2(const f32 x, const f32 y = .0f)           noexcept;
+    constexpr Vector2(const f32 coef[2])                        noexcept;
     
     // Static methods (pseudo-constructors)
-    static constexpr Vector2 zero   () noexcept;
-    static constexpr Vector2 right  () noexcept;
-    static constexpr Vector2 up     () noexcept;
+    static constexpr Vector2 zero   ()                          noexcept;
+    static constexpr Vector2 one    ()                          noexcept;
+    static constexpr Vector2 right  ()                          noexcept;
+    static constexpr Vector2 up     ()                          noexcept;
 
     // Member methods
     constexpr f32       length2             ()                  const noexcept;
@@ -80,6 +88,6 @@ struct Vector2
 using Vec2 = Vector2;
 using vec2 = Vector2;
 
-#include "../src/Vector2.inl"
+#include "../../src/Vector2.inl"
 
-} // End of namespace Math
+} // End of namespace GPM
