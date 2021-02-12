@@ -1,12 +1,12 @@
-#include "Matrix3.hpp"
-#include "Matrix4.hpp"
-#include "Vector2.hpp"
-#include "Vector3.hpp"
-#include "Vector4.hpp"
-#include "Quaternion.hpp"
-#include "conversion.hpp"
-#include "constants.hpp"
-#include "Transform.hpp"
+#include "GPM/Matrix3.hpp"
+#include "GPM/Matrix4.hpp"
+#include "GPM/Vector2.hpp"
+#include "GPM/Vector3.hpp"
+#include "GPM/Vector4.hpp"
+#include "GPM/Quaternion.hpp"
+#include "GPM/conversion.hpp"
+#include "GPM/constants.hpp"
+#include "GPM/Transform.hpp"
 
 #include <iostream>
 

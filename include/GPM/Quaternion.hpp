@@ -56,6 +56,6 @@ union alignas(16) Quaternion
 
 using Quat = Quaternion;
 
-#include "../src/Quaternion.inl"
+#include "../../src/Quaternion.inl"
 
 } // End of namespace GPM

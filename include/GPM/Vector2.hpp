@@ -86,6 +86,6 @@ union Vector2
 using Vec2 = Vector2;
 using vec2 = Vector2;
 
-#include "../src/Vector2.inl"
+#include "../../src/Vector2.inl"
 
-} // End of namespace Math
+} // End of namespace GPM
