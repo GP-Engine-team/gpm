@@ -99,6 +99,7 @@ inline Mat4 Transform::TRS(const Vec3& t, const Vec3& r, const Vec3& s) noexcept
 }
 
 
+// With OpenGL, the camera looks towards negative z  
 inline Mat4 Transform::lookAt(const Vec3& eyePos,
                               const Vec3& targetPos,
                               const Vec3& normalizedUp) noexcept
@@ -111,10 +112,8 @@ inline Mat4 Transform::lookAt(const Vec3& eyePos,
 }
 
 
-inline constexpr Mat4 Transform::symFrustrum(const f32 right,
-                                             const f32 top,
-                                             const f32 near,
-                                             const f32 far) noexcept
+inline constexpr Mat4 Transform::symFrustrum(const f32 right, const f32 top,
+                                             const f32 near,  const f32 far) noexcept
 {
     const f32 depthInv{1.f / (far - near)};
 
@@ -128,10 +127,8 @@ inline constexpr Mat4 Transform::symFrustrum(const f32 right,
 }
 
 
-inline Mat4 Transform::perspective(const f32 fovY,
-                                   const f32 aspect,
-                                   const f32 near,
-                                   const f32 far) noexcept
+inline Mat4 Transform::perspective(const f32 fovY, const f32 aspect,
+                                   const f32 near, const f32 far) noexcept
 {
     const f32 top{near * tanf(fovY / 2.f)}, right{top * aspect};
 
@@ -139,10 +136,23 @@ inline Mat4 Transform::perspective(const f32 fovY,
 }
 
 
-inline constexpr Mat4 Transform::viewport(const f32 x,
-                                          const f32 y,
-                                          const f32 width,
-                                          const f32 height) noexcept
+inline constexpr Mat4 Transform::orthographic(const f32 right, const f32 top,
+                                              const f32 near,  const f32 far) noexcept
+{
+    const f32 farMinNear{far - near};
+
+    return
+    {
+        1.f / right, .0f,       .0f,                          .0f,
+        .0f,         1.f / top, .0f,                          .0f,
+        .0f,         .0f,       -2.f / (far - near),          .0f,
+        .0f,         .0f,       (far + near) / (-farMinNear), 1.f
+    };
+}
+
+
+inline constexpr Mat4 Transform::viewport(const f32 x,     const f32 y,
+                                          const f32 width, const f32 height) noexcept
 {
     const f32 halfWidth{width * .5f}, halfHeight{height * .5f};
 
@@ -160,7 +170,6 @@ inline constexpr Mat4 Transform::viewport(const f32 x,
 
 /* ================== Transform constructor ================== */
 inline Transform::Transform(const Vec3& t, const Vec3& r, const Vec3& s) noexcept
-    : model{}
 {
     scale(s);
     rotate(r);
@@ -422,9 +431,9 @@ inline void Transform::lookAt(const Vec3& targetPos) noexcept
 {
     const Vec3 s{scaling()};
 
-    model.c[2] = {(eyePos - targetPos).normalized() * s, .0f};
-    model.c[0] = {normalizedUp.cross(forward.xyz) * s,   .0f};
-    model.c[1] = {forward.xyz.cross(right.xyz) * s,      .0f};
+    model.c[2] = {(model.c[3].xyz - targetPos).normalized() * s, .0f};
+    model.c[0] = {model.c[1].xyz.cross(model.c[2].xyz) * s,      .0f};
+    model.c[1] = {model.c[2].xyz.cross(model.c[0].xyz) * s,      .0f};
 }
 
 
