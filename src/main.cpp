@@ -14,15 +14,17 @@ using namespace GPM;
 
 int main()
 {
-    Transform transform;
+    const Vec3 eyePos   {1.f, .0f, 1.f},
+               targetPos{.0f, .0f, .0f};
+    Transform  transform{eyePos};
 
     std::cerr << "- transform:\n" << transform << '\n';
 
-#if 1
+#if 0
     transform.translate({.0f, 1.f, .0f});
     std::cerr << "- transform after y=y+1:\n" << transform << '\n';
 #endif
-#if 1
+#if 0
     transform.scaleY(5.f);
     std::cerr << "- transform after scale yx5:\n" << transform << '\n';
 #endif
@@ -33,14 +35,9 @@ int main()
     //transform.scale({.5f});
     //std::cerr << "- transform after scaling:\n" << transform << '\n';
 
-    const Vec3 eyePos   {1.f, .0f, .0f},
-               targetPos{.0f, .0f, .0f};
-
-    Mat4 lookAtMat{Transform::lookAt(eyePos, targetPos)};
-
     std::cerr << "eyePos: " << eyePos << '\n';
-    std::cerr << "targetPos: " << targetPos << '\n';
-    std::cerr << "lookAtMat:\n" << lookAtMat << '\n';
+    transform.lookAt(targetPos);
+    std::cerr << "transform.lookAt(" << targetPos << "):\n" << transform << '\n';
 
     return 0;
 }
