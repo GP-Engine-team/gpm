@@ -103,10 +103,13 @@ inline SplitTransform toSplitTransform(const Transform& transfo) noexcept
 
 inline Transform toTransform(const SplitTransform& transfo) noexcept
 {
+    Transform t;
+
     return
     {
-        transfo.position,
-
+        Transform::translation(transfo.position) *
+        toMatrix4(transfo.rotation) *
+        Transform::scaling(transfo.scale)
     };
 }
 
