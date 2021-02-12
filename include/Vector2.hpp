@@ -26,6 +26,7 @@ union Vector2
     
     // Static methods (pseudo-constructors)
     static constexpr Vector2 zero   ()                          noexcept;
+    static constexpr Vector2 one    ()                          noexcept;
     static constexpr Vector2 right  ()                          noexcept;
     static constexpr Vector2 up     ()                          noexcept;
 

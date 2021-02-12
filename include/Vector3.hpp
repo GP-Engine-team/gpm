@@ -41,7 +41,7 @@ union Vector3
     // Static methods (pseudo-constructors)
     static constexpr Vector3 zero           ()                              noexcept;
     static constexpr Vector3 one            ()                              noexcept;
-    static constexpr Vector3 left           ()                              noexcept;
+    static constexpr Vector3 right          ()                              noexcept;
     static constexpr Vector3 up             ()                              noexcept;
     static constexpr Vector3 forward        ()                              noexcept;
 

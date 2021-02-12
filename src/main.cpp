@@ -33,5 +33,14 @@ int main()
     //transform.scale({.5f});
     //std::cerr << "- transform after scaling:\n" << transform << '\n';
 
+    const Vec3 eyePos   {1.f, .0f, .0f},
+               targetPos{.0f, .0f, .0f};
+
+    Mat4 lookAtMat{Transform::lookAt(eyePos, targetPos)};
+
+    std::cerr << "eyePos: " << eyePos << '\n';
+    std::cerr << "targetPos: " << targetPos << '\n';
+    std::cerr << "lookAtMat:\n" << lookAtMat << '\n';
+
     return 0;
 }

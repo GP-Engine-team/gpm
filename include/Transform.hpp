@@ -45,6 +45,9 @@ struct Transform
     static constexpr Mat4 scaling    (const Vec3& t)                     noexcept;
     static Mat4           TRS        (const Vec3& t, const Vec3& r,
                                       const Vec3& s)                     noexcept;
+    static Mat4           lookAt     (const Vec3& eyePos,
+                                      const Vec3& targetPos,
+                                      const Vec3& normalizedUp = Vec3::up()) noexcept;
     static constexpr Mat4 symFrustrum(const f32 right, const f32 top,
                                       const f32 near,  const f32 far)    noexcept;
     static Mat4           perspective(const f32 fovY,  const f32 aspect,

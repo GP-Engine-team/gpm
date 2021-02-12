@@ -21,6 +21,10 @@ inline constexpr Vector2 Vector2::zero() noexcept
 { return {.0f, .0f}; }
 
 
+inline constexpr Vector2 one() noexcept
+{ return {1.f, 1.f}; }
+
+
 inline constexpr Vector2 Vector2::right() noexcept
 { return {1.f, .0f}; }
 

@@ -30,7 +30,7 @@ inline constexpr Vector3 Vector3::one() noexcept
 { return {1.f, 1.f, 1.f}; }
 
 
-inline constexpr Vector3 Vector3::left() noexcept
+inline constexpr Vector3 Vector3::right() noexcept
 { return {1.f, .0f, .0f}; }
 
 

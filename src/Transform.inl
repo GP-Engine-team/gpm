@@ -99,6 +99,18 @@ inline Mat4 Transform::TRS(const Vec3& t, const Vec3& r, const Vec3& s) noexcept
 }
 
 
+inline Mat4 Transform::lookAt(const Vec3& eyePos,
+                              const Vec3& targetPos,
+                              const Vec3& normalizedUp) noexcept
+{
+    const Vec4 forward{(eyePos - targetPos).normalized(), .0f},
+               right  {normalizedUp.cross(forward.xyz), .0f},
+               up     {forward.xyz.cross(right.xyz), .0f};
+
+    return {right, up, forward, eyePos};
+}
+
+
 inline constexpr Mat4 Transform::symFrustrum(const f32 right,
                                              const f32 top,
                                              const f32 near,
