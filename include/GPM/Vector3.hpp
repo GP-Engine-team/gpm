@@ -10,6 +10,7 @@
 #include <cmath>
 #include <iostream>
 
+#include "types.hpp"
 #include "Vector2.hpp"
 
 namespace GPM
