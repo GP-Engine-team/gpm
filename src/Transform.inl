@@ -104,8 +104,8 @@ inline Mat4 Transform::lookAt(const Vec3& eyePos,
                               const Vec3& normalizedUp) noexcept
 {
     const Vec4 forward{(eyePos - targetPos).normalized(), .0f},
-               right  {normalizedUp.cross(forward.xyz), .0f},
-               up     {forward.xyz.cross(right.xyz), .0f};
+               right  {normalizedUp.cross(forward.xyz),   .0f},
+               up     {forward.xyz.cross(right.xyz),      .0f};
 
     return {right, up, forward, eyePos};
 }
@@ -415,6 +415,16 @@ inline constexpr void Transform::scale(const Vec3& s) noexcept
     model.c[1].xyz *= s;
     model.c[2].xyz *= s;
     model.c[3].xyz *= s;
+}
+
+
+inline void Transform::lookAt(const Vec3& targetPos) noexcept
+{
+    const Vec3 s{scaling()};
+
+    model.c[2] = {(eyePos - targetPos).normalized() * s, .0f};
+    model.c[0] = {normalizedUp.cross(forward.xyz) * s,   .0f};
+    model.c[1] = {forward.xyz.cross(right.xyz) * s,      .0f};
 }
 
 

@@ -78,6 +78,7 @@ struct Transform
     constexpr void        scaleY     (const f32 coef)                    noexcept;
     constexpr void        scaleZ     (const f32 coef)                    noexcept;
     constexpr void        scale      (const Vec3& s)                     noexcept;
+    void                  lookAt     (const Vec3& targetPos)             noexcept;
 
     void                  apply      (const Vec3& t,
                                       const Vec3& r,
