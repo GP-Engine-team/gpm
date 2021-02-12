@@ -38,11 +38,11 @@ union alignas(16) Matrix4
     static constexpr Matrix4 identity   ()                       noexcept;
 
     // Methods
-    Matrix4             cofactor        ()                       const noexcept;
+    constexpr Matrix4   cofactor        ()                       const noexcept;
     constexpr Matrix4   transposed      ()                       const noexcept;
     constexpr Matrix4   adjugate        ()                       const noexcept;
     constexpr f32       det             ()                       const noexcept;
-    Matrix4             inversed        ()                       const noexcept;
+    constexpr Matrix4   inversed        ()                       const noexcept;
     constexpr f32       trace           ()                       const noexcept;
 
     // Operator overloads
@@ -50,7 +50,7 @@ union alignas(16) Matrix4
     constexpr Matrix4&  operator/=      (const f32 k)            noexcept;
     constexpr Matrix4   operator*       (const Matrix4& m)       const noexcept;
     constexpr Vec4      operator*       (const Vec4& v)          const noexcept;
-    Matrix4             operator/       (const f32 k)            const noexcept;
+    constexpr Matrix4   operator/       (const f32 k)            const noexcept;
 
     friend std::ostream& operator<<     (std::ostream& os, const Matrix4& m) noexcept;
 };

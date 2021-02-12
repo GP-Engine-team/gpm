@@ -26,21 +26,24 @@ inline constexpr Matrix4 Matrix4::identity() noexcept
 
 
 /* =================== Constructors =================== */
-constexpr Matrix4::Matrix4(const f32 e0,  const f32 e1,  const f32 e2,  const f32 e3,
-                           const f32 e4,  const f32 e5,  const f32 e6,  const f32 e7,
-                           const f32 e8,  const f32 e9,  const f32 e10, const f32 e11,
-                           const f32 e12, const f32 e13, const f32 e14, const f32 e15) noexcept
+inline constexpr Matrix4::Matrix4(const f32 e0,  const f32 e1,  const f32 e2,  const f32 e3,
+                                  const f32 e4,  const f32 e5,  const f32 e6,  const f32 e7,
+                                  const f32 e8,  const f32 e9,  const f32 e10, const f32 e11,
+                                  const f32 e12, const f32 e13, const f32 e14, const f32 e15) noexcept
     : e{e0, e1, e2, e3, e4, e5, e6, e7, e8, e9, e10, e11, e12, e13, e14, e15}
 {}
 
 
-constexpr Matrix4::Matrix4(const Vec4& c0, const Vec4& c1, const Vec4& c2, const Vec4& c3) noexcept
+inline constexpr Matrix4::Matrix4(const Vec4& c0, const Vec4& c1,
+                                  const Vec4& c2, const Vec4& c3) noexcept
     : c{c0, c1, c2, c3}
 {}
 
 
+
+
 /* =================== Methods =================== */
-inline Matrix4 Matrix4::cofactor() const noexcept
+inline constexpr Matrix4 Matrix4::cofactor() const noexcept
 {
     // Repeated values
     const f32 a22a33{e[5]  * e[10]}, a23a34{e[9]  * e[14]}, a24a32{e[13] * e[6]},
@@ -124,7 +127,7 @@ inline constexpr f32 Matrix4::det() const noexcept
 }
 
 
-inline Matrix4 Matrix4::inversed() const noexcept
+inline constexpr Matrix4 Matrix4::inversed() const noexcept
 { return adjugate() / det(); }
 
 
@@ -163,22 +166,10 @@ inline constexpr Matrix4& Matrix4::operator/=(const f32 k) noexcept
 {
     const f32 reciprocal{1.f / k};
 
-    e[0]  *= reciprocal;
-    e[1]  *= reciprocal;
-    e[2]  *= reciprocal;
-    e[3]  *= reciprocal;
-    e[4]  *= reciprocal;
-    e[5]  *= reciprocal;
-    e[6]  *= reciprocal;
-    e[7]  *= reciprocal;
-    e[8]  *= reciprocal;
-    e[9]  *= reciprocal;
-    e[10] *= reciprocal;
-    e[11] *= reciprocal;
-    e[12] *= reciprocal;
-    e[13] *= reciprocal;
-    e[14] *= reciprocal;
-    e[15] *= reciprocal;
+    c[0] *= reciprocal;
+    c[1] *= reciprocal;
+    c[2] *= reciprocal;
+    c[3] *= reciprocal;
 
     return *this;
 }
@@ -220,7 +211,7 @@ inline constexpr Matrix4 Matrix4::operator*(const Matrix4& m) const noexcept
 }
 
 
-inline Matrix4 Matrix4::operator/(const f32 k) const noexcept
+inline constexpr Matrix4 Matrix4::operator/(const f32 k) const noexcept
 {
     const f32 reciprocal{1.f / k};
 

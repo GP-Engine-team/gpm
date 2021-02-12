@@ -59,7 +59,7 @@ inline constexpr f32 Matrix3::det() const noexcept
 }
 
 
-inline Matrix3 Matrix3::inversed() const noexcept
+inline constexpr Matrix3 Matrix3::inversed() const noexcept
 { return adjugate() / det(); }
 
 
@@ -116,7 +116,7 @@ inline constexpr Vec3 Matrix3::operator*(const Vec3& v) const noexcept
 }
 
 
-inline Matrix3 Matrix3::operator*(const Matrix3& m) const noexcept
+inline constexpr Matrix3 Matrix3::operator*(const Matrix3& m) const noexcept
 {
     return
     {
@@ -133,7 +133,7 @@ inline Matrix3 Matrix3::operator*(const Matrix3& m) const noexcept
 }
 
 
-inline Matrix3 Matrix3::operator/(const f32 k) const noexcept
+inline constexpr Matrix3 Matrix3::operator/(const f32 k) const noexcept
 {
     const f32 reciprocal{1.f / k};
     

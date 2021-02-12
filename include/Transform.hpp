@@ -1,7 +1,12 @@
+/*
+ * Copyright (C) 2021 Amara Sami, Dallard Thomas, Nardone William, Six Jonathan
+ * This file is subject to the LGNU license terms in the LICENSE file
+ * found in the top-level directory of this distribution.
+ */
+
 #pragma once
 
 #include "conversion.hpp"
-#include "Matrix4.hpp"
 #include "types.hpp"
 #include "Vector3.hpp"
 
@@ -79,41 +84,6 @@ struct Transform
     // Utility
     friend std::ostream& operator<<(std::ostream& os, const Transform& m) noexcept;
 };
-
-
-/*
-struct Transform
-{
-    Quat rotation;
-    Vec3 position;
-    Vec3 scale;
-
-    static constexpr Mat4 translation(const Vec3& t)   noexcept;
-    static Mat4           rotationX  (const f32 angle) noexcept;
-    static Mat4           rotationY  (const f32 angle) noexcept;
-    static Mat4           rotationZ  (const f32 angle) noexcept;
-    static Mat4           rotation   (const Vec3& t)   noexcept;
-    static constexpr Mat4 scaling    (const Vec3& t)   noexcept;
-    static Mat4           TRS        (const Vec3& t, const Vec3& r,
-                                      const Vec3& s)   noexcept;
-
-    // View
-    static constexpr Mat4 symFrustrum(const f32 right, const f32 top,
-                                      const f32 near,  const f32 far)    noexcept;
-    static Mat4           perspective(const f32 fovY,  const f32 aspect,
-                                      const f32 near,  const f32 far)    noexcept;
-    static constexpr Mat4 viewport   (const f32 x,     const f32 y,
-                                      const f32 width, const f32 height) noexcept;
-
-    // Referential
-    Mat4                  normalMat  ()   noexcept;
-    constexpr Mat4        modelMat   ()   noexcept;
-    constexpr Vec3        right      ()   noexcept;
-    constexpr Vec3        up         ()   noexcept;
-    constexpr Vec3        forward    ()   noexcept;
-    constexpr Vec3        position   ()   noexcept;
-};
-*/
 
 #include "../src/Transform.inl"
 

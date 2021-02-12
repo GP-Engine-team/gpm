@@ -32,15 +32,15 @@ union Matrix3
     constexpr Matrix3   transposed      ()                  const noexcept;
     constexpr Matrix3   adjugate        ()                  const noexcept;
     constexpr f32       det             ()                  const noexcept;
-    Matrix3             inversed        ()                  const noexcept;
+    constexpr Matrix3   inversed        ()                  const noexcept;
     constexpr f32       trace           ()                  const noexcept;
 
     // Operator overloads
     constexpr Matrix3&  operator*=      (const Matrix3& m)  noexcept;
     constexpr Matrix3&  operator/=      (const f32 k)       noexcept;
-    Matrix3             operator*       (const Matrix3& m)  const noexcept;
+    constexpr Matrix3   operator*       (const Matrix3& m)  const noexcept;
     constexpr Vec3      operator*       (const Vec3& v)     const noexcept;
-    Matrix3             operator/       (const f32 k)       const noexcept;
+    constexpr Matrix3   operator/       (const f32 k)       const noexcept;
 
     friend std::ostream& operator<<     (std::ostream& os, const Matrix3& m) noexcept;
 };
