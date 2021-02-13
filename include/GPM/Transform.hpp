@@ -6,7 +6,6 @@
 
 #pragma once
 
-#include "conversion.hpp"
 #include "types.hpp"
 #include "Vector3.hpp"
 
