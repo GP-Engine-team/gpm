@@ -6,6 +6,8 @@
 
 #pragma once
 
+#include "constants.hpp"
+#include "Quaternion.hpp"
 #include "types.hpp"
 #include "Vector3.hpp"
 #include "Quaternion.hpp"
