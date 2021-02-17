@@ -8,12 +8,13 @@
 
 #include "types.hpp"
 #include "Vector3.hpp"
+#include "Quaternion.hpp"
+#include "constants.hpp"
 
 #include <cmath>
 
 namespace GPM
 {
-
 struct SplitTransform
 {
     Quat rotation;

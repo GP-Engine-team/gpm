@@ -32,6 +32,17 @@ union Vector3
 
     f32 e[3];
 
+
+    constexpr inline Vector3(const Vector3& other) = default;
+
+    constexpr inline Vector3(Vector3&& other) = default;
+
+    ~Vector3() noexcept = default;
+
+    constexpr inline Vector3& operator=(Vector3 const& other) = default;
+
+    constexpr inline Vector3& operator=(Vector3&& other) = default;
+
     // Constructors
     Vector3() = default;
     constexpr Vector3(const f32 k)                                          noexcept;
