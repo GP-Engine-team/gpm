@@ -50,6 +50,9 @@ union Vector3
     f32                 length              ()                              const noexcept;
     constexpr f32       dot                 (const Vector3& v)              const noexcept;
     constexpr Vector3   cross               (const Vector3& v)              const noexcept;
+
+    static constexpr f32       dot          (const Vector3& lhs, const Vector3& rhs) noexcept;
+    static constexpr Vector3   cross        (const Vector3& lhs, const Vector3& rhs) noexcept;
     constexpr bool      isNull              ()                              const noexcept;
     constexpr bool      isOrthogonalTo      (const Vector3& v)              const noexcept;
     constexpr bool      isNormalized        ()                              const noexcept;
@@ -100,6 +103,8 @@ union Vector3
 
     friend std::ostream& operator<<         (std::ostream& os, const Vector3& v) noexcept;
 };
+
+constexpr Vector3	operator*           (const f32 k, const Vector3& v)     noexcept;
 
 using Vec3 = Vector3;
 using vec3 = Vector3;
