@@ -1,4 +1,4 @@
-﻿#include "ShapeRelation/Intersection.hpp"
+﻿#include "GPM/ShapeRelation/Intersection.hpp"
 #include <limits>
 
 using namespace GPM;

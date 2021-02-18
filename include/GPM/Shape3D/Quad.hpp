@@ -6,10 +6,10 @@
 
 #pragma once
 
-#include "Vector3.hpp"
-#include "Shape3D/Plane.hpp"
-#include "Referential/Referential.hpp"
-#include "Tools.hpp"
+#include "../Vector3.hpp"
+#include "Plane.hpp"
+#include "../Referential.hpp"
+#include "../Tools.hpp"
 
 #include <limits>
 

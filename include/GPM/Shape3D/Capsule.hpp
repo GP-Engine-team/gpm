@@ -6,12 +6,12 @@
 
 #pragma once
 
-#include "Shape3D/Volume.hpp"
-#include "Vector3.hpp"
-#include "Shape3D/Segment.hpp"
-#include "Shape3D/InfiniteCylinder.hpp"
-#include "Shape3D/Sphere.hpp"
-#include "Shape3D/Cylinder.hpp"
+#include "Volume.hpp"
+#include "../Vector3.hpp"
+#include "Segment.hpp"
+#include "InfiniteCylinder.hpp"
+#include "Sphere.hpp"
+#include "Cylinder.hpp"
 
 namespace GPM
 {

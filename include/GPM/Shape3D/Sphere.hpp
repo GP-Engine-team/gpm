@@ -6,8 +6,8 @@
 
 #pragma once
 
-#include "Shape3D/Volume.hpp"
-#include "Vector3.hpp"
+#include "Volume.hpp"
+#include "../Vector3.hpp"
 
 namespace GPM
 {

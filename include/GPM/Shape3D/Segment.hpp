@@ -6,9 +6,9 @@
  
 #pragma once
 
-#include "Vector3.hpp"
-#include "Shape3D/Plane.hpp"
-#include "Shape3D/Line.hpp"
+#include "../Vector3.hpp"
+#include "Plane.hpp"
+#include "Line.hpp"
 
 #include <limits>
 

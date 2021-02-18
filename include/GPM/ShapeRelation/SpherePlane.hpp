@@ -6,11 +6,11 @@
  
 #pragma once
 
-#include "Shape3D/Plane.hpp"
-#include "Shape3D/Sphere.hpp"
+#include "../Shape3D/Plane.hpp"
+#include "../Shape3D/Sphere.hpp"
 
 namespace GPM::SpherePlane
 {
-    bool isSphereOnOrForwardPlanCollided(const Sphere& sphere, const Plane& plane);
+    bool isSphereOnOrForwardPlaneCollided(const Sphere& sphere, const Plane& plane);
 
 } /*namespace GPM*/

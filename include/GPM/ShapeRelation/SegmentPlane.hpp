@@ -6,9 +6,9 @@
  
 #pragma once
 
-#include "ShapeRelation/Intersection.hpp"
-#include "Shape3D/Segment.hpp"
-#include "Shape3D/Plane.hpp"
+#include "Intersection.hpp"
+#include "../Shape3D/Segment.hpp"
+#include "../Shape3D/Plane.hpp"
 
 namespace GPM::SegmentPlane
 {

@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include "Vector3.hpp"
+#include "../Vector3.hpp"
 #include <limits>
 
 namespace GPM
@@ -15,8 +15,8 @@ namespace GPM
     {
         protected:
 
-            Vec3 m_normal;       //unit vector
-            float m_distance;    //Distance with origin
+            Vec3 m_normal    = Vec3::up();       //unit vector
+            float m_distance = 0.f;             //Distance with origin
 
         public:
 

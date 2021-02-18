@@ -1,6 +1,5 @@
-﻿#include "ShapeRelation/SegmentPlane.hpp"
-
-#include "Vector3.hpp"
+﻿#include "GPM/ShapeRelation/SegmentPlane.hpp"
+#include "GPM/Vector3.hpp"
 #include <limits>
 
 using namespace GPM;

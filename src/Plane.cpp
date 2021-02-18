@@ -1,5 +1,5 @@
-#include "Shape3D/Plane.hpp"
-#include "Matrix3.hpp"
+#include "GPM/Shape3D/Plane.hpp"
+#include "GPM/Matrix3.hpp"
 
 using namespace GPM;
 

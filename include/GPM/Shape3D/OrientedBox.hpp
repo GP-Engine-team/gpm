@@ -6,11 +6,11 @@
 
 #pragma once
 
-#include "Shape3D/Volume.hpp"
-#include "Vector3.hpp"
-#include "Transform.hpp"
-#include "Referential/Referential.hpp"
-#include "Shape3D/AABB.hpp"
+#include "Volume.hpp"
+#include "../Vector3.hpp"
+#include "../Transform.hpp"
+#include "../Referential.hpp"
+#include "AABB.hpp"
 
 namespace GPM
 {
