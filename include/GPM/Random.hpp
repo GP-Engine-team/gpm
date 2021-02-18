@@ -153,4 +153,4 @@ inline bool ranPercentProba(float percent);
 
 #include "Random.inl"
 
-} //namespace FoxMath
+} //namespace GPM
