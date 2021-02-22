@@ -64,6 +64,15 @@ inline constexpr Vector3 Vector3::cross(const Vector3& v) const noexcept
             (v.y * x) - (y * v.x)};
 }
 
+inline constexpr f32 Vector3::dot (const Vector3& lhs, const Vector3& rhs) noexcept
+{
+    return lhs.dot(rhs);
+}
+
+inline constexpr Vector3 Vector3::cross (const Vector3& lhs, const Vector3& rhs) noexcept
+{
+    return lhs.cross(rhs);
+}
 
 inline constexpr bool Vector3::isNull() const noexcept
 { return !x && !y && !z; }
@@ -315,3 +324,8 @@ inline constexpr Vector3 Vector3::operator/(const f32 k) const noexcept
 
 inline std::ostream& operator<<(std::ostream& os, const Vector3& v) noexcept
 { return os << '[' << v.x << ", " << v.y << ", " << v.z << ']'; }
+
+constexpr Vector3	operator*           (const f32 k, const Vector3& v)     noexcept
+{
+    return v * k;
+}
