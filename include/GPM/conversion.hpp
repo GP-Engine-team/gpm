@@ -13,7 +13,6 @@
 
 namespace GPM
 {
-
 constexpr Mat3       toMatrix3       (const Mat4& m)                 noexcept;
 constexpr Mat4       toMatrix4       (const Mat3& m)                 noexcept;
 
