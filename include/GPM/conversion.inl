@@ -26,15 +26,15 @@ inline constexpr Mat3 toMatrix3(const Quat& q) noexcept
 {
     const f32 x2{q.x * q.x}, y2{q.y * q.y}, z2{q.z * q.z},
               xy{q.x * q.y}, yz{q.y * q.z}, xz{q.x * q.z},
-              wx{q.s * q.x},   wy{q.s * q.y},   wz{q.s * q.z},
+              wx{q.s * q.x}, wy{q.s * q.y}, wz{q.s * q.z},
               s_2{2.f / q.length2()};
 
     // Column-major
     return
     {
-        1.f - s_2 * (y2 + z2),  s_2 * (xy - wz),        s_2 * (xz + wy),
-        s_2 * (xy + wz),        1.f - s_2 * (x2 + z2),  s_2 * (yz - wx),
-        s_2 * (xz - wy),        s_2 * (yz + wx),        1.f - s_2 * (x2 + y2)
+        1.f - s_2 * (y2 + z2), s_2 * (xy + wz),       s_2 * (xz - wy),
+        s_2 * (xy - wz),       1.f - s_2 * (x2 + z2), s_2 * (yz + wx),
+        s_2 * (xz + wy),       s_2 * (yz - wx),       1.f - s_2 * (x2 + y2)
     };
 }
 
@@ -67,13 +67,13 @@ inline Quat toQuaternion(const Mat3& m) noexcept
     {
         u8 i = 0;
         if (m.e[4] > m.e[0])      i = 1u;
-        if (m.e[8] > m.e[4u * i]) i = 2u;
+        if (m.e[8] > m.c[i].e[i]) i = 2u;
 
-        const u8 next[3]    = {1u, 2u, 0u},
-                 j          = next[i],
-                 k          = next[j];
+        const u8 NEXT[3]    = {1u, 2u, 0u},
+                 j          = NEXT[i],
+                 k          = NEXT[j];
 
-        f32 tmp = sqrtf(m.c[j].e[i] - (m.c[j].e[j] + m.c[k].e[k]) + 1.f);
+        f32 tmp = sqrtf(m.c[i].e[i] - (m.c[j].e[j] + m.c[k].e[k]) + 1.f);
 
         q.e[i] = tmp * .5f;
 
@@ -103,8 +103,6 @@ inline SplitTransform toSplitTransform(const Transform& transfo) noexcept
 
 inline Transform toTransform(const SplitTransform& transfo) noexcept
 {
-    Transform t;
-
     return
     {
         Transform::translation(transfo.position) *
