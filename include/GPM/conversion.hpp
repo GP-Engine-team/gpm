@@ -13,7 +13,6 @@
 
 namespace GPM
 {
-
 constexpr Mat3       toMatrix3       (const Mat4& m)                 noexcept;
 constexpr Mat4       toMatrix4       (const Mat3& m)                 noexcept;
 
@@ -26,6 +25,6 @@ Quat                 toQuaternion    (const Mat4& m)                 noexcept;
 SplitTransform       toSplitTransform(const Transform& transfo)      noexcept;
 Transform            toTransform     (const SplitTransform& transfo) noexcept;
 
-#include "../../src/conversion.inl"
+#include "conversion.inl"
 
 } // End of namespace GPM
