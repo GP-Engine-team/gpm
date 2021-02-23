@@ -109,6 +109,6 @@ constexpr Vector3	operator*           (const f32 k, const Vector3& v)     noexce
 using Vec3 = Vector3;
 using vec3 = Vector3;
 
-#include "../../src/Vector3.inl"
+#include "Vector3.inl"
 
 } // End of namespace GPM

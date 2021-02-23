@@ -25,6 +25,6 @@ Quat                 toQuaternion    (const Mat4& m)                 noexcept;
 SplitTransform       toSplitTransform(const Transform& transfo)      noexcept;
 Transform            toTransform     (const SplitTransform& transfo) noexcept;
 
-#include "../../src/conversion.inl"
+#include "conversion.inl"
 
 } // End of namespace GPM

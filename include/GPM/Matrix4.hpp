@@ -58,6 +58,6 @@ union alignas(16) Matrix4
 using Mat4 = Matrix4;
 using mat4 = Matrix4;
 
-#include "../../src/Matrix4.inl"
+#include "Matrix4.inl"
 
 } // End of namespace GPM

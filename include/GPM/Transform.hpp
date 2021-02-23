@@ -91,6 +91,6 @@ struct Transform
     friend std::ostream& operator<<(std::ostream& os, const Transform& m) noexcept;
 };
 
-#include "../../src/Transform.inl"
+#include "Transform.inl"
 
 } // End of namespace GPM
