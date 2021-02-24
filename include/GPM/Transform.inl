@@ -183,12 +183,12 @@ inline constexpr Mat4 Transform::viewport(const f32 x,     const f32 y,
 
 
 
-/* ================== Transform constructor ================== */
+/* ================== Transform constructors ================== */
 inline Transform::Transform(const Vec3& t, const Vec3& r, const Vec3& s) noexcept
 {
-    scale(s);
-    rotate(r);
-    translate(t);
+    setScale(s);
+    setRotation(r);
+    setGlobalTranslation(t);
 }
 
 
@@ -289,9 +289,14 @@ inline constexpr void Transform::setGlobalTranslation(const Vec3& t) noexcept
 }
 
 
-void Transform::setRotation(const Vec3& r) noexcept
+inline void Transform::setRotation(const Vec3& r) noexcept
 {
+    const Mat4 rot{rotation(r)};
+    const Vec3 s  {scaling()};
 
+    model.c[0].xyz = rot.c[0].xyz * s.x;
+    model.c[1].xyz = rot.c[1].xyz * s.y;
+    model.c[2].xyz = rot.c[2].xyz * s.z;
 }
 
 
@@ -423,7 +428,7 @@ inline void Transform::rotate(const Vec3& r) noexcept
 
 inline void Transform::rotateAround(const Vec3& axis, const f32 angle) noexcept
 {
-    
+    apply(rotationAround(axis, angle));
 }
 
 
