@@ -6,9 +6,10 @@
 
 #pragma once
 
-#include "conversion.hpp"
 #include "types.hpp"
 #include "Vector3.hpp"
+#include "Matrix4.hpp"
+#include "Quaternion.hpp"
 
 #include <cmath>
 
@@ -42,6 +43,7 @@ struct Transform
     static Mat4           rotationY   (const f32 angle)                   noexcept;
     static Mat4           rotationZ   (const f32 angle)                   noexcept;
     static Mat4           rotation    (const Vec3& t)                     noexcept;
+    static Mat4           rotationAround(const Vec3& axis, const f32 angle) noexcept;
     static constexpr Mat4 scaling     (const Vec3& t)                     noexcept;
     static Mat4           TRS         (const Vec3& t, const Vec3& r,
                                        const Vec3& s)                     noexcept;
@@ -51,7 +53,7 @@ struct Transform
     static constexpr Mat4 symFrustrum (const f32 right, const f32 top,
                                        const f32 near,  const f32 far)    noexcept;
     static Mat4           perspective (const f32 fovY,  const f32 aspect,
-                                       const f32 near,  const f32 far)     noexcept;
+                                       const f32 near,  const f32 far)    noexcept;
     static constexpr Mat4 orthographic(const f32 right, const f32 top,
                                        const f32 near, const f32 far)     noexcept;
     static constexpr Mat4 viewport    (const f32 x,     const f32 y,
@@ -67,6 +69,12 @@ struct Transform
     Vec3                  eulerAngles ()                                  const noexcept;
     Vec3                  scaling     ()                                  const noexcept;
 
+    // Setters
+    constexpr void        setLocalTranslation (const Vec3& t)             noexcept;
+    constexpr void        setGlobalTranslation(const Vec3& t)             noexcept;
+    void                  setRotation         (const Vec3& r)             noexcept;
+    constexpr void        setScale            (const Vec3& s)             noexcept;
+
     // Transformations
     constexpr void        translateX  (const f32 shift)                   noexcept;
     constexpr void        translateY  (const f32 shift)                   noexcept;
@@ -76,6 +84,7 @@ struct Transform
     void                  rotateY     (const f32 angle)                   noexcept;
     void                  rotateZ     (const f32 angle)                   noexcept;
     void                  rotate      (const Vec3& r)                     noexcept;
+    void                  rotateAround(const Vec3& axis, const f32 angle) noexcept;
     constexpr void        scaleX      (const f32 coef)                    noexcept;
     constexpr void        scaleY      (const f32 coef)                    noexcept;
     constexpr void        scaleZ      (const f32 coef)                    noexcept;

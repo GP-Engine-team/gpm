@@ -80,7 +80,7 @@ inline constexpr Quaternion Quaternion::operator*(const Quaternion& q) const noe
 
 // The quaternion is assumed normalized
 inline constexpr Vec3 Quaternion::operator*(const Vec3& p) const noexcept
-{ return v * (2.f * s * s - 1.f) + v * v.dot(p) + v.cross(p) * 2.f * s; }
+{ return v * (2.f * s * s - 1.f) + v * v.dot(p) + v.cross(p) * (2.f * s); }
 
 
 inline constexpr Quaternion Quaternion::operator*(const f32 k) const noexcept
