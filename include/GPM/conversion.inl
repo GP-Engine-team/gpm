@@ -80,7 +80,7 @@ inline Quat toQuaternion(const Mat3& m) noexcept
         if (tmp != .0f)
             tmp = .5f / tmp;
 
-        q.v.z  = (m.c[j].e[k] - m.c[k].e[j]) * tmp;
+        q.s    = (m.c[j].e[k] - m.c[k].e[j]) * tmp;
         q.e[j] = (m.c[i].e[j] + m.c[j].e[i]) * tmp;
         q.e[k] = (m.c[i].e[k] + m.c[k].e[i]) * tmp;
     }
