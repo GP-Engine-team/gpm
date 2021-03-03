@@ -52,7 +52,7 @@ public:
         return Vec3::dot(point, plane.m_normal) - plane.m_distance;
     }
 
-    float getSignedDistanceToPlane(const Vec3& point) const
+    inline float getSignedDistanceToPlane(const Vec3& point) const
     {
         return Vec3::dot(m_normal, point) + m_distance;
     }
@@ -110,20 +110,22 @@ public:
                (getSignedDistanceToPlane(plane2, pt) <= -std::numeric_limits<float>::epsilon());
     }
 
-    const Vec3& getNormal() const noexcept
+    inline const Vec3& getNormal() const noexcept
     {
         return m_normal;
     }
-    const float& getDistance() const noexcept
+
+    inline const float& getDistance() const noexcept
     {
         return m_distance;
     }
 
-    void setNormal(const Vec3& newNormal) noexcept
+    inline void setNormal(const Vec3& newNormal) noexcept
     {
         m_normal = newNormal.normalized();
     }
-    void setDistance(float newDistance) noexcept
+
+    inline void setDistance(float newDistance) noexcept
     {
         m_distance = newDistance;
     }
