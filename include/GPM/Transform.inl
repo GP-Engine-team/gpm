@@ -160,7 +160,7 @@ inline constexpr Mat4 Transform::orthographic(const f32 right, const f32 top,
     {
         1.f / right, .0f,       .0f,                          .0f,
         .0f,         1.f / top, .0f,                          .0f,
-        .0f,         .0f,       -2.f / (far - near),          .0f,
+        .0f,         .0f,       -2.f / farMinNear,            .0f,
         .0f,         .0f,       (far + near) / (-farMinNear), 1.f
     };
 }
