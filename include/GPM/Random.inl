@@ -148,7 +148,7 @@ Vec3 unitPeripheralCubiqueCoordinate()
     return Vec3{unitValue<float>(), unitValue<float>(), unitValue<float>()};
 }
 
-bool ranPercentProba(float percent)
+bool isRandNumberInPercentage(float percent)
 { 
     return ranged<float>(0.f, 100.f) <= percent;
 }

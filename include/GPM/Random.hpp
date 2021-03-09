@@ -149,7 +149,7 @@ inline Vec3 unitPeripheralCubiqueCoordinate();
  * @return true 
  * @return false 
  */
-inline bool ranPercentProba(float percent);
+inline bool isRandNumberInPercentage(float percent);
 
 #include "Random.inl"
 
