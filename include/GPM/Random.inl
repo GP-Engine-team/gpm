@@ -23,27 +23,27 @@ auto unitValue() -> std::enable_if_t<std::is_integral<T>::value, T>
 }
 
 template<typename T = float>
-auto ranged(const T& max) -> std::enable_if_t<std::is_floating_point<T>::value, T>
+auto ranged(T max) -> std::enable_if_t<std::is_floating_point<T>::value, T>
 {
-    return max <= std::numeric_limits<T>::epsilon() ? static_cast<T>(0) : static_cast <T> (rand()) / (static_cast <T> (RAND_MAX / max));
+    return static_cast <T> (rand()) / (static_cast <T> (RAND_MAX / max));
 }
 
 template<typename T = int>
-auto ranged(const T& max) -> std::enable_if_t<std::is_integral<T>::value, T>
+auto ranged(T max) -> std::enable_if_t<std::is_integral<T>::value, T>
 {
-    return max <= std::numeric_limits<T>::epsilon() ? static_cast<T>(0) : ranged<T>(0, max);
+    return static_cast <T> (rand()) / (static_cast <T> (RAND_MAX/(max + static_cast<T>(1))));
 }
 
 template<typename T>
-auto ranged(const T& min, const T& max)  -> std::enable_if_t<std::is_floating_point<T>::value, T>
+auto ranged(T min, T max)  -> std::enable_if_t<std::is_floating_point<T>::value, T>
 {
-    return max - min <= std::numeric_limits<T>::epsilon() ? max : min + static_cast <T> (rand()) /( static_cast <T> (RAND_MAX/(max - min)));
+    return min + static_cast <T> (rand()) /( static_cast <T> (RAND_MAX/(max - min)));
 }
 
 template<typename T>
-auto ranged(const T& min, const T& max) -> std::enable_if_t<std::is_integral<T>::value, T>
+auto ranged(T min, T max) -> std::enable_if_t<std::is_integral<T>::value, T>
 {
-    return max - min <= std::numeric_limits<T>::epsilon() ? max : min + static_cast <T> (rand()) / (static_cast <T> (RAND_MAX/((max + static_cast<T>(1)) - min)));
+    return min + static_cast <T> (rand()) / (static_cast <T> (RAND_MAX/((max + static_cast<T>(1)) - min)));
 }
 
 Vec2 circularCoordinate(const Vec2& center, float range)
