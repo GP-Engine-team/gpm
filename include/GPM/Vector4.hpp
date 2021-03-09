@@ -10,7 +10,6 @@
 #include <cmath>
 #include <iostream>
 
-#include "types.hpp"
 #include "Vector3.hpp"
 
 namespace GPM
@@ -65,6 +64,6 @@ union alignas(16) Vector4
 using Vec4 = Vector4;
 using vec4 = Vector4;
 
-#include "../../src/Vector4.inl"
+#include "Vector4.inl"
 
 } // End of namespace GPM

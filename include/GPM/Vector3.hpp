@@ -10,7 +10,6 @@
 #include <cmath>
 #include <iostream>
 
-#include "types.hpp"
 #include "Vector2.hpp"
 
 namespace GPM
@@ -32,17 +31,6 @@ union Vector3
 
     f32 e[3];
 
-
-    constexpr inline Vector3(const Vector3& other) = default;
-
-    constexpr inline Vector3(Vector3&& other) = default;
-
-    ~Vector3() noexcept = default;
-
-    constexpr inline Vector3& operator=(Vector3 const& other) = default;
-
-    constexpr inline Vector3& operator=(Vector3&& other) = default;
-
     // Constructors
     Vector3() = default;
     constexpr Vector3(const f32 k)                                          noexcept;
@@ -62,6 +50,9 @@ union Vector3
     f32                 length              ()                              const noexcept;
     constexpr f32       dot                 (const Vector3& v)              const noexcept;
     constexpr Vector3   cross               (const Vector3& v)              const noexcept;
+
+    static constexpr f32       dot          (const Vector3& lhs, const Vector3& rhs) noexcept;
+    static constexpr Vector3   cross        (const Vector3& lhs, const Vector3& rhs) noexcept;
     constexpr bool      isNull              ()                              const noexcept;
     constexpr bool      isOrthogonalTo      (const Vector3& v)              const noexcept;
     constexpr bool      isNormalized        ()                              const noexcept;
@@ -113,9 +104,11 @@ union Vector3
     friend std::ostream& operator<<         (std::ostream& os, const Vector3& v) noexcept;
 };
 
+constexpr Vector3	operator*           (const f32 k, const Vector3& v)     noexcept;
+
 using Vec3 = Vector3;
 using vec3 = Vector3;
 
-#include "../../src/Vector3.inl"
+#include "Vector3.inl"
 
 } // End of namespace GPM

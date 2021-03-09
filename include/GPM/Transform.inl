@@ -81,6 +81,21 @@ inline Mat4 Transform::rotation(const Vec3& r) noexcept
 }
 
 
+inline Mat4 Transform::rotationAround(const Vec3& axis, const f32 angle) noexcept
+{
+    const f32 c{cosf(angle)}, s{sinf(angle)}, t{1.f - c},
+              x{axis.x}, y{axis.y}, z{axis.z};
+
+    return
+    {
+        t * x * x + c,     t * x * y - s * z, t * x * z + s * y, .0f,
+        t * x * y + s * z, t * y * y + c,     t * y * z - s * x, .0f,
+        t * x * z - s * y, t * y * z + s * x, t * z * z + c,     .0f,
+        .0f,               .0f,               .0f,               1.f
+    };
+}
+
+
 inline constexpr Mat4 Transform::scaling(const Vec3& s) noexcept
 {
     return
@@ -168,12 +183,12 @@ inline constexpr Mat4 Transform::viewport(const f32 x,     const f32 y,
 
 
 
-/* ================== Transform constructor ================== */
+/* ================== Transform constructors ================== */
 inline Transform::Transform(const Vec3& t, const Vec3& r, const Vec3& s) noexcept
 {
-    scale(s);
-    rotate(r);
-    translate(t);
+    setScale(s);
+    setRotation(r);
+    setGlobalTranslation(t);
 }
 
 
@@ -258,6 +273,41 @@ inline Vec3 Transform::scaling() const noexcept
 
 
 
+
+// Setters
+inline constexpr void Transform::setLocalTranslation(const Vec3& t) noexcept
+{
+    model.e[12] = (t.x * model.e[0]) + (t.y * model.e[4]) + (t.z * model.e[8]);
+    model.e[13] = (t.x * model.e[1]) + (t.y * model.e[5]) + (t.z * model.e[9]);
+    model.e[14] = (t.x * model.e[2]) + (t.y * model.e[6]) + (t.z * model.e[10]);
+}
+
+
+inline constexpr void Transform::setGlobalTranslation(const Vec3& t) noexcept
+{
+    model.c[3].xyz = t;
+}
+
+
+inline void Transform::setRotation(const Vec3& r) noexcept
+{
+    const Mat4 rot{rotation(r)};
+    const Vec3 s  {scaling()};
+
+    model.c[0].xyz = rot.c[0].xyz * s.x;
+    model.c[1].xyz = rot.c[1].xyz * s.y;
+    model.c[2].xyz = rot.c[2].xyz * s.z;
+}
+
+
+inline constexpr void Transform::setScale(const Vec3& s) noexcept
+{
+    scale(s / scaling());
+}
+
+
+
+
 // Transformations
 inline constexpr void Transform::translateX(const f32 shift) noexcept
 {
@@ -285,9 +335,9 @@ inline constexpr void Transform::translateZ(const f32 shift) noexcept
 
 inline constexpr void Transform::translate(const Vec3& t) noexcept
 {
-    model.e[12] += t.x * model.e[0] + t.y * model.e[4] + t.z * model.e[8];
-    model.e[13] += t.x * model.e[1] + t.y * model.e[5] + t.z * model.e[9];
-    model.e[14] += t.x * model.e[2] + t.y * model.e[6] + t.z * model.e[10];
+    model.e[12] += (t.x * model.e[0]) + (t.y * model.e[4]) + (t.z * model.e[8]);
+    model.e[13] += (t.x * model.e[1]) + (t.y * model.e[5]) + (t.z * model.e[9]);
+    model.e[14] += (t.x * model.e[2]) + (t.y * model.e[6]) + (t.z * model.e[10]);
 }
 
 
@@ -309,11 +359,6 @@ inline void Transform::rotateX(const f32 angle) noexcept
     tmp2 = (model.e[9]  * sinAngle) + (model.e[10] * cosAngle);
     model.e[9]  = tmp1;
     model.e[10] = tmp2;
-
-    tmp1 = (model.e[13] * cosAngle) - (model.e[14] * sinAngle);
-    tmp2 = (model.e[13] * sinAngle) + (model.e[14] * cosAngle);
-    model.e[13] = tmp1;
-    model.e[14] = tmp2;
 }
 
 
@@ -335,11 +380,6 @@ inline void Transform::rotateY(const f32 angle) noexcept
     tmp2 = (model.e[10] * cosAngle) - (model.e[8]  * sinAngle);
     model.e[8]  = tmp1;
     model.e[10] = tmp2;
-
-    tmp1 = (model.e[12] * cosAngle) + (model.e[14] * sinAngle);
-    tmp2 = (model.e[14] * cosAngle) - (model.e[12] * sinAngle);
-    model.e[12] = tmp1;
-    model.e[14] = tmp2;
 }
 
 
@@ -360,11 +400,6 @@ inline void Transform::rotateZ(const f32 angle) noexcept
     tmp2 = (model.e[8]  * sinAngle) + (model.e[9]  * cosAngle);
     model.e[8]  = tmp1;
     model.e[9]  = tmp2;
-
-    tmp1 = (model.e[12] * cosAngle) - (model.e[13] * sinAngle);
-    tmp2 = (model.e[12] * sinAngle) + (model.e[13] * cosAngle);
-    model.e[12] = tmp1;
-    model.e[13] = tmp2;
 }
 
 
@@ -391,39 +426,35 @@ inline void Transform::rotate(const Vec3& r) noexcept
 }
 
 
+inline void Transform::rotateAround(const Vec3& axis, const f32 angle) noexcept
+{
+    apply(rotationAround(axis, angle));
+}
+
+
 inline constexpr void Transform::scaleX(const f32 coef) noexcept
 {
-    model.e[0]  *= coef;
-    model.e[4]  *= coef;
-    model.e[8]  *= coef;
-    model.e[12] *= coef;
+    model.c[0].xyz *= coef;
 }
 
 
 inline constexpr void Transform::scaleY(const f32 coef) noexcept
 {
-    model.e[1]  *= coef;
-    model.e[5]  *= coef;
-    model.e[9]  *= coef;
-    model.e[13] *= coef;
+    model.c[1].xyz *= coef;
 }
 
 
 inline constexpr void Transform::scaleZ(const f32 coef) noexcept
 {
-    model.e[2]  *= coef;
-    model.e[6]  *= coef;
-    model.e[10] *= coef;
-    model.e[14] *= coef;
+    model.c[2].xyz *= coef;
 }
 
 
 inline constexpr void Transform::scale(const Vec3& s) noexcept
 {
-    model.c[0].xyz *= s;
-    model.c[1].xyz *= s;
-    model.c[2].xyz *= s;
-    model.c[3].xyz *= s;
+    scaleX(s.x);
+    scaleY(s.y);
+    scaleZ(s.z);
 }
 
 
