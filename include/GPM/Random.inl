@@ -19,7 +19,7 @@ auto unitValue() -> std::enable_if_t<std::is_floating_point<T>::value, T>
 template<typename T = int> 
 auto unitValue() -> std::enable_if_t<std::is_integral<T>::value, T>
 {
-    return static_cast<T>(rand() % static_cast<T>(2));
+    return static_cast<T>(rand() & 1);
 }
 
 template<typename T = float>
