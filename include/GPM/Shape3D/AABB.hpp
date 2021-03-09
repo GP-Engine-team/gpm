@@ -7,8 +7,8 @@
 #pragma once
 
 #include "../Tools.hpp"
-#include "Volume.hpp"
 #include "../Vector3.hpp"
+#include "Volume.hpp"
 
 namespace GPM
 {
@@ -19,7 +19,6 @@ protected:
     float m_iI, m_iJ, m_iK;
 
 public:
-
     AABB()                  = default;
     AABB(const AABB& other) = default;
     AABB(AABB&& other)      = default;
@@ -28,6 +27,12 @@ public:
     AABB& operator=(AABB&& other) = default;
 
     AABB(const Vec3& center, float iI, float iJ, float iK) : Volume{}, m_center{center}, m_iI{iI}, m_iJ{iJ}, m_iK{iK}
+    {
+    }
+
+    AABB(const Vec3& min, const Vec3& max)
+        : Volume{}, m_center{(max + min) * 0.5f}, m_iI{max.x - m_center.x}, m_iJ{max.y - m_center.y}, m_iK{max.z -
+                                                                                                           m_center.z}
     {
     }
 
@@ -42,22 +47,22 @@ public:
                isBetween(localPt.z, -m_iK - espilon, m_iK + espilon);
     }
 
-    virtual Vec3 getCenter() const noexcept
+    Vec3 getCenter() const noexcept
     {
         return m_center;
     }
 
-    virtual float getExtI() const noexcept
+    float getExtI() const noexcept
     {
         return m_iI;
     }
 
-    virtual float getExtJ() const noexcept
+    float getExtJ() const noexcept
     {
         return m_iJ;
     }
 
-    virtual float getExtK() const noexcept
+    float getExtK() const noexcept
     {
         return m_iK;
     }
