@@ -63,10 +63,10 @@ inline auto unitValue() -> std::enable_if_t<std::is_integral<T>::value, T>;
  * @return T 
  */
 template<typename T = float>
-inline auto ranged(const T& max) -> std::enable_if_t<std::is_floating_point<T>::value, T>;
+inline auto ranged(T max) -> std::enable_if_t<std::is_floating_point<T>::value, T>;
 
 template<typename T = int>
-inline auto ranged(const T& max) -> std::enable_if_t<std::is_integral<T>::value, T>;
+inline auto ranged(T max) -> std::enable_if_t<std::is_integral<T>::value, T>;
 
 /**
  * @brief This will generate a number from some arbitrary min to some arbitrary max:
@@ -76,10 +76,10 @@ inline auto ranged(const T& max) -> std::enable_if_t<std::is_integral<T>::value,
  * @return T 
  */
 template<typename T = float>
-inline auto ranged(const T& min, const T& max) -> std::enable_if_t<std::is_floating_point<T>::value, T>;
+inline auto ranged(T min, T max) -> std::enable_if_t<std::is_floating_point<T>::value, T>;
 
 template<typename T = int>
-inline auto ranged(const T& min, const T& max) -> std::enable_if_t<std::is_integral<T>::value, T>;
+inline auto ranged(T min, T max) -> std::enable_if_t<std::is_integral<T>::value, T>;
 
 //Cicular
 inline Vec2 circularCoordinate(const Vec2& center, float range);
@@ -149,7 +149,7 @@ inline Vec3 unitPeripheralCubiqueCoordinate();
  * @return true 
  * @return false 
  */
-inline bool ranPercentProba(float percent);
+inline bool isRandNumberInPercentage(float percent);
 
 #include "Random.inl"
 
