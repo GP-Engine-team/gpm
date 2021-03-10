@@ -25,18 +25,17 @@ public :
     AABB& operator=(AABB const& other) = default;
     AABB& operator=(AABB&& other) = default;
 
-    AABB(const Vec3& center, float iI, float iJ, float iK) : Volume{}, m_center{center}, extents.x{iI}, extents.y{iJ}, extents.z{iK}
+    AABB(const Vec3& center, float iI, float iJ, float iK) : Volume{}, center{center}, extents{iI, iJ, iK}
     {
     }
 
     AABB(const Vec3& min, const Vec3& max)
-        : Volume{}, m_center{(max + min) * 0.5f}, extents.x{max.x - m_center.x}, extents.y{max.y - m_center.y}, extents.z{max.z -
-                                                                                                           m_center.z}
+        : Volume{}, center{(max + min) * 0.5f}, extents{max.x - center.x, max.y - center.y, max.z - center.z}
     {}
 
     bool isPointInside(Vec3 pt) const noexcept
     {
-        const Vec3 localPt = pt - m_center;
+        const Vec3 localPt = pt - center;
 
         return isBetween(localPt.x, -extents.x, extents.x) &&
                isBetween(localPt.y, -extents.y, extents.y) &&

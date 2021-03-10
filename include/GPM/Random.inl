@@ -48,27 +48,27 @@ auto ranged(T min, T max) -> std::enable_if_t<std::is_integral<T>::value, T>
 
 Vec2 circularCoordinate(const Vec2& center, float range)
 {
-    float randValue = static_cast<float>(rand());
-    float scale = unitValue<float>();
+    const float randValue = static_cast<float>(rand());
+    const float scale = unitValue<float>();
     return Vec2{center.x + range * std::cos(randValue) * scale, center.y + range * std::sin(randValue) * scale};
 }
 
 Vec2 peripheralCircularCoordinate(const Vec2& center, float range)
 {
-    float randValue = static_cast<float>(rand());
+    const float randValue = static_cast<float>(rand());
     return Vec2{center.x + range * std::cos(randValue), center.y + range * std::sin(randValue)};
 }
 
 Vec2 unitPeripheralCircularCoordinate()
 {
-    float randValue = static_cast<float>(rand());
+    const float randValue = static_cast<float>(rand());
     return Vec2{std::cos(randValue), std::sin(randValue)};
 }
 
 Vec3 unitPeripheralSphericalCoordonate()
 {
-    float phi   = ranged<float>(0.f, TWO_PI);
-    float theta = ranged<float>(0.f, TWO_PI);
+    const float phi   = ranged<float>(0.f, TWO_PI);
+    const float theta = ranged<float>(0.f, TWO_PI);
     return Vec3{std::sin(phi) * std::cos(theta), std::sin(phi) * std::sin(theta), std::cos(phi)};
 }
 
