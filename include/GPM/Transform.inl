@@ -1,14 +1,3 @@
-/* ================== SplitTransform static methods ================== */
-inline std::ostream& operator<<(std::ostream& os, const SplitTransform& st) noexcept
-{
-    return os << "rotation: "   << st.rotation
-              << "\nposition: " << st.position
-              << "\nscale: "    << st.scale;
-}
-
-
-
-
 /* ================== Transform static methods ================== */
 inline constexpr Mat4 Transform::translation(const Vec3& t) noexcept
 {
@@ -480,10 +469,3 @@ inline constexpr void Transform::apply(const Mat4& m) noexcept
 {
     model *= m;
 }
-
-
-
-
-// Utility
-inline std::ostream& operator<<(std::ostream& os, const Transform& t) noexcept
-{ return os << t.model; }

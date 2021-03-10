@@ -21,8 +21,6 @@ struct SplitTransform
     Quat rotation;
     Vec3 position;
     Vec3 scale;
-
-    friend std::ostream& operator<<(std::ostream& os, const SplitTransform& m) noexcept;
 };
 
 
@@ -95,9 +93,6 @@ struct Transform
                                        const Vec3& r,
                                        const Vec3& s)                         noexcept;
     constexpr void        apply       (const Mat4& m)                         noexcept;
-
-    // Utility
-    friend std::ostream& operator<<(std::ostream& os, const Transform& m)     noexcept;
 };
 
 #include "Transform.inl"

@@ -8,9 +8,6 @@
 #include "types.hpp"
 #include "Vector3.hpp"
 
-#include <iomanip>
-#include <iostream>
-
 namespace GPM
 {
 
@@ -41,8 +38,6 @@ union Matrix3
     constexpr Matrix3   operator*       (const Matrix3& m)  const noexcept;
     constexpr Vec3      operator*       (const Vec3& v)     const noexcept;
     constexpr Matrix3   operator/       (const f32 k)       const noexcept;
-
-    friend std::ostream& operator<<     (std::ostream& os, const Matrix3& m) noexcept;
 };
 
 using Mat3 = Matrix3;

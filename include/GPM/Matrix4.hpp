@@ -9,9 +9,6 @@
 #include "types.hpp"
 #include "Vector4.hpp"
 
-#include <iomanip>
-#include <iostream>
-
 namespace GPM
 {
 
@@ -51,8 +48,6 @@ union alignas(16) Matrix4
     constexpr Matrix4   operator*       (const Matrix4& m)       const noexcept;
     constexpr Vec4      operator*       (const Vec4& v)          const noexcept;
     constexpr Matrix4   operator/       (const f32 k)            const noexcept;
-
-    friend std::ostream& operator<<     (std::ostream& os, const Matrix4& m) noexcept;
 };
 
 using Mat4 = Matrix4;
