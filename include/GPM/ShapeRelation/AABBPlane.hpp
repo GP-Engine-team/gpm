@@ -23,8 +23,8 @@ namespace GPM::AABBPlane
 bool isAABBOnOrForwardPlane(const AABB& aabb, const Plane& plane)
 {
     // Compute the projection interval radius of b onto L(t) = b.c + t * p.n
-    const float r = aabb.getExtI() * std::abs(plane.getNormal().x) + aabb.getExtJ() * std::abs(plane.getNormal().y) +
-                    aabb.getExtK() * std::abs(plane.getNormal().z);
+    const float r = aabb.extents.x * std::abs(plane.getNormal().x) + aabb.extents.y * std::abs(plane.getNormal().y) +
+                    aabb.extents.z * std::abs(plane.getNormal().z);
 
     return -r <= plane.getSignedDistanceToPlane(aabb.getCenter());
 }
