@@ -144,28 +144,3 @@ inline constexpr Matrix3 Matrix3::operator/(const f32 k) const noexcept
         e[6] * reciprocal, e[7] * reciprocal, e[8] * reciprocal
     };
 }
-
-
-inline std::ostream& operator<<(std::ostream& os, const Matrix3& mat) noexcept
-{
-    std::streamsize original = std::cout.precision();
-    os << std::setprecision(2);
-
-    for (u8 i{0u}; i < MAT3_COL; ++i)
-    {
-        u8 induction{i};
-        
-        os << "| ";
-        for (u8 j{MAT3_COL}; j--; induction += MAT3_COL)
-            os << std::setw(6) << mat.e[induction] << ' ';
-
-        os << " |";
-
-        if (i != MAT3_COL - 1u)
-            os << '\n';
-    }
-
-    os << std::setprecision(original);
-
-    return os;
-}

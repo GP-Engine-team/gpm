@@ -289,7 +289,3 @@ inline constexpr Vector2 Vector2::operator/(const f32 k) const noexcept
 
 	return {x * reciprocal, y * reciprocal};
 }
-
-
-inline std::ostream& operator<<(std::ostream& os, const Vector2& v) noexcept
-{ return os << '[' << v.x << ", " << v.y << ']'; }
