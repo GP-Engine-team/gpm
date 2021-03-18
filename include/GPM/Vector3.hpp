@@ -6,18 +6,23 @@
 
 #pragma once
 
-#include <cfloat>
 #include <cmath>
 #include <iostream>
 
 #include "Vector2.hpp"
+#include "Calc.hpp"
 
 namespace GPM
 {
 
 union Vector3
 {
-    // Data members
+    // Data members. The following data members can be accessed publicly:
+    // - Vec2 xy
+    // - f32 x, which is the same as xy.x
+    // - f32 y, which is the same as xy.y
+    // - f32 z
+    // - f32 e[3], which is the same as {x, y, z}
     struct
     {
         union
@@ -34,8 +39,8 @@ union Vector3
     // Constructors
     Vector3() = default;
     constexpr Vector3(const f32 k)                                          noexcept;
-    constexpr Vector3(const f32 x, const f32 y, const f32 z)                noexcept;
-    constexpr Vector3(Vec2 v, const f32 z = .0f)                            noexcept;
+    constexpr Vector3(const f32 x, const f32 y, const f32 z = .0f)          noexcept;
+    constexpr Vector3(const Vec2 v, const f32 z = .0f)                      noexcept;
     constexpr Vector3(const f32 coef[3])                                    noexcept;
 
     // Static methods (pseudo-constructors)
@@ -44,26 +49,26 @@ union Vector3
     static constexpr Vector3 right          ()                              noexcept;
     static constexpr Vector3 up             ()                              noexcept;
     static constexpr Vector3 forward        ()                              noexcept;
+    static constexpr f32     dot            (const Vector3& lhs, const Vector3& rhs) noexcept;
+    static constexpr Vector3 cross          (const Vector3& lhs, const Vector3& rhs) noexcept;
 
     // Member methods
-    constexpr f32       length2             ()                              const noexcept;
+    constexpr f32       sqrLength           ()                              const noexcept;
     f32                 length              ()                              const noexcept;
     constexpr f32       dot                 (const Vector3& v)              const noexcept;
     constexpr Vector3   cross               (const Vector3& v)              const noexcept;
 
-    static constexpr f32       dot          (const Vector3& lhs, const Vector3& rhs) noexcept;
-    static constexpr Vector3   cross        (const Vector3& lhs, const Vector3& rhs) noexcept;
     constexpr bool      isNull              ()                              const noexcept;
     constexpr bool      isOrthogonalTo      (const Vector3& v)              const noexcept;
     constexpr bool      isNormalized        ()                              const noexcept;
     constexpr bool      isOrthonormalTo     (const Vector3& v)              const noexcept;
     constexpr bool      isColinearTo        (const Vector3& v)              const noexcept;
     bool                isEqualTo           (const Vector3& v,
-                                             const f32 eps = FLT_EPSILON)   const noexcept;
+                                             const f32 eps = 1e-6)          const noexcept;
     bool                isNotEqualTo        (const Vector3& v,
-                                             const f32 eps = FLT_EPSILON)   const noexcept;
+                                             const f32 eps = 1e-6)          const noexcept;
     void                normalize           ()                              noexcept;
-    constexpr f32       distance2To         (const Vector3& v)              const noexcept;
+    constexpr f32       sqrDistanceTo       (const Vector3& v)              const noexcept;
     f32     	        distanceTo		    (const Vector3& v)              const noexcept;
     f32     	        angleWithUnitary    (const Vector3& v)              const noexcept;
     f32                 angleWith		    (const Vector3& v)              const noexcept;
@@ -79,6 +84,7 @@ union Vector3
                                              const f32 t)                   const noexcept;
 
     // Operator overloads
+    constexpr bool      operator==          (const Vector3& v)              noexcept;
     constexpr Vector3&	operator+=          (const Vector3& v)              noexcept;
     constexpr Vector3&	operator+=          (const Vector3&& v)             noexcept;
     constexpr Vector3&	operator-=          (const Vector3& v)              noexcept;
