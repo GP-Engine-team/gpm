@@ -27,7 +27,7 @@ inline constexpr Mat3 toMatrix3(const Quat& q) noexcept
     const f32 x2{q.x * q.x}, y2{q.y * q.y}, z2{q.z * q.z},
               xy{q.x * q.y}, yz{q.y * q.z}, xz{q.x * q.z},
               wx{q.s * q.x}, wy{q.s * q.y}, wz{q.s * q.z},
-              s_2{2.f / q.length2()};
+              s_2{2.f / q.sqrLength()};
 
     // Column-major
     return

@@ -5,10 +5,12 @@ inline Quaternion Quaternion::angleAxis(const f32 angle, const Vec3& axis) noexc
     return {axis.normalized() * sinf(halfAngle), cosf(halfAngle)};
 }
 
+
 inline constexpr Quaternion Quaternion::identity() noexcept
 {
     return {Vec3::zero(), 1.f};
 }
+
 
 inline Quaternion Quaternion::lookAt(const Vec3& sourcePoint, const Vec3& destPoint) noexcept
 {
@@ -31,15 +33,18 @@ inline Quaternion Quaternion::lookAt(const Vec3& sourcePoint, const Vec3& destPo
     return Quaternion::angleAxis(rotAngle, rotAxis);
 }
 
+
+
+
 /* =================== Methods =================== */
-inline constexpr f32 Quaternion::length2() const noexcept
+inline constexpr f32 Quaternion::sqrLength() const noexcept
 {
-    return v.length2() + s * s;
+    return v.sqrLength() + s * s;
 }
 
 inline f32 Quaternion::length() const noexcept
 {
-    return sqrtf(length2());
+    return sqrtf(sqrLength());
 }
 
 inline constexpr f32 Quaternion::dot(const Quaternion& q) const noexcept
@@ -66,7 +71,7 @@ inline constexpr Quaternion Quaternion::conjugate() const noexcept
 
 inline constexpr Quaternion Quaternion::inversed() const noexcept
 {
-    return conjugate() / length2();
+    return conjugate() / sqrLength();
 }
 
 inline Quaternion Quaternion::slerp(const Quaternion& target, const f32 t) const noexcept

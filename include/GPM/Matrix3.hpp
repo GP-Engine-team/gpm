@@ -5,7 +5,7 @@
  */
 
 #pragma once
-#include "types.hpp"
+#include "Types.hpp"
 #include "Vector3.hpp"
 
 #include <iomanip>
