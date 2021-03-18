@@ -10,8 +10,6 @@
 #include "constants.hpp"
 #include "Types.hpp"
 
-#include <iostream>
-
 namespace GPM
 {
 
@@ -64,8 +62,6 @@ union alignas(16) Quaternion
     constexpr Vec3              operator* (const Vec3& v)                         const noexcept;
     constexpr Quaternion        operator* (const f32 k)                           const noexcept;
     constexpr Quaternion        operator/ (const f32 k)                           const noexcept;
-
-    friend std::ostream&        operator<<(std::ostream& os, const Quaternion& q) noexcept;
 };
 
 using Quat = Quaternion;

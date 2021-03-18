@@ -1,14 +1,3 @@
-/* ================== SplitTransform static methods ================== */
-inline std::ostream& operator<<(std::ostream& os, const SplitTransform& st) noexcept
-{
-    return os << "rotation: "   << st.rotation
-              << "\nposition: " << st.position
-              << "\nscale: "    << st.scale;
-}
-
-
-
-
 /* ================== Transform static methods ================== */
 inline constexpr Mat4 Transform::translation(const Vec3& t) noexcept
 {
@@ -128,40 +117,40 @@ inline Mat4 Transform::lookAt(const Vec3& eyePos,
 
 
 inline constexpr Mat4 Transform::symFrustrum(const f32 right, const f32 top,
-                                             const f32 near,  const f32 far) noexcept
+                                             const f32 near_, const f32 far_) noexcept
 {
-    const f32 depthInv{1.f / (far - near)};
+    const f32 depthInv{1.f / (far_ - near_)};
 
     return
     {
-        near / right, .0f,        .0f,                          .0f,
-        .0f,          near / top, .0f,                          .0f,
-        .0f,          .0f,        -(far + near) * depthInv,    -1.f,
-        .0f,          .0f,        -2.f * far * near * depthInv, .0f
+        near_ / right, .0f,        .0f,                          .0f,
+        .0f,          near_ / top, .0f,                          .0f,
+        .0f,          .0f,        -(far_ + near_) * depthInv,    -1.f,
+        .0f,          .0f,        -2.f * far_ * near_ * depthInv, .0f
     };
 }
 
 
 inline Mat4 Transform::perspective(const f32 fovY, const f32 aspect,
-                                   const f32 near, const f32 far) noexcept
+                                   const f32 near_, const f32 far_) noexcept
 {
-    const f32 top{near * tanf(fovY / 2.f)}, right{top * aspect};
+    const f32 top{near_ * tanf(fovY / 2.f)};
 
-    return symFrustrum(right, top, near, far);
+    return symFrustrum(top * aspect, top, near_, far_);
 }
 
 
 inline constexpr Mat4 Transform::orthographic(const f32 right, const f32 top,
-                                              const f32 near,  const f32 far) noexcept
+                                              const f32 near_, const f32 far_) noexcept
 {
-    const f32 farMinNear{far - near};
+    const f32 farMinNear{far_ - near_};
 
     return
     {
         1.f / right, .0f,       .0f,                          .0f,
         .0f,         1.f / top, .0f,                          .0f,
-        .0f,         .0f,       -2.f / (far - near),          .0f,
-        .0f,         .0f,       (far + near) / (-farMinNear), 1.f
+        .0f,         .0f,       -2.f / farMinNear,            .0f,
+        .0f,         .0f,       (far_ + near_) / (-farMinNear), 1.f
     };
 }
 
@@ -480,10 +469,3 @@ inline constexpr void Transform::apply(const Mat4& m) noexcept
 {
     model *= m;
 }
-
-
-
-
-// Utility
-inline std::ostream& operator<<(std::ostream& os, const Transform& t) noexcept
-{ return os << t.model; }

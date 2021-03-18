@@ -7,7 +7,6 @@
 #pragma once
 
 #include <cmath>
-#include <iostream>
 
 #include "Vector2.hpp"
 #include "Calc.hpp"
@@ -106,8 +105,6 @@ union Vector3
     constexpr Vector3   operator-           ()                              const noexcept;
     constexpr Vector3	operator*           (const f32 k)                   const noexcept;
     constexpr Vector3	operator/           (const f32 k)                   const noexcept;
-
-    friend std::ostream& operator<<         (std::ostream& os, const Vector3& v) noexcept;
 };
 
 constexpr Vector3	operator*           (const f32 k, const Vector3& v)     noexcept;

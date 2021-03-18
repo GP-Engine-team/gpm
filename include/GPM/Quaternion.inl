@@ -124,8 +124,3 @@ inline constexpr Quaternion Quaternion::operator/(const f32 k) const noexcept
 
     return {v * reciprocal, s * reciprocal};
 }
-
-inline std::ostream& operator<<(std::ostream& os, const Quaternion& q) noexcept
-{
-    return os << '[' << q.s << ", " << q.v << ']';
-}

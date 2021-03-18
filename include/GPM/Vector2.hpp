@@ -8,7 +8,6 @@
 
 #include <cfloat>
 #include <cmath>
-#include <iostream>
 
 #include "Types.hpp"
 
@@ -81,8 +80,6 @@ union Vector2
     constexpr Vector2   operator-           ()                  const noexcept;
     constexpr Vector2   operator*           (const f32 k)       const noexcept;
     constexpr Vector2   operator/           (const f32 k)       const noexcept;
-
-    friend std::ostream& operator<<         (std::ostream& os, const Vector2& v) noexcept;
 };
 
 using Vec2 = Vector2;

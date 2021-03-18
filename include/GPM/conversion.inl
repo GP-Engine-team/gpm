@@ -69,9 +69,8 @@ inline Quat toQuaternion(const Mat3& m) noexcept
         if (m.e[4] > m.e[0])      i = 1u;
         if (m.e[8] > m.c[i].e[i]) i = 2u;
 
-        const u8 NEXT[3]    = {1u, 2u, 0u},
-                 j          = NEXT[i],
-                 k          = NEXT[j];
+        constexpr u8 NEXT[3]{1u, 2u, 0u};
+        const     u8 j = NEXT[i], k = NEXT[j];
 
         f32 tmp = sqrtf(m.c[i].e[i] - (m.c[j].e[j] + m.c[k].e[k]) + 1.f);
 
