@@ -6,61 +6,94 @@
 
 #include "../include/GPM/Types.hpp"
 #include "../include/GPM/Vector3.hpp"
+#include "../include/GPM/Matrix4.hpp"
 
+namespace GPM
+{
+
+// Global test counters
+u32 passed = 0u;
+u32 failed = 0u;
+u32 seed   = 0u;
+
+void startTests()
+{
+    // Random seed
+    seed = (u32)__rdtsc();
+    srand(seed);
+
+    fprintf(stderr, "Seed used for this round of tests: %i\n", seed);
+}
+
+
+void endTests()
+{
+    fprintf(stderr, "\nOut of %u tests, ", passed + failed);
+    fprintf(stderr, "%u \033[1m\033[32mpassed\033[0m\033[0m, ", passed);
+    fprintf(stderr, "%u \033[1m\033[31mfailed\033[0m\033[0m\n", failed);
+}
+
+
+// ============= Test macro =============
 #define TEST(title, expr) \
 do \
 { \
 if (expr) \
 { \
-    fprintf(stderr, "> \033[1m\033[32mPassed\033[0m\033[0m: "); \
+    fprintf(stderr, "> \033[1m\033[32mPassed\033[0m\033[0m"); \
+    ++passed; \
 } \
 else \
 { \
-    fprintf(stderr, "X \033[1m\033[31mFailed\033[0m\033[0m: "); \
+    fprintf(stderr, "X \033[1m\033[31mFailed\033[0m\033[0m"); \
+    ++failed; \
 } \
-fprintf(stderr, "%s\n", title); \
+fprintf(stderr, " (%s:%d)\033[0m: %s\n", __FILE__, __LINE__, title); \
 } while(0)
 
-namespace GPM
-{
 
-f32 randomf32()
-{
-    f32 f = rand();
-    f += static_cast<float>(rand()) / (static_cast<float>(RAND_MAX / (rand() - rand())));
-    f += static_cast<float>(rand()) / rand();
 
-#ifdef _DEBUG
-    fprintf(stderr, "%f is used for the following tests\n", f);
-#endif
+// ============= Random values =============
+f32 randomf32(const f32 minval = -1e5f, const f32 maxval = 1e5f)
+{
+    f32 f = minval;
+    f += static_cast<f32>(maxval - minval) * (static_cast<f32>(rand()) / RAND_MAX);
 
     return f;
 }
 
 
-Vec3 randomVector3()
+Vec3 randomVector3(const f32 minval = -1e10f, const f32 maxval = 1e10f)
 {
-    f32 x = rand(), y = rand(), z = rand();
-    x += static_cast<float>(rand()) / (static_cast<float>(RAND_MAX / (rand() - rand())));
-    x += static_cast<float>(rand()) / rand();
-    y += static_cast<float>(rand()) / (static_cast<float>(RAND_MAX / (rand() - rand())));
-    y += static_cast<float>(rand()) / rand();
-    z += static_cast<float>(rand()) / (static_cast<float>(RAND_MAX / (rand() - rand())));
-    z += static_cast<float>(rand()) / rand();
-
-    const Vec3 v{x, y, z};
-
-#ifdef _DEBUG
-    fprintf(stderr, "[%f, %f, %f] is used for the following tests\n", v.x, v.y, v.z);
-#endif
-
-    return v;
+    return
+    {
+        randomf32(minval, maxval),
+        randomf32(minval, maxval),
+        randomf32(minval, maxval)
+    };
 }
 
 
-bool areEqual(const f32 a, const f32 b, const f32 eps = 1e-6)
+Mat4 randomMatrix4(const f32 minval = -1e10f, const f32 maxval = 1e10f)
 {
-    return fabs(b - a) < eps;
+    return
+    {
+        {randomVector3(minval, maxval), randomf32(minval, maxval)},
+        {randomVector3(minval, maxval), randomf32(minval, maxval)},
+        {randomVector3(minval, maxval), randomf32(minval, maxval)},
+        {randomVector3(minval, maxval), randomf32(minval, maxval)}
+    };
+}
+
+
+Mat4 randomTransformMatrix4(const f32 minval = -1e10f, const f32 maxval = 1e10f)
+{
+    return
+    {
+        {randomVector3(minval, maxval), .0f},
+        {randomVector3(minval, maxval), .0f},
+        {randomVector3(minval, maxval), .0f},
+        {randomVector3(minval, maxval), 1.f}};
 }
 
 }

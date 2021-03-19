@@ -6,12 +6,7 @@
 
 namespace GPM
 {
-// Testing:
-// - v1: Vector3(const f32 k)
-// - v2: Vector3(const f32 x, const f32 y, const f32 z)
-// - v3: Vector3(Vec2 v, const f32 z)
-// - v4: Vector3(Vec2 v, const f32 z = .0f)
-// - v5: Vector3(const f32 coef[3])
+
 void testVec3Constructors()
 {
     fprintf(stderr, "\nVector3's constructors unit tests:\n");
@@ -68,13 +63,21 @@ void testVec3SpecificMethods()
      const Vec3 normalized{val.normalized()};
      const Vec3 rotated   {val2.rotatedAroundUnitary(normalized, randomf32())};
 
-     TEST("Vector3::normalized()", areEqual(normalized.sqrLength(), 1.f));
+     TEST("Vector3::normalized()", f32AreEqual(normalized.sqrLength(), 1.f, 1e-6));
      TEST("Vector3::rotatedAroundUnitary(const Vector3& v, const f32 angle)",
-          areEqual(val2.angleWithUnitary(normalized), rotated.angleWithUnitary(normalized), 1e-3));
+          f32AreEqual(val2.angleWithUnitary(normalized), rotated.angleWithUnitary(normalized), 1e-3));
      TEST("Vector::lerp(const Vector3& v)",
            val.lerp(normalized, 1.f).isEqualTo(normalized) &&
            val.lerp(normalized, .0f).isEqualTo(val) &&
            val.lerp(normalized, .5f).isEqualTo((val * .5f) + (normalized * .5f)));
+}
+
+
+void testVec3()
+{
+    testVec3Constructors();
+    testVec3StaticMethods();
+    testVec3SpecificMethods();
 }
 
 }
