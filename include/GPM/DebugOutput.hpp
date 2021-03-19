@@ -9,6 +9,14 @@
 #include <iomanip>
 #include <iostream>
 
+#include "Vector2.hpp"
+#include "Vector3.hpp"
+#include "Vector4.hpp"
+#include "Matrix3.hpp"
+#include "Matrix4.hpp"
+#include "Quaternion.hpp"
+#include "Transform.hpp"
+
 namespace GPM
 {
 
