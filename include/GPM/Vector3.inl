@@ -222,12 +222,6 @@ inline constexpr Vector3 Vector3::lerp(const Vector3& v, const f32 t) const noex
 }
 
 
-inline constexpr bool Vector3::operator==(const Vector3& v) noexcept
-{
-    return x == v.x && y == v.y && z == v.z;
-}
-
-
 inline constexpr Vector3& Vector3::operator+=(const Vector3& v) noexcept
 {
 	x += v.x;
@@ -327,6 +321,12 @@ inline constexpr Vector3& Vector3::operator/=(const f32 k) noexcept
     z *= reciprocal;
 
     return *this;
+}
+
+
+inline constexpr bool Vector3::operator==(const Vector3& v) const noexcept
+{
+    return x == v.x && y == v.y && z == v.z;
 }
 
 

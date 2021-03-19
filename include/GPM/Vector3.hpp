@@ -83,7 +83,6 @@ union Vector3
                                              const f32 t)                   const noexcept;
 
     // Operator overloads
-    constexpr bool      operator==          (const Vector3& v)              noexcept;
     constexpr Vector3&	operator+=          (const Vector3& v)              noexcept;
     constexpr Vector3&	operator+=          (const Vector3&& v)             noexcept;
     constexpr Vector3&	operator-=          (const Vector3& v)              noexcept;
@@ -94,6 +93,7 @@ union Vector3
     constexpr Vector3&	operator/=          (const Vector3&& v)             noexcept;
     constexpr Vector3&  operator*=          (const f32 k)                   noexcept;
     constexpr Vector3&  operator/=          (const f32 k)                   noexcept;
+    constexpr bool      operator==          (const Vector3& v)              const noexcept;
     constexpr Vector3   operator+           (const Vector3& v)              const noexcept;
     constexpr Vector3   operator+           (const Vector3&& v)             const noexcept;
     constexpr Vector3   operator-           (const Vector3& v)              const noexcept;
