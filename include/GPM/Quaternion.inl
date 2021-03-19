@@ -12,6 +12,7 @@ inline constexpr Quaternion Quaternion::identity() noexcept
 }
 
 
+// TODO: simplify, add const, remove casts, remove ifs, pass a "up" Vec3 parameter
 inline Quaternion Quaternion::lookAt(const Vec3& sourcePoint, const Vec3& destPoint) noexcept
 {
     Vec3 forwardVector = (destPoint - sourcePoint).normalized();
@@ -37,48 +38,119 @@ inline Quaternion Quaternion::lookAt(const Vec3& sourcePoint, const Vec3& destPo
 
 
 /* =================== Methods =================== */
+inline Vec3 Quaternion::axis() const noexcept
+{
+    return v / v.length();
+}
+
+
+inline f32 Quaternion::angle() const noexcept
+{
+    return 2.f * acosf(w);
+}
+
+
+inline f32 Quaternion::angleWith(const Quaternion& q) const noexcept
+{
+    return 2.f * acosf(dot(q));
+}
+
+
+inline constexpr Vec3 Quaternion::rotate(const Vec3& p) const noexcept
+{
+    return p * (2.f * w * w - 1.f) + (v * v.dot(p) * 2.f) + (v.cross(p) * (2.f * w));
+}
+
+
+inline Vec3 Quaternion::eulerAngles() const noexcept
+{
+    Vec3 angles;
+
+    { // X and Z
+        const f32 y2{y * y};
+
+        { // X
+            const f32 sinAngle{2.f * ((w * x) + (y * z))};
+            const f32 cosAngle{1.f - 2.f * ((x * x) + y2)};
+            angles.x = atan2(sinAngle, cosAngle);
+        }
+
+        { // Z
+            const f32 sinAngle{2.f * ((w * z) + (x * y))};
+            const f32 cosAngle{1.f - 2.f * (y2 + (z * z))};
+            angles.z = atan2(sinAngle, cosAngle);
+        }
+    }
+
+    { // Y
+        const f32 sinAngle{2.f * ((w * y) - (z * x))};
+
+        if (fabs(sinAngle) >= 1.f)
+        {
+            angles.y = copysign(HALF_PI, sinAngle);
+        }
+
+        else
+        {
+            angles.y = asin(sinAngle);
+        }
+    }
+
+    return angles;
+}
+
+
 inline constexpr f32 Quaternion::sqrLength() const noexcept
 {
-    return v.sqrLength() + s * s;
+    return v.sqrLength() + w * w;
 }
+
 
 inline f32 Quaternion::length() const noexcept
 {
     return sqrtf(sqrLength());
 }
 
+
 inline constexpr f32 Quaternion::dot(const Quaternion& q) const noexcept
 {
-    return v.dot(q.v) + s * q.s;
+    return v.dot(q.v) + w * q.w;
 }
+
 
 inline Quaternion Quaternion::normalized() const noexcept
 {
     return *this / length();
 }
 
+
 inline void Quaternion::normalize() noexcept
 {
     const f32 reciprocal_len{1.f / length()};
     v *= reciprocal_len;
-    s *= reciprocal_len;
+    w *= reciprocal_len;
 }
+
 
 inline constexpr Quaternion Quaternion::conjugate() const noexcept
 {
-    return {-v, s};
+    return {-v, w};
 }
+
 
 inline constexpr Quaternion Quaternion::inversed() const noexcept
 {
     return conjugate() / sqrLength();
 }
 
+
 inline Quaternion Quaternion::slerp(const Quaternion& target, const f32 t) const noexcept
 {
-    const f32 angle{acosf(dot(target))};
+    const f32 angle{angleWith(target)};
+    
     return (*this * (sinf((1.f - t) * angle)) + target * sinf(t * angle)) / sinf(angle);
 }
+
 
 inline Quaternion Quaternion::nlerp(const Quaternion& target, const f32 t) const noexcept
 {
@@ -86,41 +158,62 @@ inline Quaternion Quaternion::nlerp(const Quaternion& target, const f32 t) const
     return q.normalized();
 }
 
+
+inline bool Quaternion::isEqualTo(const Quaternion& q, const f32 eps) const noexcept
+{
+    return v.isEqualTo(q.v) && fabs(w - q.w) < eps;
+}
+
+
+
+
 /* =================== Operator overloads =================== */
+inline constexpr bool Quaternion::operator==(const Quaternion& q) const noexcept
+{
+    return v == q.v && w == q.w;
+}
+
+
 inline constexpr Quaternion Quaternion::operator+(const Quaternion& q) const noexcept
 {
-    return {v + q.v, s + q.s};
+    return {v + q.v, w + q.w};
 }
+
 
 inline constexpr Quaternion Quaternion::operator-(const Quaternion& q) const noexcept
 {
-    return {v - q.v, s - q.s};
+    return {v - q.v, w - q.w};
 }
+
 
 inline constexpr Quaternion Quaternion::operator-() const noexcept
 {
-    return {-v, -s};
+    return {-v, -w};
 }
+
 
 inline constexpr Quaternion Quaternion::operator*(const Quaternion& q) const noexcept
 {
-    return {q.v * s + v * q.s + v.cross(q.v), s * q.s - v.dot(q.v)};
+    return {(q.v * w) + (v * q.w) + v.cross(q.v), (w * q.w) - v.dot(q.v)};
 }
 
+
 // The quaternion is assumed normalized
-inline constexpr Vec3 Quaternion::operator*(const Vec3& p) const noexcept
+inline constexpr Vec3 Quaternion::operator*(const Vec3& v) const noexcept
 {
-    return v * (2.f * s * s - 1.f) + v * v.dot(p) + v.cross(p) * (2.f * s);
+    return rotate(v);
 }
+
 
 inline constexpr Quaternion Quaternion::operator*(const f32 k) const noexcept
 {
-    return {v * k, s * k};
+    return {v * k, w * k};
 }
+
 
 inline constexpr Quaternion Quaternion::operator/(const f32 k) const noexcept
 {
     const f32 reciprocal{1.f / k};
 
-    return {v * reciprocal, s * reciprocal};
+    return {v * reciprocal, w * reciprocal};
 }
