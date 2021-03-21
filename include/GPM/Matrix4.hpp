@@ -33,23 +33,26 @@ union alignas(16) Matrix4
     constexpr Matrix4(const Vec4& c0, const Vec4& c1, const Vec4& c2, const Vec4& c3) noexcept;
 
     // Static methods, pseudo-constructors
-    static constexpr Matrix4 zero      ()                  noexcept;
-    static constexpr Matrix4 identity  ()                  noexcept;
+    static constexpr Matrix4 zero      ()                     noexcept;
+    static constexpr Matrix4 identity  ()                     noexcept;
 
     // Methods
-    constexpr Matrix4        cofactor  ()                  const noexcept;
-    constexpr Matrix4        transposed()                  const noexcept;
-    constexpr Matrix4        adjugate  ()                  const noexcept;
-    constexpr f32            det       ()                  const noexcept;
-    constexpr Matrix4        inversed  ()                  const noexcept;
-    constexpr f32            trace     ()                  const noexcept;
+    constexpr Matrix4        cofactor  ()                     const noexcept;
+    constexpr Matrix4        transposed()                     const noexcept;
+    constexpr Matrix4        adjugate  ()                     const noexcept;
+    constexpr f32            det       ()                     const noexcept;
+    constexpr Matrix4        inversed  ()                     const noexcept;
+    constexpr f32            trace     ()                     const noexcept;
+    constexpr bool           isEqualTo (const Matrix4& m,
+                                        const f32 eps = 1e-6) const noexcept;
 
     // Operator overloads
-    constexpr Matrix4&       operator*= (const Matrix4& m) noexcept;
-    constexpr Matrix4&       operator/= (const f32 k)      noexcept;
-    constexpr Matrix4        operator*  (const Matrix4& m) const noexcept;
-    constexpr Vec4           operator*  (const Vec4& v)    const noexcept;
-    constexpr Matrix4        operator/  (const f32 k)      const noexcept;
+    constexpr bool           operator== (const Matrix4& m)    const noexcept;
+    constexpr Matrix4&       operator*= (const Matrix4& m)    noexcept;
+    constexpr Matrix4&       operator/= (const f32 k)         noexcept;
+    constexpr Matrix4        operator*  (const Matrix4& m)    const noexcept;
+    constexpr Vec4           operator*  (const Vec4& v)       const noexcept;
+    constexpr Matrix4        operator/  (const f32 k)         const noexcept;
 };
 
 using Mat4 = Matrix4;

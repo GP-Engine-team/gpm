@@ -38,9 +38,20 @@ inline constexpr void Vector4::homogenize() noexcept
 }
 
 
+inline constexpr bool Vector4::isEqualTo(const Vec4& v, const f32 eps) const noexcept
+{
+    return xyz.isEqualTo(v.xyz, eps) && fabs(w - v.w) <= eps;
+}
+
 
 
 /* =================== Operator overloads =================== */
+inline constexpr bool Vector4::operator==(const Vector4& v) const noexcept
+{
+    return xyz == v.xyz && w == v.w;
+}
+
+
 inline constexpr Vector4& Vector4::operator*=(const Vector4& v) noexcept
 {
     xyz = xyz * v.xyz;
