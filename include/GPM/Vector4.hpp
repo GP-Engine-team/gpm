@@ -56,7 +56,7 @@ union alignas(16) Vector4
     // Methods
     constexpr Vector4 homogenized ()  const noexcept;
     constexpr void    homogenize  ()  noexcept;
-    constexpr bool    isEqualTo   (const Vector4& v,
+    bool              isEqualTo   (const Vector4& v,
                                    const f32 eps = 1e-6)                        const noexcept;
 
     constexpr bool     operator== (const Vector4& v)                            const noexcept;

@@ -38,7 +38,7 @@ inline constexpr void Vector4::homogenize() noexcept
 }
 
 
-inline constexpr bool Vector4::isEqualTo(const Vec4& v, const f32 eps) const noexcept
+inline bool Vector4::isEqualTo(const Vec4& v, const f32 eps) const noexcept
 {
     return xyz.isEqualTo(v.xyz, eps) && fabs(w - v.w) <= eps;
 }

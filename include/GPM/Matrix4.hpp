@@ -43,7 +43,7 @@ union alignas(16) Matrix4
     constexpr f32            det       ()                     const noexcept;
     constexpr Matrix4        inversed  ()                     const noexcept;
     constexpr f32            trace     ()                     const noexcept;
-    constexpr bool           isEqualTo (const Matrix4& m,
+    bool                     isEqualTo (const Matrix4& m,
                                         const f32 eps = 1e-6) const noexcept;
 
     // Operator overloads
