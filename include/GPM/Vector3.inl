@@ -193,9 +193,7 @@ inline constexpr Vector3 Vector3::projectedOn(const Vector3& v) const noexcept
 
 inline Vector3 Vector3::normalized() const noexcept
 {
-    const f32 reciprocal{1.f / length()};
-
-    return {x * reciprocal, y * reciprocal, z * reciprocal};
+    return *this / length();
 }
 
 
