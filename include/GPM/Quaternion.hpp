@@ -38,13 +38,15 @@ union alignas(16) Quaternion
     };
     f32 e[4];
 
-    static Quaternion           angleAxis (const f32 angle, const Vec3& axis)      noexcept;
     static constexpr Quaternion identity  ()                                       noexcept;
+    static Quaternion           angleAxis (const f32 angle, const Vec3& axis)      noexcept;
+    static Quaternion           fromEuler (const Vec3& angles)                     noexcept;
     static Quaternion           lookAt    (const Vec3& sourcePoint,
                                            const Vec3& destPoint)                  noexcept;
 
     // Methods
-    Vec3                        axis       ()                                      const noexcept;
+    constexpr Vec3              axis       ()                                      const noexcept;
+    Vec3                        unitAxis   ()                                      const noexcept;
     f32                         angle      ()                                      const noexcept;
     f32                         angleWith  (const Quaternion& q)                   const noexcept;
     constexpr Vec3              rotate     (const Vec3& v)                         const noexcept;

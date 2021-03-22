@@ -1,4 +1,10 @@
 ﻿/* =================== Static methods (pseudo-constructors) =================== */
+inline constexpr Quaternion Quaternion::identity() noexcept
+{
+    return {Vec3::zero(), 1.f};
+}
+
+
 inline Quaternion Quaternion::angleAxis(const f32 angle, const Vec3& axis) noexcept
 {
     const f32 halfAngle{angle * .5f};
@@ -6,9 +12,30 @@ inline Quaternion Quaternion::angleAxis(const f32 angle, const Vec3& axis) noexc
 }
 
 
-inline constexpr Quaternion Quaternion::identity() noexcept
+inline Quaternion Quaternion::fromEuler(const Vec3& angles) noexcept
 {
-    return {Vec3::zero(), 1.f};
+    // Half angles
+    const f32 halfXAngle{angles.x * .5f},
+              halfYAngle{angles.y * .5f},
+              halfZAngle{angles.z * .5f};
+
+    // Cosinus and sinus of half angles
+    const f32 cosX{cosf(halfXAngle)}, sinX{sinf(halfXAngle)},
+              cosY{cosf(halfYAngle)}, sinY{sinf(halfYAngle)},
+              cosZ{cosf(halfZAngle)}, sinZ{sinf(halfZAngle)};
+
+    // Results used more than once
+    const f32 cosYcosZ{cosY * cosZ}, sinYsinZ{sinY * sinZ},
+              sinYcosZ{sinY * cosZ}, cosYsinZ{cosY * sinZ};
+
+    const Vec3 imAxis
+    {
+        sinX * cosYcosZ - cosX * sinYsinZ,
+        cosX * sinYcosZ + sinX * cosYsinZ,
+        cosX * cosYsinZ - sinX * sinYcosZ
+    };
+
+    return {imAxis, cosX * cosYcosZ + sinX * sinYsinZ};
 }
 
 
@@ -38,9 +65,15 @@ inline Quaternion Quaternion::lookAt(const Vec3& sourcePoint, const Vec3& destPo
 
 
 /* =================== Methods =================== */
-inline Vec3 Quaternion::axis() const noexcept
+inline constexpr Vec3 Quaternion::axis() const noexcept
 {
-    return v / v.length();
+    return v;
+}
+
+
+inline Vec3 Quaternion::unitAxis() const noexcept
+{
+    return v.normalized();
 }
 
 
