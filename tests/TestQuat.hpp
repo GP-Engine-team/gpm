@@ -3,6 +3,7 @@
 #include "TestingTools.hpp"
 #include "../include/GPM/Quaternion.hpp"
 #include "../include/GPM/Calc.hpp"
+#include "../include/GPM/DebugOutput.hpp"
 
 namespace GPM
 {
@@ -11,13 +12,20 @@ void testQuatStaticMethods()
 {
     fprintf(stderr, "\nQuaternion's static methods unit tests:\n");
 
-    const Vec3 v1   {randomVector3()};
-    const f32  angle{randomf32()};
+    const Vec3 v1   {randomVector3(-100.f, 100.f)};
+    const f32  angle{randomf32(-PI, PI)};
     const Quat q1   {Quat::angleAxis(angle, v1)};
+    const Quat q2   {Quat::fromEuler(v1)};
 
     TEST("Quaternion::angleAxis(const f32 angle, const Vec3& axis)",
          f32AreEqual(q1.w, cosf(angle * .5f), 1e-6) &&
          q1.v.isEqualTo(v1.normalized() * sinf(angle * .5f), 1e-6));
+
+    TEST("Quaternion::fromEuler(const Vector3& angles)",
+         q2.rotate(v1).isEqualTo(v1.rotatedAround(q2.axis(), q2.angle()), 1e-3));
+
+    std::cerr << "q2.rotate(v1) = " << q2.rotate(v1) << '\n';
+    std::cerr << "v1.rotatedAroundUnitary(q2.axis(), q2.angle()) = " << v1.rotatedAroundUnitary(q2.axis(), q2.angle()) << '\n';
 }
 
 
@@ -37,10 +45,10 @@ void testQuatMethods()
          (la * Vec3::forward()).isColinearTo(v2 - v1));
     */
 
-    const bool inversed{q1.axis().isEqualTo(-v1.normalized())};
+    const bool inversed{q1.unitAxis().isEqualTo(-v1.normalized())};
 
-    TEST("Quaternion::axis()",
-         q1.axis().isEqualTo(v1.normalized()) || inversed);
+    TEST("Quaternion::axis() and Quaternion::unitAxis()",
+         q1.unitAxis().isEqualTo(v1.normalized()) || inversed);
 
     TEST("Quaternion::angle()", f32AreEqual(q1.angle(), inversed ? -angle : angle, 1e-4));
     TEST("Quaternion::slerp(const Quaternion& target, const f32 t)",
