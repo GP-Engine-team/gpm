@@ -3,7 +3,6 @@
 #include "TestingTools.hpp"
 #include "../include/GPM/Quaternion.hpp"
 #include "../include/GPM/Calc.hpp"
-#include "../include/GPM/DebugOutput.hpp"
 
 namespace GPM
 {
@@ -23,9 +22,6 @@ void testQuatStaticMethods()
 
     TEST("Quaternion::fromEuler(const Vector3& angles)",
          q2.rotate(v1).isEqualTo(v1.rotatedAround(q2.axis(), q2.angle()), 1e-3));
-
-    std::cerr << "q2.rotate(v1) = " << q2.rotate(v1) << '\n';
-    std::cerr << "v1.rotatedAroundUnitary(q2.axis(), q2.angle()) = " << v1.rotatedAroundUnitary(q2.axis(), q2.angle()) << '\n';
 }
 
 
