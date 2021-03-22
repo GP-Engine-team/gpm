@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <float.h>
+#include <intrin.h>
 
 #include "../include/GPM/Types.hpp"
 #include "../include/GPM/Vector3.hpp"
