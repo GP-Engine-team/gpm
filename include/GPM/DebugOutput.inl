@@ -49,7 +49,7 @@ inline std::ostream& operator<<(std::ostream& os, const Matrix4& mat) noexcept
 
 
 inline std::ostream& operator<<(std::ostream& os, const Quaternion& q) noexcept
-{ return os << '[' << q.s << ", " << q.v << ']'; }
+{ return os << '[' << q.w << ", " << q.v << ']'; }
 
 
 inline std::ostream& operator<<(std::ostream& os, const SplitTransform& st) noexcept

@@ -26,8 +26,8 @@ inline constexpr Mat3 toMatrix3(const Quat& q) noexcept
 {
     const f32 x2{q.x * q.x}, y2{q.y * q.y}, z2{q.z * q.z},
               xy{q.x * q.y}, yz{q.y * q.z}, xz{q.x * q.z},
-              wx{q.s * q.x}, wy{q.s * q.y}, wz{q.s * q.z},
-              s_2{2.f / q.length2()};
+              wx{q.w * q.x}, wy{q.w * q.y}, wz{q.w * q.z},
+              s_2{2.f / q.sqrLength()};
 
     // Column-major
     return
@@ -54,7 +54,7 @@ inline Quat toQuaternion(const Mat3& m) noexcept
     {
         f32 tmp = sqrtf(trace + 1.f);
 
-        q.s = tmp * .5f;
+        q.w = tmp * .5f;
 
         tmp = .5f / tmp;
 
@@ -79,7 +79,7 @@ inline Quat toQuaternion(const Mat3& m) noexcept
         if (tmp != .0f)
             tmp = .5f / tmp;
 
-        q.s    = (m.c[j].e[k] - m.c[k].e[j]) * tmp;
+        q.w    = (m.c[j].e[k] - m.c[k].e[j]) * tmp;
         q.e[j] = (m.c[i].e[j] + m.c[j].e[i]) * tmp;
         q.e[k] = (m.c[i].e[k] + m.c[k].e[i]) * tmp;
     }

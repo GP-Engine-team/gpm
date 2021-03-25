@@ -135,9 +135,23 @@ inline constexpr f32 Matrix4::trace() const noexcept
 { return e[0] + e[5] + e[10] + e[15]; }
 
 
+inline bool Matrix4::isEqualTo(const Matrix4& m, const f32 eps) const noexcept
+{
+    return c[0].isEqualTo(m.c[0], eps) && c[1].isEqualTo(m.c[1], eps) &&
+           c[2].isEqualTo(m.c[2], eps) && c[3].isEqualTo(m.c[3], eps);
+}
+
+
 
 
 /* ================ Operator overloads ================= */
+inline constexpr bool Matrix4::operator==(const Matrix4& m) const noexcept
+{
+    return (c[0] == m.c[0]) && (c[1] == m.c[1]) &&
+           (c[2] == m.c[2]) && (c[3] == m.c[3]);
+}
+
+
 // This actually does m * *this
 inline constexpr Matrix4& Matrix4::operator*=(const Matrix4& m) noexcept
 {

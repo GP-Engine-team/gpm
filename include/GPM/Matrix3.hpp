@@ -5,7 +5,7 @@
  */
 
 #pragma once
-#include "types.hpp"
+#include "Types.hpp"
 #include "Vector3.hpp"
 
 namespace GPM
@@ -16,7 +16,9 @@ namespace GPM
 
 union Matrix3
 {
-    // Data members, aligned by 16 to enable auto-vectorization
+    // Data members. The following data members can be accessed publicly:
+    // - f32  e[9], which is the same as {c[0].x, c[0].y, c[0].z, c[1].x, ...}
+    // - Vec4 c[3], which is the same as {Vec3{e[0], e[1], e[2]}, Vec3{e[3], ...}, ...}
     f32  e[MAT3_COEF];
     Vec3 c[MAT3_COL];
 

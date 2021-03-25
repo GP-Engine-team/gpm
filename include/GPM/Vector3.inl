@@ -1,4 +1,4 @@
-/* =================== Cosntructors =================== */
+/* =================== Constructors =================== */
 inline constexpr Vector3::Vector3(const f32 k) noexcept
     : x{k}, y{k}, z{k}
 {}
@@ -9,7 +9,7 @@ inline constexpr Vector3::Vector3(const f32 x_, const f32 y_, const f32 z_) noex
 {}
 
 
-inline constexpr Vector3::Vector3(Vec2 v, const f32 z_) noexcept
+inline constexpr Vector3::Vector3(const Vec2 v, const f32 z_) noexcept
     : xy{v}, z{z_}
 {}
 
@@ -23,38 +23,66 @@ inline constexpr Vector3::Vector3(const f32 coef[3]) noexcept
 
 /* =================== Static methods (pseudo-constructors) =================== */
 inline constexpr Vector3 Vector3::zero() noexcept
-{ return {.0f, .0f, .0f}; }
+{
+    return {.0f, .0f, .0f}; 
+}
 
 
 inline constexpr Vector3 Vector3::one() noexcept
-{ return {1.f, 1.f, 1.f}; }
+{
+    return {1.f, 1.f, 1.f}; 
+}
 
 
 inline constexpr Vector3 Vector3::right() noexcept
-{ return {1.f, .0f, .0f}; }
+{
+    return {1.f, .0f, .0f}; 
+}
 
 
 inline constexpr Vector3 Vector3::up() noexcept
-{ return {.0f, 1.f, .0f}; }
+{
+    return {.0f, 1.f, .0f}; 
+}
 
 
 inline constexpr Vector3 Vector3::forward() noexcept
-{ return {.0f, .0f, 1.f}; }
+{
+    return {.0f, .0f, 1.f}; 
+}
+
+
+inline constexpr f32 Vector3::dot(const Vector3& lhs, const Vector3& rhs) noexcept
+{
+    return lhs.dot(rhs);
+}
+
+
+inline constexpr Vector3 Vector3::cross(const Vector3& lhs, const Vector3& rhs) noexcept
+{
+    return lhs.cross(rhs);
+}
 
 
 
 
 /* =================== Methods =================== */
-inline constexpr f32 Vector3::length2() const noexcept
-{ return (x * x) + (y * y) + (z * z); }
+inline constexpr f32 Vector3::sqrLength() const noexcept
+{
+    return (x * x) + (y * y) + (z * z);
+}
 
 
 inline f32 Vector3::length() const noexcept
-{ return sqrtf(length2()); }
+{
+    return sqrtf(sqrLength());
+}
 
 
 inline constexpr f32 Vector3::dot(const Vector3& v) const noexcept
-{ return (x * v.x) + (y * v.y) + (z * v.z); }
+{
+    return (x * v.x) + (y * v.y) + (z * v.z);
+}
 
 
 inline constexpr Vector3 Vector3::cross(const Vector3& v) const noexcept
@@ -64,42 +92,47 @@ inline constexpr Vector3 Vector3::cross(const Vector3& v) const noexcept
             (v.y * x) - (y * v.x)};
 }
 
-inline constexpr f32 Vector3::dot (const Vector3& lhs, const Vector3& rhs) noexcept
-{
-    return lhs.dot(rhs);
-}
-
-inline constexpr Vector3 Vector3::cross (const Vector3& lhs, const Vector3& rhs) noexcept
-{
-    return lhs.cross(rhs);
-}
 
 inline constexpr bool Vector3::isNull() const noexcept
-{ return !x && !y && !z; }
+{
+    return !x && !y && !z;
+}
 
 
 inline constexpr bool Vector3::isOrthogonalTo(const Vector3& v) const noexcept
-{ return !dot(v); }
+{
+    return !dot(v);
+}
 
 
 inline constexpr bool Vector3::isNormalized() const noexcept
-{ return !(length2() - 1.f); }
+{
+    return !(sqrLength() - 1.f);
+}
 
 
 inline constexpr bool Vector3::isOrthonormalTo(const Vector3& v) const noexcept
-{ return !dot(v) && isNormalized() && v.isNormalized(); }
+{
+    return !dot(v) && isNormalized() && v.isNormalized();
+}
 
 
 inline constexpr bool Vector3::isColinearTo(const Vector3& v) const noexcept
-{ return cross(v).isNull(); }
+{
+    return cross(v).isNull();
+}
 
 
 inline bool Vector3::isEqualTo(const Vector3& v, const f32 eps) const noexcept
-{ return fabs(x - v.x) <= eps && fabs(y - v.y) <= eps && fabs(z - v.z) <= eps; }
+{
+    return fabs(x - v.x) <= eps && fabs(y - v.y) <= eps && fabs(z - v.z) <= eps;
+}
 
 
 inline bool Vector3::isNotEqualTo(const Vector3& v, const f32 eps) const noexcept
-{ return fabs(x - v.x) > eps || fabs(y - v.y) > eps || fabs(z - v.z) > eps; }
+{
+    return fabs(x - v.x) > eps || fabs(y - v.y) > eps || fabs(z - v.z) > eps;
+}
 
 
 inline void Vector3::normalize() noexcept
@@ -112,55 +145,71 @@ inline void Vector3::normalize() noexcept
 }
 
 
-inline constexpr f32 Vector3::distance2To(const Vector3& v) const noexcept
-{ return (*this - v).length2(); }
+inline constexpr f32 Vector3::sqrDistanceTo(const Vector3& v) const noexcept
+{
+    return (*this - v).sqrLength();
+}
 
 
 inline f32 Vector3::distanceTo(const Vector3& v) const noexcept
-{ return (*this - v).length(); }
+{
+    return (*this - v).length();
+}
 
 
 inline f32 Vector3::angleWithUnitary(const Vector3& v) const noexcept
-{ return acosf(dot(v) / length()); }
+{
+    const f32 cosAngle{dot(v) / length()};
+
+    return acosf(clamp(cosAngle, -1.f, 1.f));
+}
 
 
 inline f32 Vector3::angleWith(const Vector3& v) const noexcept
-{ return acosf(dot(v) / sqrtf(length2() * v.length2())); }
+{
+    const f32 cosAngle{dot(v) / sqrtf(sqrLength() * v.sqrLength())};
+
+    return acosf(clamp(cosAngle, -1.f, 1.f));
+}
 
 
 inline f32 Vector3::triangleArea(const Vector3& v) const noexcept
-{ return cross(v).length() * .5f; }
+{
+    return cross(v).length() * .5f;
+}
 
 
 inline constexpr Vector3 Vector3::projectedOnUnitary(const Vector3& v) const noexcept
-{ return v * dot(v); }
+{
+    return v * dot(v);
+}
 
 
 inline constexpr Vector3 Vector3::projectedOn(const Vector3& v) const noexcept
-{ return v * (dot(v) / v.length2()); }
-
+{
+    return v * (dot(v) / v.sqrLength());
+}
 
 
 inline Vector3 Vector3::normalized() const noexcept
 {
-    const f32 reciprocal{1.f / length()};
-
-    return {x * reciprocal, y * reciprocal, z * reciprocal};
+    return *this / length();
 }
 
 
-// Rodriguez rotation around v, by angle radians
 inline Vector3 Vector3::rotatedAroundUnitary(const Vector3& v, const f32 angle) const noexcept
 {
-	const Vector3   cp{v.cross(*this)};
+	const Vector3   uxv     {v.cross(*this)};
 	const f32	    cosAngle{cosf(angle)}, dp{dot(v)};
 
-    return (*this * cosAngle) + (cp * sinf(angle)) + v * (dp * (1.f - cosAngle));
+    return (*this * cosAngle) + v * (dp * (1.f - cosAngle)) + (uxv * sinf(angle));
 }
 
 
 inline Vector3 Vector3::rotatedAround(const Vector3& v, const f32 angle) const noexcept
-{ return rotatedAroundUnitary(v.normalized(), angle); }
+{
+    return rotatedAroundUnitary(v.normalized(), angle);
+}
 
 
 inline constexpr Vector3 Vector3::lerp(const Vector3& v, const f32 t) const noexcept
@@ -169,7 +218,6 @@ inline constexpr Vector3 Vector3::lerp(const Vector3& v, const f32 t) const noex
 
     return {(x * tmp) + (v.x * t), (y * tmp) + (v.y * t), (z * tmp) + (v.z * t)};
 }
-
 
 
 inline constexpr Vector3& Vector3::operator+=(const Vector3& v) noexcept
@@ -274,44 +322,70 @@ inline constexpr Vector3& Vector3::operator/=(const f32 k) noexcept
 }
 
 
+inline constexpr bool Vector3::operator==(const Vector3& v) const noexcept
+{
+    return x == v.x && y == v.y && z == v.z;
+}
+
+
 inline constexpr Vector3 Vector3::operator+(const Vector3& v) const noexcept
-{ return {x + v.x, y + v.y, z + v.z}; }
+{
+    return {x + v.x, y + v.y, z + v.z};
+}
 
 
 inline constexpr Vector3 Vector3::operator+(const Vector3&& v) const noexcept
-{ return {x + v.x, y + v.y, z + v.z}; }
+{
+    return {x + v.x, y + v.y, z + v.z};
+}
 
 
-inline constexpr Vector3 Vector3::operator-(const Vector3& v)	const noexcept
-{ return {x - v.x, y - v.y, z - v.z}; }
+inline constexpr Vector3 Vector3::operator-(const Vector3& v) const noexcept
+{
+    return {x - v.x, y - v.y, z - v.z};
+}
 
 
 inline constexpr Vector3 Vector3::operator-(const Vector3&& v) const noexcept
-{ return {x - v.x, y - v.y, z - v.z}; }
+{
+    return {x - v.x, y - v.y, z - v.z};
+}
 
 
 inline constexpr Vector3 Vector3::operator-() const noexcept
-{ return {-x, -y, -z}; }
+{
+    return {-x, -y, -z};
+}
 
 
 inline constexpr Vector3 Vector3::operator*(const Vector3& v) const noexcept
-{ return {x * v.x, y * v.y, z * v.z}; }
+{
+    return {x * v.x, y * v.y, z * v.z};
+}
 
 
 inline constexpr Vector3 Vector3::operator*(const Vector3&& v) const noexcept
-{ return {x * v.x, y * v.y, z * v.z}; }
+{
+    return {x * v.x, y * v.y, z * v.z};
+}
 
 
 inline constexpr Vector3 Vector3::operator/(const Vector3& v) const noexcept
-{ return {x / v.x, y / v.y, z / v.z}; }
+{
+    return {x / v.x, y / v.y, z / v.z};
+}
 
 
 inline constexpr Vector3 Vector3::operator/(const Vector3&& v) const noexcept
-{ return {x / v.x, y / v.y, z / v.z}; }
+{
+    return {x / v.x, y / v.y, z / v.z};
+}
 
 
 inline constexpr Vector3 Vector3::operator*(const f32 k) const noexcept
-{ return {x * k, y * k, z * k}; }
+{
+    return {x * k, y * k, z * k};
+}
 
 
 inline constexpr Vector3 Vector3::operator/(const f32 k) const noexcept
