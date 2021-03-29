@@ -61,7 +61,7 @@ struct Transform
     Mat4                  normalMat   ()                                      const noexcept;
     constexpr Vec3        right       ()                                      const noexcept;
     constexpr Vec3        up          ()                                      const noexcept;
-    constexpr Vec3        forward     ()                                      const noexcept;
+    constexpr Vec3        backward    ()                                      const noexcept;
     constexpr Vec3        translation ()                                      const noexcept;
     Mat4                  rotation    ()                                      const noexcept;
     Vec3                  eulerAngles ()                                      const noexcept;
