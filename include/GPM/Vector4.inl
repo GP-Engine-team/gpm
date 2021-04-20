@@ -80,15 +80,15 @@ inline constexpr Vector4 Vector4::operator/(const f32 k) const noexcept
 }
 
 inline constexpr Vector4 Vector4::operator+(const Vector4& v) const noexcept
-{ return {x + v.x, y + v.y, z + v.z, , w + v.w}; }
+{ return {x + v.x, y + v.y, z + v.z, w + v.w}; }
 
 
 inline constexpr Vector4 Vector4::operator+(const Vector4&& v) const noexcept
-{ return {x + v.x, y + v.y, z + v.z, , w + v.w}; }
+{ return {x + v.x, y + v.y, z + v.z, w + v.w}; }
 
 inline constexpr Vector4 Vector4::operator-(const Vector4& v)	const noexcept
-{ return {x - v.x, y - v.y, z - v.z, , w - v.w}; }
+{ return {x - v.x, y - v.y, z - v.z, w - v.w}; }
 
 
 inline constexpr Vector4 Vector4::operator-(const Vector4&& v) const noexcept
-{ return {x - v.x, y - v.y, z - v.z, , w - v.w}; }
+{ return {x - v.x, y - v.y, z - v.z, w - v.w}; }
