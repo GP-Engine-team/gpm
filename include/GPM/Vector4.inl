@@ -78,3 +78,17 @@ inline constexpr Vector4 Vector4::operator/(const f32 k) const noexcept
     const f32 reciprocal{1.f / k};
     return {xyz * reciprocal, w * reciprocal};
 }
+
+inline constexpr Vector4 Vector4::operator+(const Vector4& v) const noexcept
+{ return {x + v.x, y + v.y, z + v.z, , w + v.w}; }
+
+
+inline constexpr Vector4 Vector4::operator+(const Vector4&& v) const noexcept
+{ return {x + v.x, y + v.y, z + v.z, , w + v.w}; }
+
+inline constexpr Vector4 Vector4::operator-(const Vector4& v)	const noexcept
+{ return {x - v.x, y - v.y, z - v.z, , w - v.w}; }
+
+
+inline constexpr Vector4 Vector4::operator-(const Vector4&& v) const noexcept
+{ return {x - v.x, y - v.y, z - v.z, , w - v.w}; }
