@@ -31,8 +31,8 @@ inline Quaternion Quaternion::fromEuler(const Vec3& angles) noexcept
     const Vec3 imAxis
     {
         sinX * cosYcosZ - cosX * sinYsinZ,
-        cosX * sinYcosZ + sinX * cosYsinZ,
-        cosX * cosYsinZ - sinX * sinYcosZ
+        cosX * cosYsinZ - sinX * sinYcosZ,
+        cosX * sinYcosZ + sinX * cosYsinZ
     };
 
     return {imAxis, cosX * cosYcosZ + sinX * sinYsinZ};

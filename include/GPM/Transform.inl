@@ -108,11 +108,11 @@ inline Mat4 Transform::lookAt(const Vec3& eyePos,
                               const Vec3& targetPos,
                               const Vec3& normalizedUp) noexcept
 {
-    const Vec4 forward{(eyePos - targetPos).normalized(), .0f},
-               right  {normalizedUp.cross(forward.xyz),   .0f},
-               up     {forward.xyz.cross(right.xyz),      .0f};
+    const Vec4 backward{(eyePos - targetPos).normalized(), .0f},
+               right   {normalizedUp.cross(backward.xyz),   .0f},
+               up      {backward.xyz.cross(right.xyz),      .0f};
 
-    return {right, up, forward, eyePos};
+    return {right, up, backward, eyePos};
 }
 
 
@@ -207,7 +207,7 @@ inline constexpr Vec3 Transform::up() const noexcept
 }
 
 
-inline constexpr Vec3 Transform::forward() const noexcept
+inline constexpr Vec3 Transform::backward() const noexcept
 {
     return model.c[2].xyz;
 }
@@ -222,7 +222,7 @@ inline constexpr Vec3 Transform::translation() const noexcept
 
 inline Mat4 Transform::rotation() const noexcept
 {
-    const Vec3 invScale{1.f / right().length(), 1.f / up().length(), 1.f / forward().length()};
+    const Vec3 invScale{1.f / right().length(), 1.f / up().length(), 1.f / backward().length()};
 
     return
     {
@@ -257,7 +257,7 @@ inline Vec3 Transform::eulerAngles() const noexcept
 
 inline Vec3 Transform::scaling() const noexcept
 {
-    return {right().length(), up().length(), forward().length()};
+    return {right().length(), up().length(), backward().length()};
 }
 
 
