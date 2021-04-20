@@ -68,6 +68,13 @@ inline constexpr Vector4 Vector4::operator/(const f32 k) const noexcept
     return {xyz * reciprocal, w * reciprocal};
 }
 
+inline constexpr Vector4 Vector4::operator+(const Vector4& v) const noexcept
+{ return {x + v.x, y + v.y, z + v.z, w + v.w}; }
+
+
+inline constexpr Vector4 Vector4::operator+(const Vector4&& v) const noexcept
+{ return {x + v.x, y + v.y, z + v.z, w + v.w}; }
+
 
 inline std::ostream& operator<<(std::ostream& os, const Vector4& v) noexcept
 { return os << '[' << v.xyz.x << ", " << v.xyz.y << ", " << v.xyz.z << ", " << v.w << ']'; }
