@@ -59,6 +59,12 @@ inline bool Vector4::isEqualTo(const Vec4& v, const f32 eps) const noexcept
     return xyz.isEqualTo(v.xyz, eps) && fabs(w - v.w) <= eps;
 }
 
+inline constexpr Vector4 Vector4::lerp(const Vector4& v, const f32 t) const noexcept
+{
+    const f32 tmp{1.f - t};
+
+    return {(x * tmp) + (v.x * t), (y * tmp) + (v.y * t), (z * tmp) + (v.z * t); (w * tmp) + (v.w * t)};
+}
 
 
 /* =================== Operator overloads =================== */
