@@ -40,7 +40,7 @@ inline f32 Vector4::length() const noexcept
 
 inline constexpr f32 Vector4::dot(const Vector4& v) const noexcept
 {
-    return (x * v.x) + (y * v.y) + (z * v.z) + w * v.w);
+    return (x * v.x) + (y * v.y) + (z * v.z) + (w * v.w);
 }
 
 inline constexpr Vector4 Vector4::homogenized() const noexcept
