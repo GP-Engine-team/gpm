@@ -63,6 +63,8 @@ union alignas(16) Vector4
     bool              isEqualTo   (const Vector4& v,
                                    const f32 eps = 1e-6)                        const noexcept;
 
+    constexpr Vector4   lerp                (const Vector4& v, const f32 t) const noexcept;
+
     constexpr bool     operator== (const Vector4& v)                            const noexcept;
     constexpr Vector4&	operator+=          (const Vector4& v)              noexcept;
     constexpr Vector4&	operator+=          (const Vector4&& v)             noexcept;
