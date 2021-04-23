@@ -27,6 +27,22 @@ inline constexpr Vector4::Vector4(const f32 coef[4]) noexcept
 
 
 /* =================== Methods =================== */
+inline constexpr f32 Vector4::sqrLength() const noexcept
+{
+    return (x * x) + (y * y) + (z * z) + (w * w);
+}
+
+
+inline f32 Vector4::length() const noexcept
+{
+    return sqrtf(sqrLength());
+}
+
+inline constexpr f32 Vector4::dot(const Vector4& v) const noexcept
+{
+    return (x * v.x) + (y * v.y) + (z * v.z) + w * v.w);
+}
+
 inline constexpr Vector4 Vector4::homogenized() const noexcept
 { return {xyz / w}; }
 
@@ -51,6 +67,45 @@ inline constexpr bool Vector4::operator==(const Vector4& v) const noexcept
     return xyz == v.xyz && w == v.w;
 }
 
+inline constexpr Vector4& Vector4::operator+=(const Vector4& v) noexcept
+{
+	x += v.x;
+	y += v.y;
+	z += v.z;
+    w += v.w;
+
+	return *this;
+}
+
+inline constexpr Vector4& Vector4::operator+=(const Vector4&& v) noexcept
+{
+	x += v.x;
+	y += v.y;
+	z += v.z;
+    w += v.w;
+
+	return *this;
+}
+
+inline constexpr Vector4& Vector4::operator-=(const Vector4& v) noexcept
+{
+	x -= v.x;
+	y -= v.y;
+	z -= v.z;
+	w -= v.w;
+
+	return *this;
+}
+
+inline constexpr Vector4& Vector4::operator-=(const Vector4&& v) noexcept
+{
+	x -= v.x;
+	y -= v.y;
+	z -= v.z;
+	w -= v.w;
+
+	return *this;
+}
 
 inline constexpr Vector4& Vector4::operator*=(const Vector4& v) noexcept
 {
