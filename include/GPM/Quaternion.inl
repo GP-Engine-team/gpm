@@ -15,14 +15,12 @@ inline Quaternion Quaternion::angleAxis(const f32 angle, const Vec3& axis) noexc
 inline Quaternion Quaternion::fromEuler(const Vec3& angles) noexcept
 {
     // Half angles
-    const f32 halfXAngle{angles.x * .5f},
-              halfYAngle{angles.y * .5f},
-              halfZAngle{angles.z * .5f};
+    const Vec3 halfAngles{angles * .5f};
 
     // Cosinus and sinus of half angles
-    const f32 cosX{cosf(halfXAngle)}, sinX{sinf(halfXAngle)},
-              cosY{cosf(halfYAngle)}, sinY{sinf(halfYAngle)},
-              cosZ{cosf(halfZAngle)}, sinZ{sinf(halfZAngle)};
+    const f32 cosX{cosf(halfAngles.x)}, sinX{sinf(halfAngles.x)},
+              cosY{cosf(halfAngles.y)}, sinY{sinf(halfAngles.y)},
+              cosZ{cosf(halfAngles.z)}, sinZ{sinf(halfAngles.z)};
 
     // Results used more than once
     const f32 cosYcosZ{cosY * cosZ}, sinYsinZ{sinY * sinZ},
@@ -31,13 +29,12 @@ inline Quaternion Quaternion::fromEuler(const Vec3& angles) noexcept
     const Vec3 imAxis
     {
         sinX * cosYcosZ - cosX * sinYsinZ,
-        cosX * cosYsinZ - sinX * sinYcosZ,
-        cosX * sinYcosZ + sinX * cosYsinZ
+        cosX * sinYcosZ - sinX * cosYsinZ,
+        cosX * cosYsinZ + sinX * sinYcosZ
     };
 
     return {imAxis, cosX * cosYcosZ + sinX * sinYsinZ};
 }
-
 
 // TODO: simplify, add const, remove casts, remove ifs, pass a "up" Vec3 parameter
 inline Quaternion Quaternion::lookAt(const Vec3& sourcePoint, const Vec3& destPoint) noexcept
@@ -99,33 +96,32 @@ inline Vec3 Quaternion::eulerAngles() const noexcept
 {
     Vec3 angles;
 
-    { // X and Z
-        const f32 y2{y * y};
+    { // X and Y
+        const f32 z2 = z * z;
 
         { // X
-            const f32 sinAngle{2.f * ((w * x) + (y * z))};
-            const f32 cosAngle{1.f - 2.f * ((x * x) + y2)};
-            angles.x = atan2(sinAngle, cosAngle);
+            const f32 sinXcosZ = 2.f * ((w * x) + (z * y));
+            const f32 cosXcosZ = 1.f - 2.f * ((x * x) + z2);
+            angles.x = atan2f(sinXcosZ, cosXcosZ);
         }
 
-        { // Z
-            const f32 sinAngle{2.f * ((w * z) + (x * y))};
-            const f32 cosAngle{1.f - 2.f * (y2 + (z * z))};
-            angles.z = atan2(sinAngle, cosAngle);
+        { // Y
+            const f32 sinYcosZ = 2.f * ((w * y) + (x * z));
+            const f32 cosYcosZ = 1.f - 2.f * (z2 + (y * y));
+            angles.y = atan2f(sinYcosZ, cosYcosZ);
         }
     }
 
-    { // Y
-        const f32 sinAngle{2.f * ((w * y) - (z * x))};
-
-        if (fabs(sinAngle) >= 1.f)
+    { // Z
+        const f32 sinZ = 2.f * ((w * z) - (y * x));
+        
+        if (fabsf(sinZ) >= 1.f)
         {
-            angles.y = copysign(HALF_PI, sinAngle);
+            angles.z = copysignf(HALF_PI, sinZ);
         }
-
         else
         {
-            angles.y = asin(sinAngle);
+            angles.z = asinf(sinZ);
         }
     }
 
