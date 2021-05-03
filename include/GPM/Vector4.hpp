@@ -54,17 +54,31 @@ union alignas(16) Vector4
     constexpr Vector4(const f32 coef[4])                                        noexcept;
 
     // Methods
+    inline constexpr f32       sqrLength           ()                              const noexcept;
+    inline f32                 length              ()                              const noexcept;
+    inline constexpr f32       dot                 (const Vector4& v)              const noexcept;
+
     constexpr Vector4 homogenized ()  const noexcept;
     constexpr void    homogenize  ()  noexcept;
     bool              isEqualTo   (const Vector4& v,
                                    const f32 eps = 1e-6)                        const noexcept;
 
+    inline constexpr Vector4   lerp                (const Vector4& v, const f32 t) const noexcept;
+
     constexpr bool     operator== (const Vector4& v)                            const noexcept;
+    constexpr Vector4&	operator+=          (const Vector4& v)              noexcept;
+    constexpr Vector4&	operator+=          (const Vector4&& v)             noexcept;
+    constexpr Vector4&	operator-=          (const Vector4& v)              noexcept;
+    constexpr Vector4&	operator-=          (const Vector4&& v)             noexcept;
     constexpr Vector4& operator*= (const Vector4& v)                            noexcept;
     constexpr Vector4  operator*  (const Vector4& v)                            const noexcept;
     constexpr Vector4  operator/  (const Vector4& v)                            const noexcept;
     constexpr Vector4  operator*  (const f32 k)                                 const noexcept;
     constexpr Vector4  operator/  (const f32 k)                                 const noexcept;
+    constexpr Vector4  operator+  (const Vector4& v) const noexcept;
+    constexpr Vector4  operator+  (const Vector4&& v)const noexcept;
+    constexpr Vector4  operator-  (const Vector4& v) const noexcept;
+    constexpr Vector4  operator-  (const Vector4&& v)const noexcept;
 };
 
 using Vec4 = Vector4;

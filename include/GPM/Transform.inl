@@ -212,6 +212,11 @@ inline constexpr Vec3 Transform::backward() const noexcept
     return model.c[2].xyz;
 }
 
+inline constexpr Vec3 Transform::forward() const noexcept
+{
+    return -model.c[2].xyz;
+}
+
 
 inline constexpr Vec3 Transform::translation() const noexcept
 {
