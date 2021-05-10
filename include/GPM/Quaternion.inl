@@ -172,12 +172,12 @@ inline constexpr Quaternion Quaternion::inversed() const noexcept
     return conjugate() / sqrLength();
 }
 
-
 inline Quaternion Quaternion::slerp(const Quaternion& target, const f32 t) const noexcept
 {
-    const f32 angle{angleWith(target)};
-    
-    return (*this * (sinf((1.f - t) * angle)) + target * sinf(t * angle)) / sinf(angle);
+    const f32 dotQaQb = dot(target);
+    const f32 angle   = std::acos(std::abs(dotQaQb));
+    const f32 sign    = (dotQaQb >= 0.f) * 2.f - 1.f; // Hack to avoid branch (2x - 1) with x is bool
+    return (*this * sign * std::sin((1.f - t) * angle) + target * std::sin(t * angle)) / std::sin(angle);
 }
 
 
