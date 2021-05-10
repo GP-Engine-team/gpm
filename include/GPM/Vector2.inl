@@ -82,9 +82,16 @@ inline bool Vector2::isNotEqualTo(const Vector2& v, const f32 eps) const noexcep
 
 inline void Vector2::normalize() noexcept
 {
-	const f32 reciprocal{1.f / length()};
-	x *= reciprocal;
-	y *= reciprocal;
+	*this /= length();
+}
+
+
+inline void Vector2::safelyNormalize() noexcept
+{
+    const f32 sqrLen{sqrLength()};
+
+    if (sqrLen)    
+	    *this /= sqrtf(sqrLen);
 }
 
 
@@ -118,6 +125,14 @@ inline constexpr Vector2 Vector2::projectedOn(const Vector2& v) const noexcept
 
 inline Vector2 Vector2::normalized() const noexcept
 { return *this / length(); }
+
+
+inline Vector2 Vector2::safelyNormalized() const noexcept
+{
+    const f32 sqrLen{sqrLength()};
+
+    return sqrLen ? (*this / sqrtf(sqrLen)) : *this;
+}
 
 
 inline Vector2 Vector2::rotated(const f32 angle) const noexcept
