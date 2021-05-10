@@ -20,7 +20,7 @@
 
 #include "Constants.hpp"
 
-namespace GPM::Random
+namespace GPM
 {
 
 /**
@@ -34,7 +34,7 @@ inline void initSeed();
  * 
  * @param seed The pseudo-random number generator is initialized using the argument passed as seed.
  */
-inline void initSeed(float seed);
+inline void initSeed(const u32 seed);
 
 /**
  * @brief This will generate a number from 0.0 to 1.0, inclusive.
