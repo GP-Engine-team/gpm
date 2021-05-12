@@ -1,56 +1,54 @@
-#include "Random.hpp"
-
 void initSeed()
 {
-    std::srand(time(NULL));
+    srand((u32)time(NULL));
 }
 
-void initSeed(float seed)
+void initSeed(const u32 seed)
 {
     srand(seed);
 }
 
-template<typename T = float> 
+template<typename T> 
 auto unitValue() -> std::enable_if_t<std::is_floating_point<T>::value, T>
 {
-    return static_cast <T> (rand()) / static_cast <T> (RAND_MAX);
+    return static_cast<T>(rand()) / static_cast<T>(RAND_MAX);
 } 
 
-template<typename T = int> 
+template<typename T> 
 auto unitValue() -> std::enable_if_t<std::is_integral<T>::value, T>
 {
     return static_cast<T>(rand() & 1);
 }
 
-template<typename T = float>
+template<typename T>
 auto ranged(T max) -> std::enable_if_t<std::is_floating_point<T>::value, T>
 {
-    return static_cast <T> (rand()) / (static_cast <T> (RAND_MAX / max));
+    return static_cast<T>(rand()) / (static_cast<T>(RAND_MAX / max));
 }
 
-template<typename T = int>
+template<typename T>
 auto ranged(T max) -> std::enable_if_t<std::is_integral<T>::value, T>
 {
-    return static_cast <T> (rand()) / (static_cast <T> (RAND_MAX/(max + static_cast<T>(1))));
+    return static_cast<T>(rand()) / (static_cast<T>(RAND_MAX/(max + static_cast<T>(1))));
 }
 
 template<typename T>
 auto ranged(T min, T max)  -> std::enable_if_t<std::is_floating_point<T>::value, T>
 {
-    return min + static_cast <T> (rand()) /( static_cast <T> (RAND_MAX/(max - min)));
+    return min + static_cast<T>(rand()) / (static_cast<T>(RAND_MAX / (max - min)));
 }
 
 template<typename T>
 auto ranged(T min, T max) -> std::enable_if_t<std::is_integral<T>::value, T>
 {
-    return min + static_cast <T> (rand()) / (static_cast <T> (RAND_MAX/((max + static_cast<T>(1)) - min)));
+    return min + static_cast<T>(rand()) / (static_cast<T>(RAND_MAX / ((max + static_cast<T>(1)) - min)));
 }
 
 Vec2 circularCoordinate(const Vec2& center, float range)
 {
     const float randValue = static_cast<float>(rand());
     const float scale = unitValue<float>();
-    return Vec2{center.x + range * std::cos(randValue) * scale, center.y + range * std::sin(randValue) * scale};
+    return {center.x + range * std::cos(randValue) * scale, center.y + range * std::sin(randValue) * scale};
 }
 
 Vec2 peripheralCircularCoordinate(const Vec2& center, float range)

@@ -1,11 +1,14 @@
+#if !defined(_MSC_VER)
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wmissing-braces"
+#endif
 
+#include "../include/GPM/conversion.hpp"
 #include "TestingTools.hpp"
 #include "TestVec3.hpp"
 #include "TestQuat.hpp"
 #include "TestMat4.hpp"
-#include "../include/GPM/DebugOutput.hpp"
+#include "../include/GPM/Random.hpp"
 
 // Test compilation line, execute from the root of the repository:
 // - clang++: clang++ -W -Wall -Werror -O3 -ffp-contract=fast -march=native -fno-reciprocal-math -fno-trapping-math -fno-math-errno -fno-signed-zeros -msse2 tests/main.cpp -o main.exe
