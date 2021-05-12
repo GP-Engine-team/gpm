@@ -20,7 +20,7 @@
 
 #include "Constants.hpp"
 
-namespace GPM
+namespace GPM::Random
 {
 
 /**
