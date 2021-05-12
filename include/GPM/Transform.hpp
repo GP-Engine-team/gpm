@@ -74,6 +74,10 @@ struct Transform
     void                  setRotation         (const Vec3& r)                 noexcept;
     constexpr void        setScale            (const Vec3& s)                 noexcept;
 
+    constexpr void 	setVectorUp(const Vec3& newUp) noexcept;
+    constexpr void 	setVectorRight(const Vec3& newRight) noexcept;
+    constexpr void 	setVectorForward(const Vec3& newForward) noexcept;
+
     // Transformations
     constexpr void        translateX  (const f32 shift)                       noexcept;
     constexpr void        translateY  (const f32 shift)                       noexcept;

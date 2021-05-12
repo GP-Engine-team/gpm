@@ -425,6 +425,20 @@ inline void Transform::rotateAround(const Vec3& axis, const f32 angle) noexcept
     apply(rotationAround(axis, angle));
 }
 
+inline constexpr void Transform::setVectorUp(const Vec3& newUp) noexcept
+{
+	model.c[1].xyz = newUp;
+}
+
+inline constexpr void Transform::setVectorRight(const Vec3& newRight) noexcept
+{
+	model.c[0].xyz = newRight;
+}
+
+inline constexpr void Transform::setVectorForward(const Vec3& newForward) noexcept
+{
+	model.c[2].xyz = -newForward;
+}
 
 inline constexpr void Transform::scaleX(const f32 coef) noexcept
 {
