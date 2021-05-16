@@ -140,18 +140,22 @@ inline Mat4 Transform::perspective(const f32 fovY, const f32 aspect,
 }
 
 
-inline constexpr Mat4 Transform::orthographic(const f32 right, const f32 top,
-                                              const f32 near_, const f32 far_) noexcept
+inline constexpr Mat4 Transform::orthographic(const f32 right, const f32 left, const f32 top, const f32 bottom,
+                                              const f32 nearVal, const f32 farVal) noexcept
 {
-    const f32 farMinNear{far_ - near_};
+    // will be optimisate by compilator
+    const float a11 = 2.f / (right - left);
+    const float a22 = 2.f / (top - bottom);
+    const float a33 = -2.f / (farVal - nearVal);
+    
+    const float tx = -(right + left) / (right - left);
+    const float ty = -(top + bottom) / (top - bottom);
+    const float tz = -(farVal + nearVal) / (farVal - nearVal);
 
-    return
-    {
-        1.f / right, .0f,       .0f,                          .0f,
-        .0f,         1.f / top, .0f,                          .0f,
-        .0f,         .0f,       -2.f / farMinNear,            .0f,
-        .0f,         .0f,       (far_ + near_) / (-farMinNear), 1.f
-    };
+    return {a11, 0.f, 0.f, 0.f,
+            0.f, a22, 0.f, 0.f,
+            0.f, 0.f, a33, 0.f,
+            tx, ty, tz, 1.f};
 }
 
 
