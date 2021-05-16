@@ -52,8 +52,8 @@ struct Transform
                                        const f32 near_, const f32 far_)      noexcept;
     static Mat4           perspective (const f32 fovY,  const f32 aspect,
                                        const f32 near_, const f32 far_)      noexcept;
-    static constexpr Mat4 orthographic(const f32 right, const f32 top,
-                                       const f32 near_, const f32 far_)       noexcept;
+    static constexpr Mat4 orthographic(const f32 right, const f32 left, const f32 top, const f32 bottom,
+                                       const f32 nearVal, const f32 farVal) noexcept;
     static constexpr Mat4 viewport    (const f32 x,     const f32 y,
                                        const f32 width, const f32 height)     noexcept;
 
