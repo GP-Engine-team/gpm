@@ -131,7 +131,7 @@ inline Vec3 Quaternion::eulerAngles() const noexcept
 
 inline constexpr f32 Quaternion::sqrLength() const noexcept
 {
-    return v.sqrLength() + w * w;
+    return v.sqrLength() + (w * w);
 }
 
 
@@ -153,11 +153,28 @@ inline Quaternion Quaternion::normalized() const noexcept
 }
 
 
+inline Quaternion Quaternion::safelyNormalized() const noexcept
+{
+    const f32 sqrLen{sqrLength()};
+    return sqrLen ? *this / sqrtf(sqrLen) : *this;
+}
+
+
 inline void Quaternion::normalize() noexcept
 {
     const f32 reciprocal_len{1.f / length()};
     v *= reciprocal_len;
     w *= reciprocal_len;
+}
+
+inline void Quaternion::safelyNormalize() noexcept
+{
+    const f32 sqrLen{sqrLength()};
+
+    if (sqrLen)
+    {
+        *this /= sqrtf(sqrLen);
+    }
 }
 
 
@@ -172,11 +189,18 @@ inline constexpr Quaternion Quaternion::inversed() const noexcept
     return conjugate() / sqrLength();
 }
 
+
+inline constexpr Quaternion Quaternion::to(const Quaternion& target) const noexcept
+{
+    return target * inversed();
+}
+
+
 inline Quaternion Quaternion::slerp(const Quaternion& target, const f32 t) const noexcept
 {
     const f32 dotQaQb = dot(target);
     const f32 angle   = std::acos(std::abs(dotQaQb));
-    const f32 sign    = (dotQaQb >= 0.f) * 2.f - 1.f; // Hack to avoid branch (2x - 1) with x is bool
+    const f32 sign    = copysignf(1.f, dotQaQb);
     return (*this * sign * std::sin((1.f - t) * angle) + target * std::sin(t * angle)) / std::sin(angle);
 }
 
@@ -201,6 +225,22 @@ inline constexpr bool Quaternion::operator==(const Quaternion& q) const noexcept
 {
     return v == q.v && w == q.w;
 }
+
+
+inline constexpr Quaternion Quaternion::operator*=(const f32 k) const noexcept
+{
+    return {v * k, w * k};
+}
+
+
+inline constexpr Quaternion Quaternion::operator/=(const f32 k) const noexcept
+{
+    const f32 reciprocal{1.f / k};
+
+    return {v * reciprocal, w * reciprocal};
+}
+
+
 
 
 inline constexpr Quaternion Quaternion::operator+(const Quaternion& q) const noexcept
