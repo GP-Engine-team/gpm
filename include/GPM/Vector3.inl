@@ -179,6 +179,12 @@ inline f32 Vector3::angleWith(const Vector3& v) const noexcept
 }
 
 
+inline f32 Vector3::signedAngleWithUnitary(const Vector3& v, const Vector3& planeNormal) const noexcept
+{
+    return atan2f((cross(v)).dot(planeNormal), dot(v));
+}
+
+
 inline f32 Vector3::triangleArea(const Vector3& v) const noexcept
 {
     return cross(v).length() * .5f;
@@ -206,6 +212,7 @@ inline Vector3 Vector3::normalized() const noexcept
 inline Vector3 Vector3::safelyNormalized() const noexcept
 {
     const f32 sqrLen{sqrLength()};
+
     return sqrLen ? (*this / sqrtf(sqrLen)) : *this;
 }
 

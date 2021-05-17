@@ -63,15 +63,17 @@ union Vector3
     constexpr bool      isOrthonormalTo     (const Vector3& v)              const noexcept;
     constexpr bool      isColinearTo        (const Vector3& v)              const noexcept;
     bool                isEqualTo           (const Vector3& v,
-                                             const f32 eps = 1e-6)          const noexcept;
+                                             const f32 eps = 1e-6f)         const noexcept;
     bool                isNotEqualTo        (const Vector3& v,
-                                             const f32 eps = 1e-6)          const noexcept;
+                                             const f32 eps = 1e-6f)         const noexcept;
     void                normalize           ()                              noexcept;
     void                safelyNormalize     ()                              noexcept;
     constexpr f32       sqrDistanceTo       (const Vector3& v)              const noexcept;
     f32     	        distanceTo		    (const Vector3& v)              const noexcept;
     f32     	        angleWithUnitary    (const Vector3& v)              const noexcept;
     f32                 angleWith		    (const Vector3& v)              const noexcept;
+    f32                 signedAngleWithUnitary(const Vector3& v,
+                                               const Vector3& planeNormal = Vector3::up()) const noexcept;
     f32                 triangleArea	    (const Vector3& v)              const noexcept;
     Vector3             normalized          ()                              const noexcept;
     Vector3             safelyNormalized    ()                              const noexcept;
