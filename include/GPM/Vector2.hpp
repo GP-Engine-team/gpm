@@ -32,7 +32,7 @@ union Vector2
     static constexpr Vector2 up     ()                          noexcept;
 
     // Member methods
-    constexpr f32       sqrLength             ()                  const noexcept;
+    constexpr f32       sqrLength           ()                  const noexcept;
     f32                 length              ()                  const noexcept;
     constexpr f32       dot                 (const Vector2& v)  const noexcept;
     constexpr f32       cross               (const Vector2& v)  const noexcept;
