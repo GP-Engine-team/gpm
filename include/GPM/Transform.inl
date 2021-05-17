@@ -102,15 +102,14 @@ inline Mat4 Transform::TRS(const Vec3& t, const Vec3& r, const Vec3& s) noexcept
     return translation(t) * rotation(r) * scaling(s);
 }
 
-
-// With OpenGL, the camera looks towards negative z  
+ 
 inline Mat4 Transform::lookAt(const Vec3& eyePos,
                               const Vec3& targetPos,
                               const Vec3& normalizedUp) noexcept
 {
     const Vec4 backward{(eyePos - targetPos).normalized(), .0f},
-               right   {normalizedUp.cross(backward.xyz),   .0f},
-               up      {backward.xyz.cross(right.xyz),      .0f};
+               right   {normalizedUp.cross(backward.xyz),  .0f},
+               up      {backward.xyz.cross(right.xyz),     .0f};
 
     return {right, up, backward, eyePos};
 }
