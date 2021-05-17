@@ -52,8 +52,8 @@ struct Transform
                                        const f32 near_, const f32 far_)      noexcept;
     static Mat4           perspective (const f32 fovY,  const f32 aspect,
                                        const f32 near_, const f32 far_)      noexcept;
-    static constexpr Mat4 orthographic(const f32 right, const f32 top,
-                                       const f32 near_, const f32 far_)       noexcept;
+    static constexpr Mat4 orthographic(const f32 right, const f32 left, const f32 top, const f32 bottom,
+                                       const f32 nearVal, const f32 farVal) noexcept;
     static constexpr Mat4 viewport    (const f32 x,     const f32 y,
                                        const f32 width, const f32 height)     noexcept;
 
@@ -73,6 +73,10 @@ struct Transform
     constexpr void        setGlobalTranslation(const Vec3& t)                 noexcept;
     void                  setRotation         (const Vec3& r)                 noexcept;
     constexpr void        setScale            (const Vec3& s)                 noexcept;
+
+    constexpr void 	setVectorUp(const Vec3& newUp) noexcept;
+    constexpr void 	setVectorRight(const Vec3& newRight) noexcept;
+    constexpr void 	setVectorForward(const Vec3& newForward) noexcept;
 
     // Transformations
     constexpr void        translateX  (const f32 shift)                       noexcept;
