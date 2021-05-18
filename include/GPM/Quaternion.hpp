@@ -45,26 +45,31 @@ union alignas(16) Quaternion
                                            const Vec3& destPoint)                  noexcept;
 
     // Methods
-    constexpr Vec3              axis       ()                                      const noexcept;
-    Vec3                        unitAxis   ()                                      const noexcept;
-    f32                         angle      ()                                      const noexcept;
-    f32                         angleWith  (const Quaternion& q)                   const noexcept;
-    constexpr Vec3              rotate     (const Vec3& v)                         const noexcept;
-    Vec3                        eulerAngles()                                      const noexcept;
-    constexpr f32               sqrLength  ()                                      const noexcept;
-    f32                         length     ()                                      const noexcept;
-    constexpr f32               dot        (const Quaternion& q)                   const noexcept;
-    Quaternion                  normalized ()                                      const noexcept;
-    void                        normalize  ()                                      noexcept;
-    constexpr Quaternion        conjugate  ()                                      const noexcept;
-    constexpr Quaternion        inversed   ()                                      const noexcept;
-    Quaternion                  slerp      (const Quaternion& target, const f32 t) const noexcept;
-    Quaternion                  nlerp      (const Quaternion& target, const f32 t) const noexcept;
-    bool                        isEqualTo  (const Quaternion& q,
-                                            const f32 eps = FLT_EPSILON)           const noexcept;
+    constexpr Vec3              axis            ()                                      const noexcept;
+    Vec3                        unitAxis        ()                                      const noexcept;
+    f32                         angle           ()                                      const noexcept;
+    f32                         angleWith       (const Quaternion& q)                   const noexcept;
+    constexpr Vec3              rotate          (const Vec3& v)                         const noexcept;
+    Vec3                        eulerAngles     ()                                      const noexcept;
+    constexpr f32               sqrLength       ()                                      const noexcept;
+    f32                         length          ()                                      const noexcept;
+    constexpr f32               dot             (const Quaternion& q)                   const noexcept;
+    Quaternion                  normalized      ()                                      const noexcept;
+    Quaternion                  safelyNormalized()                                      const noexcept;
+    void                        normalize       ()                                      noexcept;
+    void                        safelyNormalize ()                                      noexcept;
+    constexpr Quaternion        conjugate       ()                                      const noexcept;
+    constexpr Quaternion        inversed        ()                                      const noexcept;
+    constexpr Quaternion        to              (const Quaternion& target)              const noexcept;
+    Quaternion                  slerp           (const Quaternion& target, const f32 t) const noexcept;
+    Quaternion                  nlerp           (const Quaternion& target, const f32 t) const noexcept;
+    bool                        isEqualTo       (const Quaternion& q,
+                                                 const f32 eps = FLT_EPSILON)           const noexcept;
 
     // Operator overloads
     constexpr bool              operator== (const Quaternion& q)                   const noexcept;
+    constexpr Quaternion        operator*= (const f32 k)                           const noexcept;
+    constexpr Quaternion        operator/= (const f32 k)                           const noexcept;
     constexpr Quaternion        operator+  (const Quaternion& q)                   const noexcept;
     constexpr Quaternion        operator-  (const Quaternion& q)                   const noexcept;
     constexpr Quaternion        operator-  ()                                      const noexcept;

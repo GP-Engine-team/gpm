@@ -137,11 +137,17 @@ inline bool Vector3::isNotEqualTo(const Vector3& v, const f32 eps) const noexcep
 
 inline void Vector3::normalize() noexcept
 {
-    const f32 reciprocal{1.f / length()};
+    *this /= length();
+}
 
-    x *= reciprocal;
-    y *= reciprocal;
-    z *= reciprocal;
+inline void Vector3::safelyNormalize() noexcept
+{
+    const f32 sqrLen{sqrLength()};
+
+    if (sqrLen)
+    {
+        *this /= sqrtf(sqrLen);
+    }
 }
 
 
@@ -173,6 +179,12 @@ inline f32 Vector3::angleWith(const Vector3& v) const noexcept
 }
 
 
+inline f32 Vector3::signedAngleWithUnitary(const Vector3& v, const Vector3& planeNormal) const noexcept
+{
+    return atan2f((cross(v)).dot(planeNormal), dot(v));
+}
+
+
 inline f32 Vector3::triangleArea(const Vector3& v) const noexcept
 {
     return cross(v).length() * .5f;
@@ -194,6 +206,14 @@ inline constexpr Vector3 Vector3::projectedOn(const Vector3& v) const noexcept
 inline Vector3 Vector3::normalized() const noexcept
 {
     return *this / length();
+}
+
+
+inline Vector3 Vector3::safelyNormalized() const noexcept
+{
+    const f32 sqrLen{sqrLength()};
+
+    return sqrLen ? (*this / sqrtf(sqrLen)) : *this;
 }
 
 
