@@ -16,8 +16,8 @@ inline bool f32AreEqual(const f32 a, const f32 b, const f32 eps)
     return fabs(b - a) <= eps;
 }
 
-template<typename T>
-inline T lerp(const T& a, const T& b, const f32 alpha)
+
+inline f32 lerpf(const f32 a, const f32 b, const f32 alpha)
 {
 	return (a * (1.f - alpha)) + (b * alpha);
 }
