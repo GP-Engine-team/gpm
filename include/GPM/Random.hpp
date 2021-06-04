@@ -59,7 +59,7 @@ inline auto unitValue() -> std::enable_if_t<std::is_integral<T>::value, T>;
  * @brief This will generate a number from 0.0 to some arbitrary float, max:
  * 
  * @tparam float 
- * @param max : exclude
+ * @param max 
  * @return T 
  */
 template<typename T = float>
@@ -71,8 +71,8 @@ inline auto ranged(T max) -> std::enable_if_t<std::is_integral<T>::value, T>;
 /**
  * @brief This will generate a number from some arbitrary min to some arbitrary max:
  * @tparam float 
- * @param min : include
- * @param max : exclude
+ * @param min 
+ * @param max 
  * @return T 
  */
 template<typename T = float>

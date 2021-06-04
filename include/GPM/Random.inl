@@ -29,7 +29,7 @@ auto ranged(T max) -> std::enable_if_t<std::is_floating_point<T>::value, T>
 template<typename T>
 auto ranged(T max) -> std::enable_if_t<std::is_integral<T>::value, T>
 {
-    return static_cast<T>(rand()) % max;
+    return static_cast<T>(rand()) / (static_cast<T>(RAND_MAX/(max + static_cast<T>(1))));
 }
 
 template<typename T>
@@ -41,7 +41,7 @@ auto ranged(T min, T max)  -> std::enable_if_t<std::is_floating_point<T>::value,
 template<typename T>
 auto ranged(T min, T max) -> std::enable_if_t<std::is_integral<T>::value, T>
 {
-    return min + static_cast<T>(rand()) % (max - min);
+    return min + static_cast<T>(rand()) / (static_cast<T>(RAND_MAX / ((max + static_cast<T>(1)) - min)));
 }
 
 Vec2 circularCoordinate(const Vec2& center, float range)
