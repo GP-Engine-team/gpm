@@ -135,9 +135,23 @@ inline constexpr f32 Matrix4::trace() const noexcept
 { return e[0] + e[5] + e[10] + e[15]; }
 
 
+inline bool Matrix4::isEqualTo(const Matrix4& m, const f32 eps) const noexcept
+{
+    return c[0].isEqualTo(m.c[0], eps) && c[1].isEqualTo(m.c[1], eps) &&
+           c[2].isEqualTo(m.c[2], eps) && c[3].isEqualTo(m.c[3], eps);
+}
+
+
 
 
 /* ================ Operator overloads ================= */
+inline constexpr bool Matrix4::operator==(const Matrix4& m) const noexcept
+{
+    return (c[0] == m.c[0]) && (c[1] == m.c[1]) &&
+           (c[2] == m.c[2]) && (c[3] == m.c[3]);
+}
+
+
 // This actually does m * *this
 inline constexpr Matrix4& Matrix4::operator*=(const Matrix4& m) noexcept
 {
@@ -222,29 +236,4 @@ inline constexpr Matrix4 Matrix4::operator/(const f32 k) const noexcept
         e[8]  * reciprocal, e[9]  * reciprocal, e[10] * reciprocal, e[11] * reciprocal,
         e[12] * reciprocal, e[13] * reciprocal, e[14] * reciprocal, e[15] * reciprocal,
     };
-}
-
-
-inline std::ostream& operator<<(std::ostream& os, const Matrix4& mat) noexcept
-{
-    std::streamsize original = std::cout.precision();
-    os << std::setprecision(2);
-
-    for (u8 i{0u}; i < MAT4_COL; ++i)
-    {
-        u8 induction{i};
-        
-        os << "| ";
-        for (u8 j{MAT4_COL}; j--; induction += MAT4_COL)
-            os << std::setw(10) << mat.e[induction] << ' ';
-
-        os << " |";
-        
-        if (i != MAT4_COL - 1u)
-            os << '\n';
-    }
-
-    os << std::setprecision(original);
-
-    return os;
 }

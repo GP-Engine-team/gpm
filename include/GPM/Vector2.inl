@@ -36,12 +36,12 @@ inline constexpr Vector2 Vector2::up() noexcept
 
 
 /* =================== Methods =================== */
-inline constexpr f32 Vector2::length2() const noexcept
+inline constexpr f32 Vector2::sqrLength() const noexcept
 { return (x * x) + (y * y); }
 
 
 inline f32 Vector2::length() const noexcept
-{ return sqrtf(length2()); }
+{ return sqrtf(sqrLength()); }
 
 
 inline constexpr f32 Vector2::dot(const Vector2& v) const noexcept
@@ -61,7 +61,7 @@ inline constexpr bool Vector2::isOrthogonalTo(const Vector2& v) const noexcept
 
 
 inline constexpr bool Vector2::isNormalized() const noexcept
-{ return !(length2() - 1.f); }
+{ return !(sqrLength() - 1.f); }
 
 
 inline constexpr bool Vector2::isOrthonormalTo(const Vector2& v) const noexcept
@@ -82,14 +82,21 @@ inline bool Vector2::isNotEqualTo(const Vector2& v, const f32 eps) const noexcep
 
 inline void Vector2::normalize() noexcept
 {
-	const f32 reciprocal{1.f / length()};
-	x *= reciprocal;
-	y *= reciprocal;
+	*this /= length();
 }
 
 
-inline constexpr f32 Vector2::distance2To(const Vector2& v) const noexcept
-{ return (*this - v).length2(); }
+inline void Vector2::safelyNormalize() noexcept
+{
+    const f32 sqrLen{sqrLength()};
+
+    if (sqrLen)    
+	    *this /= sqrtf(sqrLen);
+}
+
+
+inline constexpr f32 Vector2::sqrDistanceTo(const Vector2& v) const noexcept
+{ return (*this - v).sqrLength(); }
 
 
 inline f32 Vector2::distanceTo(const Vector2& v) const noexcept
@@ -101,7 +108,7 @@ inline f32 Vector2::angleWithUnitary(const Vector2& v) const noexcept
 
 
 inline f32 Vector2::angleWith(const Vector2& v) const noexcept
-{ return acosf(dot(v) / sqrtf(length2() * v.length2())); }
+{ return acosf(dot(v) / sqrtf(sqrLength() * v.sqrLength())); }
 
 
 inline constexpr f32 Vector2::triangleArea(const Vector2& v) const noexcept
@@ -113,11 +120,19 @@ inline constexpr Vector2 Vector2::projectedOnUnitary(const Vector2& v) const noe
 
 
 inline constexpr Vector2 Vector2::projectedOn(const Vector2& v) const noexcept
-{ return v * (dot(v) / v.length2()); }
+{ return v * (dot(v) / v.sqrLength()); }
 
 
 inline Vector2 Vector2::normalized() const noexcept
 { return *this / length(); }
+
+
+inline Vector2 Vector2::safelyNormalized() const noexcept
+{
+    const f32 sqrLen{sqrLength()};
+
+    return sqrLen ? (*this / sqrtf(sqrLen)) : *this;
+}
 
 
 inline Vector2 Vector2::rotated(const f32 angle) const noexcept
@@ -289,7 +304,3 @@ inline constexpr Vector2 Vector2::operator/(const f32 k) const noexcept
 
 	return {x * reciprocal, y * reciprocal};
 }
-
-
-inline std::ostream& operator<<(std::ostream& os, const Vector2& v) noexcept
-{ return os << '[' << v.x << ", " << v.y << ']'; }

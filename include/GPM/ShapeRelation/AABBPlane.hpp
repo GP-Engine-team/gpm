@@ -26,7 +26,7 @@ bool isAABBOnOrForwardPlane(const AABB& aabb, const Plane& plane)
     const float r = aabb.extents.x * std::abs(plane.getNormal().x) + aabb.extents.y * std::abs(plane.getNormal().y) +
                     aabb.extents.z * std::abs(plane.getNormal().z);
 
-    return -r <= plane.getSignedDistanceToPlane(aabb.getCenter());
+    return -r <= plane.getSignedDistanceToPlane(aabb.center);
 }
 
 } // namespace GPM::AABBPlane

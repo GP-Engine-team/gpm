@@ -34,7 +34,7 @@ inline void initSeed();
  * 
  * @param seed The pseudo-random number generator is initialized using the argument passed as seed.
  */
-inline void initSeed(float seed);
+inline void initSeed(const u32 seed);
 
 /**
  * @brief This will generate a number from 0.0 to 1.0, inclusive.
@@ -59,7 +59,7 @@ inline auto unitValue() -> std::enable_if_t<std::is_integral<T>::value, T>;
  * @brief This will generate a number from 0.0 to some arbitrary float, max:
  * 
  * @tparam float 
- * @param max 
+ * @param max : exclude
  * @return T 
  */
 template<typename T = float>
@@ -71,8 +71,8 @@ inline auto ranged(T max) -> std::enable_if_t<std::is_integral<T>::value, T>;
 /**
  * @brief This will generate a number from some arbitrary min to some arbitrary max:
  * @tparam float 
- * @param min 
- * @param max 
+ * @param min : include
+ * @param max : exclude
  * @return T 
  */
 template<typename T = float>

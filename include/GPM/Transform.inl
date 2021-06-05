@@ -1,14 +1,3 @@
-/* ================== SplitTransform static methods ================== */
-inline std::ostream& operator<<(std::ostream& os, const SplitTransform& st) noexcept
-{
-    return os << "rotation: "   << st.rotation
-              << "\nposition: " << st.position
-              << "\nscale: "    << st.scale;
-}
-
-
-
-
 /* ================== Transform static methods ================== */
 inline constexpr Mat4 Transform::translation(const Vec3& t) noexcept
 {
@@ -113,56 +102,59 @@ inline Mat4 Transform::TRS(const Vec3& t, const Vec3& r, const Vec3& s) noexcept
     return translation(t) * rotation(r) * scaling(s);
 }
 
-
-// With OpenGL, the camera looks towards negative z  
+ 
 inline Mat4 Transform::lookAt(const Vec3& eyePos,
                               const Vec3& targetPos,
                               const Vec3& normalizedUp) noexcept
 {
-    const Vec4 forward{(eyePos - targetPos).normalized(), .0f},
-               right  {normalizedUp.cross(forward.xyz),   .0f},
-               up     {forward.xyz.cross(right.xyz),      .0f};
+    const Vec4 backward{(eyePos - targetPos).normalized(), .0f},
+               right   {normalizedUp.cross(backward.xyz),  .0f},
+               up      {backward.xyz.cross(right.xyz),     .0f};
 
-    return {right, up, forward, eyePos};
+    return {right, up, backward, eyePos};
 }
 
 
 inline constexpr Mat4 Transform::symFrustrum(const f32 right, const f32 top,
-                                             const f32 near,  const f32 far) noexcept
+                                             const f32 near_, const f32 far_) noexcept
 {
-    const f32 depthInv{1.f / (far - near)};
+    const f32 depthInv{1.f / (far_ - near_)};
 
     return
     {
-        near / right, .0f,        .0f,                          .0f,
-        .0f,          near / top, .0f,                          .0f,
-        .0f,          .0f,        -(far + near) * depthInv,    -1.f,
-        .0f,          .0f,        -2.f * far * near * depthInv, .0f
+        near_ / right, .0f,        .0f,                          .0f,
+        .0f,          near_ / top, .0f,                          .0f,
+        .0f,          .0f,        -(far_ + near_) * depthInv,    -1.f,
+        .0f,          .0f,        -2.f * far_ * near_ * depthInv, .0f
     };
 }
 
 
 inline Mat4 Transform::perspective(const f32 fovY, const f32 aspect,
-                                   const f32 near, const f32 far) noexcept
+                                   const f32 near_, const f32 far_) noexcept
 {
-    const f32 top{near * tanf(fovY / 2.f)}, right{top * aspect};
+    const f32 top{near_ * tanf(fovY / 2.f)};
 
-    return symFrustrum(right, top, near, far);
+    return symFrustrum(top * aspect, top, near_, far_);
 }
 
 
-inline constexpr Mat4 Transform::orthographic(const f32 right, const f32 top,
-                                              const f32 near,  const f32 far) noexcept
+inline constexpr Mat4 Transform::orthographic(const f32 right, const f32 left, const f32 top, const f32 bottom,
+                                              const f32 nearVal, const f32 farVal) noexcept
 {
-    const f32 farMinNear{far - near};
+    // will be optimisate by compilator
+    const float a11 = 2.f / (right - left);
+    const float a22 = 2.f / (top - bottom);
+    const float a33 = -2.f / (farVal - nearVal);
+    
+    const float tx = -(right + left) / (right - left);
+    const float ty = -(top + bottom) / (top - bottom);
+    const float tz = -(farVal + nearVal) / (farVal - nearVal);
 
-    return
-    {
-        1.f / right, .0f,       .0f,                          .0f,
-        .0f,         1.f / top, .0f,                          .0f,
-        .0f,         .0f,       -2.f / (far - near),          .0f,
-        .0f,         .0f,       (far + near) / (-farMinNear), 1.f
-    };
+    return {a11, 0.f, 0.f, 0.f,
+            0.f, a22, 0.f, 0.f,
+            0.f, 0.f, a33, 0.f,
+            tx, ty, tz, 1.f};
 }
 
 
@@ -218,9 +210,14 @@ inline constexpr Vec3 Transform::up() const noexcept
 }
 
 
-inline constexpr Vec3 Transform::forward() const noexcept
+inline constexpr Vec3 Transform::backward() const noexcept
 {
     return model.c[2].xyz;
+}
+
+inline constexpr Vec3 Transform::forward() const noexcept
+{
+    return -model.c[2].xyz;
 }
 
 
@@ -233,7 +230,7 @@ inline constexpr Vec3 Transform::translation() const noexcept
 
 inline Mat4 Transform::rotation() const noexcept
 {
-    const Vec3 invScale{1.f / right().length(), 1.f / up().length(), 1.f / forward().length()};
+    const Vec3 invScale{1.f / right().length(), 1.f / up().length(), 1.f / backward().length()};
 
     return
     {
@@ -268,7 +265,7 @@ inline Vec3 Transform::eulerAngles() const noexcept
 
 inline Vec3 Transform::scaling() const noexcept
 {
-    return {right().length(), up().length(), forward().length()};
+    return {right().length(), up().length(), backward().length()};
 }
 
 
@@ -431,6 +428,20 @@ inline void Transform::rotateAround(const Vec3& axis, const f32 angle) noexcept
     apply(rotationAround(axis, angle));
 }
 
+inline constexpr void Transform::setVectorUp(const Vec3& newUp) noexcept
+{
+	model.c[1].xyz = newUp;
+}
+
+inline constexpr void Transform::setVectorRight(const Vec3& newRight) noexcept
+{
+	model.c[0].xyz = newRight;
+}
+
+inline constexpr void Transform::setVectorForward(const Vec3& newForward) noexcept
+{
+	model.c[2].xyz = -newForward;
+}
 
 inline constexpr void Transform::scaleX(const f32 coef) noexcept
 {
@@ -480,10 +491,3 @@ inline constexpr void Transform::apply(const Mat4& m) noexcept
 {
     model *= m;
 }
-
-
-
-
-// Utility
-inline std::ostream& operator<<(std::ostream& os, const Transform& t) noexcept
-{ return os << t.model; }

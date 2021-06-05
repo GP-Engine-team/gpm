@@ -8,9 +8,8 @@
 
 #include <cfloat>
 #include <cmath>
-#include <iostream>
 
-#include "types.hpp"
+#include "Types.hpp"
 
 namespace GPM
 {
@@ -33,7 +32,7 @@ union Vector2
     static constexpr Vector2 up     ()                          noexcept;
 
     // Member methods
-    constexpr f32       length2             ()                  const noexcept;
+    constexpr f32       sqrLength           ()                  const noexcept;
     f32                 length              ()                  const noexcept;
     constexpr f32       dot                 (const Vector2& v)  const noexcept;
     constexpr f32       cross               (const Vector2& v)  const noexcept;
@@ -47,12 +46,14 @@ union Vector2
     bool                isNotEqualTo        (const Vector2& v,
                                              const f32 eps = FLT_EPSILON) const noexcept;
     void                normalize           ()                  noexcept;
-    constexpr f32       distance2To         (const Vector2& v)  const noexcept;
+    void                safelyNormalize     ()                  noexcept;
+    constexpr f32       sqrDistanceTo       (const Vector2& v)  const noexcept;
     f32                 distanceTo          (const Vector2& v)  const noexcept;
     f32                 angleWithUnitary    (const Vector2& v)  const noexcept;
     f32                 angleWith           (const Vector2& v)  const noexcept;
     constexpr f32       triangleArea        (const Vector2& v)  const noexcept;
     Vector2             normalized          ()                  const noexcept;
+    Vector2             safelyNormalized    ()                  const noexcept;
     constexpr Vector2   projectedOnUnitary  (const Vector2& v)  const noexcept;
     constexpr Vector2   projectedOn         (const Vector2& v)  const noexcept;
     Vector2             rotated             (const f32 angle)   const noexcept;
@@ -81,8 +82,6 @@ union Vector2
     constexpr Vector2   operator-           ()                  const noexcept;
     constexpr Vector2   operator*           (const f32 k)       const noexcept;
     constexpr Vector2   operator/           (const f32 k)       const noexcept;
-
-    friend std::ostream& operator<<         (std::ostream& os, const Vector2& v) noexcept;
 };
 
 using Vec2 = Vector2;
